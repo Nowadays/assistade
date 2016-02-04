@@ -165,6 +165,39 @@
 
 		}
 
+		function initGroupe(){
+			if($this->session->userdata('adminFirstConnexion') === FALSE)
+				redirect('admin');
+
+			//if($this->session->userdata('state') !== self::$states['INIT_TEACHER'])
+			//	redirect('config/initPeriods');
+
+			$this->load->library('upload');
+			$data = array('name' => 'groupes', 'table' => 'groupe', 'src' => 'initGroupe');
+
+			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
+			{
+				try
+				{
+					$passwords = $this->config_model->insertFromCSV('student_group_tp', $_FILES['csv']);
+
+					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
+					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
+				}
+				catch(Exception $e)
+				{
+					$data['title'] = 'Erreur';
+					$data['content'] = $e->getMessage();
+					$data['state'] = 'danger';
+					$data['button'] = array('visible' => FALSE);
+
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+				}
+			}
+			else
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+		}
+
 		/**
 		 * Affiche la page d'import des matières
 		 *
@@ -291,11 +324,14 @@
 				$data = implode(',', $data);
 				
 				$fileName = "";
-				
+
 				if($tableName === "teacher")
 					$fileName = "Professeur";
 				else if($tableName === "subject")
 					$fileName = "Matiere";
+				else if($tableName === "student_group_tp"){
+					$fileName = "Groupe";
+				}
 				
 				$fileName .= ".csv";
 
