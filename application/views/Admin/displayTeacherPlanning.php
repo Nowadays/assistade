@@ -20,6 +20,9 @@
 
 		echo heading('Son planning', 2);
 		
+        echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
+        echo '<p>Nombre d\'heures minimal de disponnibilité : '.$miniHours.'</p>';
+
 		echo availabilityTable($hours, $TeacherTimeSlot);		
 		
 		echo availabilityLevel();

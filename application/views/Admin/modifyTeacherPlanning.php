@@ -18,6 +18,9 @@
 
 		echo heading('Son planning', 2);
 
+        echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
+        echo '<p>Nombre d\'heures minimal de disponnibilité : '.$miniHours.'</p>';
+
 
 		echo form_button(array('content' => 'Remettre à blanc', 'class' => 'btn btn-xs active', 'id' => 'white'));
 		echo nbs(2);

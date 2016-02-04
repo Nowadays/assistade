@@ -380,6 +380,8 @@
 			$data = array();
 			$this->addMessage($view,$data);
 			$data['hours'] = $this->main_model->getHours();
+            $data['effectivHours'] = $this->main_model->getTeacherHours($this->session->userdata('teacherId'));
+            $data['miniHours'] = $this->main_model->getTeacherMiniHours($this->session->userdata('teacherId'))*1.5;
 			$this->addUserInfo($data);
 
 			$this->load->template($view, $data, array('getPlanning.js', 'displayAvailability.js'));

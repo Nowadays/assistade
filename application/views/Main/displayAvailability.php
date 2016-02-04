@@ -19,6 +19,10 @@
 	echo div(array('style' => 'max-width: 750px;', 'class' => "text-center center-block"));
 		echo heading('Vos disponibilités');
 		echo '<p class="lead">Ces disponibilités sont définitives ! Pour tout problème, veuillez contacter l\'administrateur.</p>';
+
+        echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
+        echo '<p>Nombre d\'heures minimal de disponnibilité : '.$miniHours.'</p>';
+
 		echo availabilityTable($hours);
 		echo availabilityLevel();
 	echo div_close(); 
