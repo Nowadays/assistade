@@ -5,7 +5,7 @@
 	class Config extends CI_Controller
 	{
 		private static $states = array('CREATE_DB' => 0, 'INIT_YEAR' => 1, 'INIT_PERIODS' => 2, 'INIT_TEACHER' => 3, 'INIT_SUBJECT' => 4, 
-			'INIT_IN_CHARGE' => 5, 'INIT_ADMIN_INFO' => 6);
+			'INIT_IN_CHARGE' => 5, 'INIT_ADMIN_INFO' => 6, 'INIT_GROUPE' => 7);
 
 		public function __construct()
 		{
@@ -165,38 +165,7 @@
 
 		}
 
-		function initGroupe(){
-			if($this->session->userdata('adminFirstConnexion') === FALSE)
-				redirect('admin');
 
-			//if($this->session->userdata('state') !== self::$states['INIT_TEACHER'])
-			//	redirect('config/initPeriods');
-
-			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'groupe', 'src' => 'initGroupe');
-
-			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
-			{
-				try
-				{
-					$passwords = $this->config_model->insertFromCSV('student_group_tp', $_FILES['csv']);
-
-					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
-					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
-				}
-				catch(Exception $e)
-				{
-					$data['title'] = 'Erreur';
-					$data['content'] = $e->getMessage();
-					$data['state'] = 'danger';
-					$data['button'] = array('visible' => FALSE);
-
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
-				}
-			}
-			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
-		}
 
 		/**
 		 * Affiche la page d'import des matières
@@ -261,8 +230,8 @@
 				{
 					$this->config_model->saveManagerSubject($this->input->post('manageResp'));
 
-					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
-					redirect('config/initAdminInfo');
+					$this->session->set_userdata('state', self::$states['INIT_GROUPE']);
+					redirect('config/initGroupe');
 				}
 				catch(Exception $e)
 				{
@@ -280,6 +249,39 @@
 			else
 				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data);
 		}
+
+		function initGroupe(){
+			if($this->session->userdata('adminFirstConnexion') === FALSE)
+				redirect('admin');
+
+			if($this->session->userdata('state') !== self::$states['INIT_GROUPE'])
+				redirect('config/initInCharge');
+
+			$this->load->library('upload');
+			$data = array('name' => 'groupes', 'table' => 'student_group_tp', 'src' => 'initGroupe');
+
+			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
+			{
+				try
+				{
+					$this->config_model->insertFromCSV('student_group_tp', $_FILES['csv']);
+					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
+					redirect('admin/initAdminInfo');
+				}
+				catch(Exception $e)
+				{
+					$data['title'] = 'Erreur';
+					$data['content'] = $e->getMessage();
+					$data['state'] = 'danger';
+					$data['button'] = array('visible' => FALSE);
+
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+				}
+			}
+			else
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+		}
+
 
 		/**
 		 * Affiche la page pour changer le mot de passe administrateur
