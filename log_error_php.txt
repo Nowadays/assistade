@@ -1,0 +1,11 @@
+[05-Jan-2016 19:33:53 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:35:29 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:42:35 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:44:55 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:44:57 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:44:57 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:45:38 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:45:40 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:45:40 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[05-Jan-2016 19:45:40 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
+[06-Jan-2016 23:01:13 Europe/Berlin] PHP Notice:  Use of undefined constant e_all - assumed 'e_all' in /var/www/html/index.php on line 9
