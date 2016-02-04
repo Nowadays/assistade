@@ -252,7 +252,7 @@
                     $state = ($this->input->post('save') !== FALSE) ? 1 : 2;
 					
                     if($state === 1){
-                        $this->main_model->insertWish($this->input->post('timeSlot'), $state);   
+                        $this->main_model->insertWish($this->input->post('timeSlot'), $state, $this->session->userdata('teacherId'));   
                     }else{
                         if($this->main_model->getTeacherHours($this->session->userdata('teacherId')) < 1.5*$this->main_model->getTeacherMiniHours($this->session->userdata('teacherId'))){
                             $message['state']= 'danger';
@@ -260,7 +260,7 @@
                             $message['content']= 'Votre voeux n\'a pas pu être accepté, vous n\'avez pas renseigné suffisemment d\'heures disponibles';
                             $message['static']= FALSE;
                         }else{
-                            $this->main_model->insertWish($this->input->post('timeSlot'), $state);
+                            $this->main_model->insertWish($this->input->post('timeSlot'), $state, $this->session->userdata('teacherId'));
                         }
                     }
                     

@@ -449,7 +449,7 @@
 			{
 				foreach ($availability as $timeslot_id => $value) //on enregistre tous les voeux !=0
 				{
-					if($value != 0 && $value != 3)
+					if($value != 0)
 					{
 						$data = array(
 							'wish_id' => $wish_id,
