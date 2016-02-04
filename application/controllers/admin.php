@@ -243,7 +243,7 @@
 				$data['infos']= $this->admin_model->getTeacherInformations($initials);
 				$data['hours'] = $this->admin_model->getHours();
                 $data['miniHours'] = $this->admin_model->getTeacherMiniHours($initials)*1.5;
-				$data['TeacherTimeSlot'] = $this->admin_model->getTeacherTimeSlots($initials, $period['period_id']);
+                $data['effectivHours'] = $this->admin_model->getTeacherHours($initials);
 				$data['TeacherTimeSlot'] = $this->admin_model->getTeacherTimeSlots($initials, $period['period_id']);
 				$data['wishState'] = $this->admin_model->getTeacherWishState($initials);
 
