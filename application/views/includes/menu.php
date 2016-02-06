@@ -36,6 +36,8 @@
 
 					$elems[] = array('Mes anciens Planning', 'main/displayOlderPlanning');
 					
+                    $elems[] = array('Voir mes modules', 'main/displaySubjects');
+                    
 					if(isset($is_responsible) && $is_responsible === true)
 					{
 						if($responsibleId === $teacherId)

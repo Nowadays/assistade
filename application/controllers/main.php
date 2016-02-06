@@ -387,6 +387,24 @@
 			$this->load->template($view, $data, array('getPlanning.js', 'displayAvailability.js'));
 		}
 		
+        
+        /**
+		 * Méthode affichant les matières dans lesquelles l'enseignant est concerné dans la période actuelle
+		 */
+		public function displaySubjects()
+		{
+			$this->checkUserState();
+			
+			$view = array('Main/displaySubjects');
+			$data = array();
+            $data['periodNumber'] = $this->main_model->getCurrentPeriod()['period_number'];
+            $data['subjects'] = $this->main_model->getTeacherSubjects($this->session->userdata('teacherId'),$data['periodNumber']);
+            $this->addUserInfo($data);
+
+			$this->load->template($view, $data);
+		}
+        
+        
 		/**
 		 * Propose la liste des vacataire ou propose la création d'un vacataire
 		 * 

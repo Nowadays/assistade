@@ -363,13 +363,22 @@
             $this->db->query("CREATE TABLE course(
 				id_course SERIAL NOT NULL,
                 teacher_id VARCHAR(3) NOT NULL,
-                student_group_id INTEGER NOT NULL,
+                student_group_id INTEGER,
                 subject_id VARCHAR(6) NOT NULL,
+                period_id INTEGER NOT NULL,
                 CONSTRAINT course_pk PRIMARY KEY(id_course),
                 CONSTRAINT course_fk1 FOREIGN KEY(teacher_id) REFERENCES teacher(initials),
                 CONSTRAINT course_fk2 FOREIGN KEY(student_group_id) REFERENCES student_group(id),
-                CONSTRAINT course_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id)
+                CONSTRAINT course_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id),
+                CONSTRAINT course_fk4 FOREIGN KEY(period_id) REFERENCES period(id)
   				)");
+            
+            $this->db->query("CREATE OR REPLACE VIEW courseDetail AS
+				SELECT *
+                FROM course
+                INNER JOIN subject
+                ON course.subject_id = subject.id
+  				");
             
             $this->db->query("CREATE TABLE mini_nb_hours(
                 teacher_id VARCHAR(3) NOT NULL,

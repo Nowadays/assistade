@@ -375,6 +375,31 @@
 			
 			return $result;
         }
+        
+        
+        /**
+		* Méthode retournant les modules dans lesquels un enseignant est impliqué pour une période donnée
+		*
+		* Cette méthode retourne un tableau correspondant aux modules du professeur dans la période donnée
+		*
+		*/
+        public function getTeacherSubjects($teacherId, $period = FALSE)
+        {
+            if($period === FALSE)
+				$period = $this->getCurrentPeriodId();
+            
+        
+            $result = null;
+
+            $query = $this->db->select('*')->from('course')->join('subject','course.subject_id=subject.id','inner')->where('period_id', $period)->where('teacher_id', $teacherId)->get();
+			
+            if($query -> num_rows() > 0){
+                $result = $query->result_array();   
+            }
+            
+			return $result;
+        }
+        
 
 		/**
 		 * Méthode retournant les informations sur un professeur donné.
