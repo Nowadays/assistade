@@ -361,5 +361,16 @@
 
 			return $password;
 		}
+        
+        
+        
+        
+        public function isTeacherFirstConnection($id)
+		{
+			$this->db->where("teacher_id", $id);
+			$query = $this->db->get('teacher_information')->result_array();
+
+			return empty($query);
+		}
 	}
 ?>

@@ -484,6 +484,16 @@
 					$this->email->send();
 				}
 			}
+            
+            $data['teacherWishes'] = $this->admin_model->getTeachersWishes();
+            $view = array('Admin/summary');
+            $this->session->set_userdata('message', array('title' => 'Succès',
+															  'content' => 'Le mail de rappel a bien été envoyé !',
+															  'state' => 'success',
+															  'static' => false));
+            
+            $this->addMessage($view,$data);
+            $this->load->admin_template($view, $data);
 		}
 		
 		/**

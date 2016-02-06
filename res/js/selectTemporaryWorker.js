@@ -5,7 +5,7 @@ var cellNames = ['Initiales','Nom','Prénom'];
 var cellDatabaseNames = ['initials','lastname','firstname'];
 
 function saveNewRow(){
-	//$('#loading').modal('toggle');
+	$('#loading').modal({backdrop: 'static', keyboard: false});
 
 	var data = {};
 	data.action = 'insert';
