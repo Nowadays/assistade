@@ -11,7 +11,7 @@
 	$periodNumber = $period['period_number'];
 	$date = formatDate($period['end_time']);
 	$isPeriodOpen = boolval($period['state']);
-	$periodState = ($isPeriodOpen && $period['state'] != -1) ? 'Saisie des voeux <strong>ouvert</strong>' : 'Saisi des voeux <strong>fermé</strong>';
+	$periodState = ($isPeriodOpen && $period['state'] != -1) ? 'Saisie des voeux <strong>ouverte</strong>' : 'Saisi des voeux <strong>fermée</strong>';
 
 	echo div(array('style' => 'max-width: 500px;', 'class' => 'alert alert-info center-block text-center'));
 		echo "<p>Année en cours : <strong>$beginYear - $endYear</strong></p>";
@@ -27,7 +27,12 @@
 		{
 			echo br();
 			echo anchor('admin/openWishInput', 'Ouvrir la saisie des voeux', array('class' => "btn btn-primary"));
-		}
+		}else{
+            //Si tous les profs ont validé leurs voeux (fonction à définir)
+            //Sinon le bouton est inactif (grisé)
+            echo br();
+			echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary"));
+        }
 
 		echo br(2);
 		echo anchor('admin/newYear', 'Nouvelle année (reset total)', array('class' => 'btn btn-danger'));
