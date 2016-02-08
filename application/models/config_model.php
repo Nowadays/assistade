@@ -63,8 +63,11 @@
 			$valuesToInsert = array();
 			$diff = array_diff($this->db->list_fields($tableName), $fileColumns);
 
-			if(($fileColumns === FALSE) || !empty($diff)) //If file empty or first line doesn't match table's fields' name
-				throw new Exception("Le nom des colonnes ne correspond pas aux valeurs attendues !"); //Throw an error
+
+            if(($fileColumns === FALSE) || !empty($diff)){//If file empty or first line doesn't match table's fields' name
+                //Throw an error
+                throw new Exception("Le nom des colonnes ne correspond pas aux valeurs attendues ou le fichier est vide !");
+            }
 
 			$tmp = array();
 
@@ -88,13 +91,20 @@
 				}
 			};
 
-			$this->db->insert_batch($tableName, $valuesToInsert);
+            if(empty($valuesToInsert)){
+                throw new Exception("Fichier vide");
+            }else{
+                $this->db->insert_batch($tableName, $valuesToInsert);
+            }
 
-			if($tableName === 'teacher')
+
+			if($tableName === 'teacher' && !empty($passwordToInsert))
 			{
 				$this->db->insert_batch('teacher_password', $passwordToInsert);
 				return $password;
-			}
+			}else{
+                throw new Exception("Password vide");
+            }
 		}
 
 		/**
