@@ -4,7 +4,7 @@
 	 *
 	 * Cette vue nécessite les variables suivantes : 'teacherName' => nom de l'enseignant, 'infos' => tableau associatif ayant pour clé : 'phone' => numéro de téléphone de
 	 * l'enseignant, 'email' => l'adresse email du professeur. 'teacherInitials' => initials (id) du professeur, 'TeacherTimeSlot' => tableau contenant les disponibilités du
-	 * professeur, 'hours' => tableau contenant les crénaux horaires.
+	 * professeur, 'hours' => tableau contenant les crénaux horaires, 'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon).
 	 */
 	echo div(array('style' => 'max-width: 750px;', 'class' => 'text-center center-block'));
 		
@@ -35,7 +35,7 @@
 
 			$TeacherTimeSlot = (empty($TeacherTimeSlot)) ? TRUE : $TeacherTimeSlot;
 
-			echo availabilityTable($hours, $TeacherTimeSlot);
+			echo availabilityTable($hours, $status, $TeacherTimeSlot);
 
 			echo availabilityLevel();
 

@@ -44,8 +44,21 @@
 		 * 
 		 * @return string  Code HTML à afficher
 		 */
-		function availabilityTable(array $hours, $form = FALSE)
+		function availabilityTable(array $hours, array $status=NULL, $form = FALSE)
 		{
+            if($status === NULL){
+                $status = array();
+                for($i = 1; $i <= 5; $i++){
+                    for($j = 1; $j <= 8; $j++){
+                        if(($i === 4) && ($j > 4))
+                            array_push($status,array('status' => 1));
+                        else
+                            array_push($status,array('status' => 0));
+                    }
+                }
+            }
+            
+            
 			$header =  array('', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi');
 			$table = '<table class="table table-bordered">';
 
@@ -55,14 +68,16 @@
 			$table .= '</tr>';
 
 			foreach ($hours as $hourId => $hour)
-			{
+			{    
 				$table .= '<tr>';
 					$table .= "<td>$hour</td>";
 					for($i = 1; $i <= 5; $i++)
 					{
-						if(($i === 4) && ($hourId > 4))
+						                        
+                        if(($status[($i-1)*8+$hourId-1]['status'] == 1)){
 							$table .= '<td class="notSelectable" style="background-color: grey"></td>';
-						else
+                        }
+                        else
 						{
 							$timeslot_id = ($i-1) * count($hours) + $hourId;
 

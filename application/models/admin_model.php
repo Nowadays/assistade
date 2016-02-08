@@ -231,6 +231,15 @@
 
 			return $result;
 		}
+        
+        
+        
+        public function getHoursStatus(){
+            $result = $this->db->select('status')->from('time_slot')->order_by('id','asc')->get()->result_array();
+                
+            return $result;
+        }
+        
 		
 		/**
 		 * Méthode modifiant une matière en base de données

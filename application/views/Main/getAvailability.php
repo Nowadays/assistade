@@ -3,7 +3,8 @@
 	 * Vue affichant le tableau permettant de saisir son planning
 	 * Cette vue nécessite les variables suivantes : $periodNumber => numéro de la période en cours
 	 * (optionnel) $TeacherTimeSlot => tableau contenant les clé, l'id d'un crénaux horaire et pour valeur un tableau contenant "availability_level"
-     * (ajout) $minHour => Le nombre minimal d'heures à rentrer par l'enseignant
+     * (ajout) $minHour => Le nombre minimal d'heures à rentrer par l'enseignant,
+     *'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon)
 	 */
 	echo div(array('style' => 'max-width: 800px;', 'class' => 'text-center center-block'));
 		echo heading('Voeux pour P'.$periodNumber, 2);
@@ -25,7 +26,7 @@
             echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
             echo '<p>Nombre d\'heures minimal de disponnibilité : '.$miniHours.'</p>';
 
-			echo availabilityTable($hours, $TeacherTimeSlot);
+			echo availabilityTable($hours, $status, $TeacherTimeSlot);
 
 			echo form_button(array('content' => 'Remettre à zéro', 'class' => 'btn btn-danger', 'id' => 'reset'));
 			echo nbs(2);

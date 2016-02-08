@@ -380,6 +380,7 @@
 			$data = array();
 			$this->addMessage($view,$data);
 			$data['hours'] = $this->main_model->getHours();
+            $data['status'] = $this->main_model->getHoursStatus();
             $data['effectivHours'] = $this->main_model->getTeacherHours($this->session->userdata('teacherId'));
             $data['miniHours'] = $this->main_model->getTeacherMiniHours($this->session->userdata('teacherId'))*1.5;
 			$this->addUserInfo($data);

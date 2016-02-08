@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * Vue affichant le planning définitifs d'un enseignant.
-	 * Cette vues nécessite les variables suivantes : $hours => tableau des tranches horaires ayant pour clé l'id de latranche et pour valeur
+	 * Cette vues nécessite les variables suivantes : $hours => tableau des tranches horaires ayant pour clé l'id de latranche et pour valeur, 'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon)
 	 * la tranche horaire sous la forme "HHhMM-HHhMM"
 	 * Les données du tableau sont remplis via requêtes AJAX.
 	 */

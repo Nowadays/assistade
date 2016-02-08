@@ -4,7 +4,7 @@
 	 *
 	 * Cette vue affiche le planning d'un professeur et si le planning a été validé, active le bouton 'Modifier le planning'
 	 * Cette vue nécessite les variables suivantes : 'teacherName' => nom du professeur, 'infos' => tableau associatif ayant pour clé :
-	 * 'phone' => numéro de téléphone du professeur, 'email' => adresse email du professeur. La variable 'hours' => tableau contenant les crénaux horaires,
+	 * 'phone' => numéro de téléphone du professeur, 'email' => adresse email du professeur. La variable 'hours' => tableau contenant les crénaux horaires, 'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon),
 	 * 'teacherTimeSlot' => tableau contenant les disponibilités du professeur et 'whishState' => état du voeux du professeur.
 	 */
 	
@@ -23,7 +23,7 @@
         echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
         echo '<p>Nombre d\'heures minimal de disponnibilité : '.$miniHours.'</p>';
 
-		echo availabilityTable($hours, $TeacherTimeSlot);		
+		echo availabilityTable($hours, $status, $TeacherTimeSlot);		
 		
 		echo availabilityLevel();
 
