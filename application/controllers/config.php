@@ -266,7 +266,7 @@
 				{
 					$this->config_model->insertFromCSV('student_group_tp', $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
-					redirect('admin/initAdminInfo');
+					redirect('config/initAdminInfo');
 				}
 				catch(Exception $e)
 				{
