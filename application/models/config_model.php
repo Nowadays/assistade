@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','student_group_tp','mini_nb_hours'); //Tables available for importing from CSV file
 
 		function __construct()
 		{

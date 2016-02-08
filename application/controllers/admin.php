@@ -146,7 +146,6 @@
 		**/
 		public function openWishInput()
 		{
-			echo 'walal';
 			$this->admin_model->openPeriodWishInput();
 
 			$data = array('title' => 'Succès !',

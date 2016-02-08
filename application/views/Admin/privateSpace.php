@@ -26,7 +26,7 @@
 		if(!$isPeriodOpen)
 		{
 			echo br();
-			echo anchor('admin/openWishInput', 'Ouvrir la saisie des voeux', array('class' => "btn btn-primary"));
+			echo anchor('config/initNbHours', 'Ouvrir la saisie des voeux', array('class' => "btn btn-primary"));
 		}else{
             //Si tous les profs ont validé leurs voeux (fonction à définir)
             //Sinon le bouton est inactif (grisé)
@@ -37,5 +37,5 @@
 		echo br(2);
 		echo anchor('admin/newYear', 'Nouvelle année (reset total)', array('class' => 'btn btn-danger'));
 
-	echo div_close();
+echo div_close();
 ?>

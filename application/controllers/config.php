@@ -5,7 +5,7 @@
 	class Config extends CI_Controller
 	{
 		private static $states = array('CREATE_DB' => 0, 'INIT_YEAR' => 1, 'INIT_PERIODS' => 2, 'INIT_TEACHER' => 3, 'INIT_SUBJECT' => 4, 
-			'INIT_IN_CHARGE' => 5, 'INIT_ADMIN_INFO' => 6, 'INIT_GROUPE' => 7);
+			'INIT_IN_CHARGE' => 5, 'INIT_ADMIN_INFO' => 6, 'INIT_GROUPE' => 7, 'INIT_NB_HOURS' => 8);
 
 		public function __construct()
 		{
@@ -300,13 +300,42 @@
 			{
 				$this->config_model->insertAdminPassword($this->input->post('password'));
 
-				$this->session->unset_userdata('state');
+				$this->session->set_userdata('state',self::$states['INIT_NB_HOURS']);
 				$this->session->unset_userdata('adminFirstConnection');
 
 				redirect('admin/signIn');
 			}
 			else
 				$this->load->templateWithoutMenu('Config/Admin/initAdminInfo');
+		}
+
+		public function initNbHours(){
+			if($this->session->userdata('state') !== self::$states['INIT_NB_HOURS']){
+				redirect('Admin/privateSpace');
+			}
+			$this->load->library('upload');
+			$data = array('name' => 'les heures', 'table' => 'mini_nb_hours', 'src' => 'initNbHours');
+			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
+			{
+				try
+				{
+					$this->config_model->insertFromCSV('mini_nb_hours', $_FILES['csv']);
+					$this->session->unset_userdata('state');
+					redirect('admin/openWishInput');
+				}
+				catch(Exception $e)
+				{
+					$data['title'] = 'Erreur';
+					$data['content'] = $e->getMessage();
+					$data['state'] = 'danger';
+					$data['button'] = array('visible' => FALSE);
+
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+				}
+			}
+			else
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+
 		}
 
 		/**
@@ -333,6 +362,8 @@
 					$fileName = "Matiere";
 				else if($tableName === "student_group_tp"){
 					$fileName = "Groupe";
+				}else if($tableName === "mini_nb_hours"){
+					$fileName = "NbHeure";
 				}
 				
 				$fileName .= ".csv";
@@ -357,5 +388,7 @@
 				$this->load->templateWithoutMenu('Main/message', $data);
 			}
 		}
+
+
 	}
 ?>
