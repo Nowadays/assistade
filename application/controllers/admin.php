@@ -131,6 +131,10 @@
 		 */
 		public function newYear()
 		{
+			$this->load->model('config_model');
+			$r='DROP SCHEMA ade CASCADE';
+			$this->db->query($r);
+			$this->config_model->createDatabase();
 			$this->session->set_userdata('adminFirstConnexion', TRUE);
 			redirect('config/adminFirstConnexion');
 		}
@@ -142,6 +146,7 @@
 		**/
 		public function openWishInput()
 		{
+			echo 'walal';
 			$this->admin_model->openPeriodWishInput();
 
 			$data = array('title' => 'Succès !',
