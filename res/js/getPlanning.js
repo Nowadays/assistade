@@ -27,7 +27,7 @@ function ajaxAnswer(xml)
 	var hasColorsChanged = false;
 
 	$('.selectable').removeClass("avoid unavailable available");
-	$('.selectable').addClass('available');
+	//$('.selectable').addClass('available');
 
 	$(xml).find('timeslot').each(function()
 	{

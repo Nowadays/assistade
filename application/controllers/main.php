@@ -284,6 +284,7 @@
 					$this->addUserInfo($data);
 
 					$data['hours'] = $this->main_model->getHours();
+                    $data['status'] = $this->main_model->getHoursStatus();
                     $data['effectivHours'] = $this->main_model->getTeacherHours($this->session->userdata('teacherId'));
                     $data['miniHours'] = $this->main_model->getTeacherMiniHours($this->session->userdata('teacherId'))*1.5;
 					$data['periodNumber'] = $this->main_model->getCurrentPeriod()['period_number'];
