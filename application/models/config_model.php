@@ -391,6 +391,7 @@
                 ON course.subject_id = subject.id
   				");
             
+            //Pourra être supprimée par la suite, il faudra alors une fonction de calcul du nombre d'heures en prenant en compte le nombre de groupe par matières et le nombre d'heure pour chaque groupe dans la matière
             $this->db->query("CREATE TABLE mini_nb_hours(
                 teacher_id VARCHAR(3) NOT NULL,
                 period_id INTEGER NOT NULL,
@@ -398,6 +399,16 @@
                 CONSTRAINT mini_nb_hours_pk PRIMARY KEY(teacher_id,period_id),
                 CONSTRAINT mini_nb_hours_td_fk1 FOREIGN KEY(teacher_id) REFERENCES teacher(initials),
                 CONSTRAINT mini_nb_hours_td_fk2 FOREIGN KEY(period_id) REFERENCES period(id)
+  				)");
+            
+            $this->db->query("CREATE TABLE nb_group(
+                teacher_id VARCHAR(3) NOT NULL,
+                period_id INTEGER NOT NULL,
+                subject_id VARCHAR(6) NOT NULL,
+                CONSTRAINT nb_group_pk PRIMARY KEY(teacher_id,period_id,subject_id),
+                CONSTRAINT nb_group_fk1 FOREIGN KEY(teacher_id) REFERENCES teacher(initials),
+                CONSTRAINT nb_group_fk2 FOREIGN KEY(period_id) REFERENCES period(id),
+                CONSTRAINT nb_group_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id)
   				)");
 
 			/************* Remplissage de la base de donnée *************/
