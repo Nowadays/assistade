@@ -233,9 +233,36 @@
 		}
         
         
-        
+        /**
+		 * Méthode retournant le statut des créneaux horaires (sélectionnable ou non)
+		 *
+		 * Cette méthode retourne un tableau avec le statut de chaque créneau horaire : 0 s'il est libre et 1 s'il est bloqué
+		 * 
+		 * @return string[] Tableau associatif ayant comme clé l'id du crénaux et comme valeur le statut du créneau horaire.
+		 */
         public function getHoursStatus(){
             $result = $this->db->select('status')->from('time_slot')->order_by('id','asc')->get()->result_array();
+                
+            return $result;
+        }
+        
+        
+        /**
+		* Méthode renvoyant la liste des heures où aucun enseignant n'est disponible
+		*
+		* Cette méthode renvoie un tableau contenant des identifiants de créneaux horaires libres pendant la période ou NULL s'il n'y en a pas.
+		*/
+        public function getFreeHours($period = NULL){
+            if($period === NULL)
+				$period = $this->getCurrentPeriodId();
+            
+            $result = null;
+            
+            $query = $this->db->query('(select id from time_slot except select id from time_slot where id>28 and id<33) except select distinct timeslot_id as id from involved_time_slot where availability_level=3')->get();
+            
+            if($query -> num_rows() > 0){
+                $result = $query->result_array();   
+            }
                 
             return $result;
         }

@@ -174,26 +174,6 @@
 			}
 		}
         
-        /**
-		* Méthode renvoyant la liste des heures où aucun enseignant n'est disponible
-		*
-		* Cette méthode renvoie un tableau contenant des identifiants de créneaux horaires libres pendant la périodenou NULL s'il n'y en a pas.
-		*/
-        public function getFreeHours($period = NULL){
-            if($period === NULL)
-				$period = $this->getCurrentPeriodId();
-            
-            $result = null;
-            
-            $query = $this->db->query('(select id from time_slot except select id from time_slot where id>28 and id<33) except select distinct timeslot_id as id from involved_time_slot where availability_level=3')->get();
-            
-            if($query -> num_rows() > 0){
-                $result = $query->result_array();   
-            }
-                
-            return $result;
-        }
-        
 		
 		/**
 		* Méthode renvoyant la liste des professeurs

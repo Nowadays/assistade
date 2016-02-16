@@ -258,13 +258,13 @@
 				redirect('config/initInCharge');
 
 			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'student_group_tp', 'src' => 'initGroupe');
+			$data = array('name' => 'groupes', 'table' => 'group_tp', 'src' => 'initGroupe');
 
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
 				try
 				{
-					$this->config_model->insertFromCSV('student_group_tp', $_FILES['csv']);
+					$this->config_model->insertFromCSV('group_tp', $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
 					redirect('config/initAdminInfo');
 				}

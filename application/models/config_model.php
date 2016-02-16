@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp','mini_nb_hours'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','group_tp','mini_nb_hours'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -98,12 +98,14 @@
             }
 
 
-			if($tableName === 'teacher' && !empty($passwordToInsert))
-			{
-				$this->db->insert_batch('teacher_password', $passwordToInsert);
-				return $password;
-			}else{
-                throw new Exception("Password vide");
+			if($tableName === 'teacher'){
+                if (!empty($passwordToInsert))
+                {
+				    $this->db->insert_batch('teacher_password', $passwordToInsert);
+				    return $password;
+                }else{
+                    throw new Exception("Password vide");
+                }
             }
 		}
 
@@ -410,7 +412,40 @@
                 CONSTRAINT nb_group_fk2 FOREIGN KEY(period_id) REFERENCES period(id),
                 CONSTRAINT nb_group_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id)
   				)");
+            
+            $this->db->query("CREATE VIEW group_tp AS
+                SELECT * FROM student_group_tp");
 
+            
+            /************* Triggers *************/
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION insert_group() RETURNS trigger AS $group$
+                BEGIN
+                    PERFORM * FROM student_group WHERE id = NEW.id;
+                    IF NOT FOUND
+                    THEN
+                        INSERT INTO student_group VALUES(NEW.id);
+                    END IF;
+                    PERFORM * FROM student_group_td WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd;
+                    IF NOT FOUND
+                    THEN
+                        INSERT INTO student_group_td VALUES(NEW.id,NEW.id_grouptd);
+                    END IF;
+                    PERFORM * FROM student_group_tp WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd AND id_grouptp=NEW.id_grouptp;
+                    IF NOT FOUND
+                    THEN
+                        INSERT INTO student_group_tp VALUES(NEW.id,NEW.id_grouptp,NEW.id_grouptd);
+                    END IF;
+                    RETURN NEW;
+                END;
+                $group$ LANGUAGE plpgsql');
+                
+            $this->db->query("CREATE TRIGGER insert_group
+                INSTEAD OF INSERT
+                ON group_tp
+                FOR EACH ROW
+                EXECUTE PROCEDURE insert_group()");
+            
 			/************* Remplissage de la base de donnée *************/
 
 			$this->db->query("INSERT INTO hours VALUES
