@@ -108,8 +108,7 @@
 				$period = $this->getCurrentPeriodId();
 
 			//attention ici voir pour modifier la requête (union impossible en active record), ATTENTION au schéma utilisé !!!
-			$this->db->select('teacher_id, state, lastname, firstname')->distinct()->from('teacher_wish')->join('teacher','teacher.initials = teacher_wish.teacher_id');
-			$this->db->where('period_id',$period);
+			$this->db->select('teacher_id, state, lastname, firstname')->distinct()->from('teacher_wish')->join('teacher','teacher.initials = teacher_wish.teacher_id')->where('period_id',$period);
 			$teachersWithWish = $this->db->get();
 			
 			if($teachersWithWish === FALSE)
@@ -242,7 +241,6 @@
 		 */
         public function getHoursStatus(){
             $result = $this->db->select('status')->from('time_slot')->order_by('id','asc')->get()->result_array();
-                
             return $result;
         }
         

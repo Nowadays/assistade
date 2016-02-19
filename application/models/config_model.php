@@ -169,6 +169,21 @@
 			$this->db->empty_table('in_charge');
 			$this->db->insert_batch('in_charge', $manageSubj);
 		}
+        
+        
+        public function saveSubjectHours($table,$data)
+		{
+			// test : si chaque matière a un professeur
+			/*if($this->db->count_all($table) !== count($data))
+			{
+				throw new Exception('valeurs invalides');
+			}	*/
+			
+			foreach ( $data as $subId => $nbHours )
+			{
+                $this->db->insert($table,array('nb_hours'=>$nbHours, 'id' =>$subId));
+			}		
+		}
 
 		/**
 		 * Méthode inserant le nouveau mot de passe de l'administrateur en base de donnée

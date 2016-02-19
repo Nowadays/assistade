@@ -208,9 +208,10 @@
 		}
 
 		/**
-		 * Affiche la page permettant d'assigner aux matières un responsables
+		 * Affiche la page d'import des groupes d'étudiants
 		 *
-		 * Affiche la page pour désigner un responsable par chaque matière puis enregistre les données en base de donnée
+         * Affiche la page permettant de télécharger un squellettes CSV permettant de remplir la base de données puis enregistre
+		 * les groupes s'il n'y a pas d'erreur. Puis affiche la page affichant le mot de passe de chaque enseignant.
 		 */
 		public function initInCharge()
 		{
@@ -229,6 +230,9 @@
 				try
 				{
 					$this->config_model->saveManagerSubject($this->input->post('manageResp'));
+                    $this->config_model->saveSubjectHours('cm',$this->input->post('cmHours'));
+                    $this->config_model->saveSubjectHours('td',$this->input->post('tdHours'));
+                    $this->config_model->saveSubjectHours('tp',$this->input->post('tpHours'));
 
 					$this->session->set_userdata('state', self::$states['INIT_GROUPE']);
 					redirect('config/initGroupe');
@@ -250,6 +254,11 @@
 				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data);
 		}
 
+        /**
+		 * Affiche la page permettant d'assigner aux matières un responsables
+		 *
+		 * Affiche la page pour désigner un responsable par chaque matière puis enregistre les données en base de donnée
+		 */
 		function initGroupe(){
 			if($this->session->userdata('adminFirstConnexion') === FALSE)
 				redirect('admin');

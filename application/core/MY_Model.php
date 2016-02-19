@@ -193,15 +193,23 @@
 		/**
 		* Méthode renvoyant la liste des matières
 		*
-		* Cette méthode renvoie un tableau contenant d'autre tableau représentant les n-uplets de la table "subject".
+		* Cette méthode renvoie un tableau contenant d'autres tableaux représentant les n-uplets de la table "subject" ainsi que le nombre d'heures de td/tp/cm.
 		* Chaque colonne est acessible par son nom.
 		*
 		* @return array[] Renvoie un tableau de tableau associatif représentant chacun une ligne de la table teacher. Les clés
-		* sont : 'id', 'short_name', 'subject_name'.
+		* sont : 'id', 'short_name', 'subject_name', 'hours_cm', 'hours_td', 'hours_tp'.
 		*/
 		public function getSubjects()
 		{
-			return $this->db->select('*')->from('subject')->order_by('id', 'asc')->get()->result_array();
+			//$query = $this->db->query('SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp FROM subject LEFT JOIN cm ON subject.id=cm.id LEFT JOIN td ON subject.id=td.id LEFT JOIN tp ON subject.id=tp.id ORDER BY subject.id ASC')->get();
+                
+            $query = $this->db->select('subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp')->from('subject')->join('cm','subject.id=cm.id','LEFT')->join('td','subject.id=td.id','LEFT')->join('tp','subject.id=tp.id','LEFT')->order_by('subject.id', 'asc')->get();
+            
+            if($query){
+                return $query->result_array();
+            }else{
+                return array();
+            }
 		}
 		
 		/**

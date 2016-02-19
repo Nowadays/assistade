@@ -11,7 +11,7 @@
 
 	echo div(array('style' => 'max-width: 750px;', 'class' => 'panel panel-info text-center center-block'));
 		echo div(array('class' => 'panel-heading'));
-			echo heading("Association Responsable / Matière");
+			echo heading("Initialisation des matières");
 		echo div_close();
 
 		echo div(array('class' => 'panel-body'));
@@ -26,7 +26,7 @@
 				echo br(2);
 				
 				echo '<table class="table table-bordered">';
-				echo '<tr><th>Matière</th><th>Responsable</th></tr>';
+				echo '<tr><th>Matière</th><th>Responsable</th><th>Heures CM</th><th>Heures TD</th><th>Heures TP</th></tr>';
 				
 				
 				foreach($subjects as $s)
@@ -35,6 +35,12 @@
 					echo form_label($s['id']." - ".$s['short_name']);
 					echo '</td><td>';
 					echo form_dropdown('manageResp['.$s['id'].']', $data, (isset($responsibles[$s['id']]))? $responsibles[$s['id']] : 'default', 'id="resp" class="form-control"');
+                    echo'</td><td>';
+                    echo form_input(array('type' => 'number', 'min' => 0, 'value' => 0, 'id' => 'cmHour', 'name' => 'cmHour['.$s['id'].']', 'class' => 'form-control', 'required' => 'true'));
+                    echo'</td><td>';
+                    echo form_input(array('type' => 'number', 'min' => 0, 'value' => 0, 'id' => 'tpHour', 'name' => 'tpHour['.$s['id'].']', 'class' => 'form-control', 'required' => 'true'));
+                    echo'</td><td>';
+                    echo form_input(array('type' => 'number', 'min' => 0, 'value' => 0, 'id' => 'tdHour', 'name' => 'tdHour['.$s['id'].']', 'class' => 'form-control', 'required' => 'true'));
 					echo '</td></tr>';
 				}
 				
