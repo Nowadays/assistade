@@ -389,10 +389,13 @@
 					$id = $this->input->post('id');
 					$short_name = $this->input->post('short_name');
 					$subject_name = $this->input->post('subject_name');
-					
+                    $hours_cm = $this->input->post('hours_cm');
+                    $hours_td = $this->input->post('hours_td');
+                    $hours_tp = $this->input->post('hours_tp');
+                    
 					if($action == 'insert' || $action == 'update')
 					{
-						$result = $this->admin_model->singleActionSubject($action, array('id' => $id, 'short_name' => $short_name, 'subject_name' => $subject_name));
+						$result = $this->admin_model->singleActionSubject($action, array('id' => $id, 'short_name' => $short_name, 'subject_name' => $subject_name, 'hours_cm' => $hours_cm, 'hours_td' => $hours_td, 'hours_tp' => $hours_tp));
 					}
 					else if($action == 'delete')
 					{

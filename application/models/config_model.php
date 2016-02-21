@@ -430,6 +430,13 @@
             
             $this->db->query("CREATE VIEW group_tp AS
                 SELECT * FROM student_group_tp");
+            
+            $this->db->query("CREATE VIEW subjects AS
+                SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp
+                FROM subject
+                LEFT JOIN cm ON subject.id = cm.id
+                LEFT JOIN td ON subject.id = td.id
+                LEFT JOIN tp ON subject.id = tp.id");
 
             
             /************* Triggers *************/
@@ -460,6 +467,87 @@
                 ON group_tp
                 FOR EACH ROW
                 EXECUTE PROCEDURE insert_group()");
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION insert_subject() RETURNS trigger AS $subject$
+                BEGIN
+                    PERFORM * FROM subject WHERE id = NEW.id;
+                    IF NOT FOUND
+                    THEN
+                        INSERT INTO subject values (NEW.id, NEW.short_name, NEW.subject_name);
+                    END IF;
+                    INSERT INTO cm VALUES(NEW.id, NEW.hours_cm);            
+                    INSERT INTO td VALUES(NEW.id, NEW.hours_td);
+                    INSERT INTO tp VALUES(NEW.id, NEW.hours_tp);
+                    RETURN NEW;
+                END;
+                $subject$ LANGUAGE plpgsql');
+                
+            $this->db->query("CREATE TRIGGER insert_subject
+                INSTEAD OF INSERT
+                ON subjects
+                FOR EACH ROW
+                EXECUTE PROCEDURE insert_subject()");
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION delete_subject() RETURNS trigger AS $del_subject$
+                BEGIN
+                    PERFORM * FROM cm WHERE id = OLD.id;
+                    IF FOUND
+                    THEN
+                        DELETE FROM cm WHERE id = OLD.id;
+                    END IF;
+                    PERFORM * FROM td WHERE id = OLD.id;
+                    IF FOUND
+                    THEN
+                        DELETE FROM td WHERE id = OLD.id;
+                    END IF;
+                    PERFORM * FROM tp WHERE id = OLD.id;
+                    IF FOUND
+                    THEN
+                        DELETE FROM tp WHERE id = OLD.id;
+                    END IF;
+                    PERFORM * FROM subject WHERE id = OLD.id;
+                    IF FOUND
+                    THEN
+                        DELETE FROM subject WHERE id = OLD.id;
+                    END IF;
+                    RETURN NEW;
+                END;
+                $del_subject$ LANGUAGE plpgsql');
+                
+            $this->db->query("CREATE TRIGGER delete_subject
+                INSTEAD OF DELETE
+                ON subjects
+                FOR EACH ROW
+                EXECUTE PROCEDURE delete_subject()");
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION update_subject() RETURNS trigger AS $ud_subject$
+                BEGIN
+                    IF OLD.hours_cm <> NEW.hours_cm
+                    THEN
+                        UPDATE cm SET nb_hours = NEW.hours_cm WHERE id = NEW.id;
+                    END IF;
+                    IF OLD.hours_td <> NEW.hours_td
+                    THEN
+                        UPDATE td SET nb_hours = NEW.hours_td WHERE id = NEW.id;
+                    END IF;
+                    IF OLD.hours_tp <> NEW.hours_td
+                    THEN
+                        UPDATE tp SET nb_hours = NEW.hours_tp WHERE id = NEW.id;
+                    END IF;
+                    IF OLD.short_name <> NEW.short_name OR OLD.subject_name <> NEW.subject_name
+                    THEN
+                        UPDATE subject SET short_name = NEW.short_name, subject_name = NEW.subject.name WHERE id = NEW.id;
+                    END IF;
+                    RETURN NEW;
+                END;
+                $ud_subject$ LANGUAGE plpgsql');
+                
+            $this->db->query("CREATE TRIGGER update_subject
+                INSTEAD OF UPDATE
+                ON subjects
+                FOR EACH ROW
+                EXECUTE PROCEDURE update_subject()");
+     
             
 			/************* Remplissage de la base de donnée *************/
 

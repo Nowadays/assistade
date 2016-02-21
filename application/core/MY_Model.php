@@ -201,9 +201,7 @@
 		*/
 		public function getSubjects()
 		{
-			//$query = $this->db->query('SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp FROM subject LEFT JOIN cm ON subject.id=cm.id LEFT JOIN td ON subject.id=td.id LEFT JOIN tp ON subject.id=tp.id ORDER BY subject.id ASC')->get();
-                
-            $query = $this->db->select('subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp')->from('subject')->join('cm','subject.id=cm.id','LEFT')->join('td','subject.id=td.id','LEFT')->join('tp','subject.id=tp.id','LEFT')->order_by('subject.id', 'asc')->get();
+            $query = $this->db->select('*')->from('subjects')->order_by('id', 'asc')->get();
             
             if($query){
                 return $query->result_array();

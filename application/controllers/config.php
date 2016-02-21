@@ -230,9 +230,6 @@
 				try
 				{
 					$this->config_model->saveManagerSubject($this->input->post('manageResp'));
-                    $this->config_model->saveSubjectHours('cm',$this->input->post('cmHours'));
-                    $this->config_model->saveSubjectHours('td',$this->input->post('tdHours'));
-                    $this->config_model->saveSubjectHours('tp',$this->input->post('tpHours'));
 
 					$this->session->set_userdata('state', self::$states['INIT_GROUPE']);
 					redirect('config/initGroupe');

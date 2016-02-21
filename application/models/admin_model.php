@@ -283,7 +283,7 @@
 			if(!$this->isSubjectIdCorrect($subject['id']))
 					return 'identifiant incorrect !';
 					
-			$subjectInfo = $this->db->select('*')->from('subject')->where('id', $subject['id'])->get()->result_array();
+			$subjectInfo = $this->db->select('*')->from('subjects')->where('id', $subject['id'])->get()->result_array();
 
 			if($action == 'insert')
 			{
@@ -296,7 +296,7 @@
 				if(!$this->isSubjectNameCorrect	($subject['subject_name']))
 					return 'nom de la matière incorrect !';
 				
-				$this->db->insert('subject', $subject);
+				$this->db->insert('subjects', $subject);
 				return 'success';
 			}
 			else if($action == 'update' || $action == 'delete')
@@ -312,8 +312,8 @@
 					if(!$this->isSubjectNameCorrect	($subject['subject_name']))
 						return 'nom de la matière incorrect !';
 				
-					$this->db->where('id', $subject['id']);				
-					$this->db->update('subject', $subject);
+					//$this->db->where('id', $subject['id']);				
+					$this->db->update('subjects', $subject);
 				}
 				else
 				{
@@ -321,7 +321,7 @@
 					$this->db->delete('in_charge');
 					
 					$this->db->where('id', $subject['id']);				
-					$this->db->delete('subject');
+					$this->db->delete('subjects');
 				}
 				
 				return 'success';
