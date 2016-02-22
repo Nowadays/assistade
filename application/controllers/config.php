@@ -316,7 +316,7 @@
 		}
 
 		public function initNbHours(){
-			if($this->session->userdata('state') !== self::$states['INIT_NB_HOURS']){
+			if($this->session->userdata('state') == self::$states['INIT_NB_HOURS']){
 				redirect('Admin/privateSpace');
 			}
 			$this->load->library('upload');
