@@ -55,6 +55,9 @@
 		*/
 		public function insertFromCSV($tableName, array $fileInfo)
 		{
+			echo '<script language="javascript">';
+			echo 'alert("insertFromCSV")';
+			echo '</script>';
 			if(!in_array($tableName, self::$csvTables, TRUE))	//If table's name given isn't in csvTables
 				throw new Exception("Une erreur inatendues est survenue. Le nom de la table à modifier est incorrect."); //Throw an error
 
@@ -95,6 +98,7 @@
                 throw new Exception("Fichier vide");
             }else{
                 $this->db->insert_batch($tableName, $valuesToInsert);
+
             }
 
 

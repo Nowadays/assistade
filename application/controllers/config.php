@@ -149,6 +149,8 @@
 
 					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
 					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
+					unset($_FILES);
+					redirect('config/initSubject');
 				}
 				catch(Exception $e)
 				{
@@ -183,12 +185,18 @@
 				redirect('config/initPeriods');
 
 			$data = array('name' => 'matières', 'table' => 'subject', 'src' => 'initSubject');
+			if(empty($_FILES)){
+				print_r($_FILES);
 
+			}
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
 				try
 				{
 					$this->config_model->insertFromCSV('subject', $_FILES['csv']);
+					echo '<script language="javascript">';
+					echo 'alert("initSubject")';
+					echo '</script>';
 
 					$this->session->set_userdata('state', self::$states['INIT_IN_CHARGE']);
 					redirect('config/initInCharge');
