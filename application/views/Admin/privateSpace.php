@@ -7,7 +7,6 @@
 	 * de saisie de voeux pour la période courante, 'state' => état de la saisie des voeux (si c'est ouvert ou fermé). 
 	 * 
 	 */
-	
 	$periodNumber = $period['period_number'];
 	$date = formatDate($period['end_time']);
 	$isPeriodOpen = boolval($period['state']);
@@ -31,7 +30,12 @@
             //Si tous les profs ont validé leurs voeux (fonction à définir)
             //Sinon le bouton est inactif (grisé)
             echo br();
-			echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary"));
+
+            if($res){
+				echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary"));
+			}else{
+				echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary disabled"));
+			}
         }
 
 		echo br(2);

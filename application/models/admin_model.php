@@ -112,6 +112,21 @@
 			}
 		}
 
+
+		public function getState($period)
+		{
+			$this->db->select('state')->from('teacher_wish')->where('period_id', $period['period_number']);
+			$tab= $this->db->get()->result_array();
+			
+			$bool=1;
+
+			foreach($tab as $index => $val){
+				if($val['state']!=2){
+					$bool=0;
+				}
+			}
+			return $bool;
+		}
 		/**
 		* Méthode renvoyant l'état du voeu de chaque professeur.
 		*

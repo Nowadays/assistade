@@ -119,6 +119,7 @@
 			
 			$data = $this->admin_model->getCurrentYear();
 			$data['period'] = $this->admin_model->getCurrentPeriod();
+			$data['res']=$this->admin_model->getState($data['period']);
 
 			$this->load->admin_template('Admin/privateSpace', $data);
 		}
