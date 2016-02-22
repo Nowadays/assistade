@@ -1,7 +1,7 @@
 <?php
 	class Admin_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subjects'); //Tables available for importing from CSV file
 
 		public function __construct()
 		{
@@ -296,8 +296,12 @@
 				if(!$this->isSubjectNameCorrect	($subject['subject_name']))
 					return 'nom de la matière incorrect !';
 				
-				$this->db->insert('subjects', $subject);
-				return 'success';
+				$this->db->insert('subject', array('id' => $subject['id'], 'short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name']));
+				$this->db->insert('cm', array('id' => $subject['id'], 'nb_hours' => $subject['hours_cm']));                    
+				$this->db->insert('td', array('id' => $subject['id'], 'nb_hours' => $subject['hours_td']));
+				$this->db->insert('tp', array('id' => $subject['id'], 'nb_hours' => $subject['hours_tp']));                
+                    
+                return 'success';
 			}
 			else if($action == 'update' || $action == 'delete')
 			{
@@ -312,16 +316,36 @@
 					if(!$this->isSubjectNameCorrect	($subject['subject_name']))
 						return 'nom de la matière incorrect !';
 				
-					//$this->db->where('id', $subject['id']);				
-					$this->db->update('subjects', $subject);
+                    $this->db->where('id', $subject['id']);				
+					$this->db->update('cm', array('nb_hours' => $subject['hours_cm']));
+                    
+                    $this->db->where('id', $subject['id']);				
+					$this->db->update('td', array('nb_hours' => $subject['hours_td']));
+                    
+					$this->db->where('id', $subject['id']);				
+					$this->db->update('tp', array('nb_hours' => $subject['hours_tp']));
+                    
+                    $this->db->where('id', $subject['id']);				
+					$this->db->update('subject', array('short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name']));
+                    
+                    //$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
 				}
 				else
 				{
+                    $this->db->where('id', $subject['id']);				
+					$this->db->delete('cm');
+                    
+                    $this->db->where('id', $subject['id']);				
+					$this->db->delete('td');
+                    
+                    $this->db->where('id', $subject['id']);				
+					$this->db->delete('tp  ');
+                    
 					$this->db->where('sub_id', $subject['id']);
 					$this->db->delete('in_charge');
 					
 					$this->db->where('id', $subject['id']);				
-					$this->db->delete('subjects');
+					$this->db->delete('subject');
 				}
 				
 				return 'success';
