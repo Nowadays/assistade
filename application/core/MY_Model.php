@@ -135,6 +135,15 @@
 				$this->db->where('teacher_id', $teacher['initials']);							
 				$this->db->delete('teacher_information');
 				
+                $this->db->where('teacher_id', $teacher['initials']);							
+				$this->db->delete('course');
+                
+                $this->db->where('teacher_id', $teacher['initials']);							
+				$this->db->delete('nb_group');
+                
+                $this->db->where('teacher_id', $teacher['initials']);							
+				$this->db->delete('mini_nb_hours');
+                
 				$this->db->where('initials', $teacher['initials']);							
 				$this->db->delete('teacher');
 					

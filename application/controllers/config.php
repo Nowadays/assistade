@@ -178,28 +178,22 @@
 		 */
 		public function initSubject()
 		{
-			if($this->session->userdata('adminFirstConnexion') === FALSE)
+            if($this->session->userdata('adminFirstConnexion') === FALSE)
 				redirect('admin');
 			
 			if($this->session->userdata('state') !== self::$states['INIT_SUBJECT'])
 				redirect('config/initPeriods');
 
+            $this->load->library('upload');
 			$data = array('name' => 'matières', 'table' => 'subject', 'src' => 'initSubject');
-			if(empty($_FILES)){
-				print_r($_FILES);
-
-			}
+			
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
 				try
-				{
-					$this->config_model->insertFromCSV('subject', $_FILES['csv']);
-					echo '<script language="javascript">';
-					echo 'alert("initSubject")';
-					echo '</script>';
-
+				{				    
+                    $this->config_model->insertFromCSV('subject', $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_IN_CHARGE']);
-					redirect('config/initInCharge');
+                    redirect('config/initInCharge');
 				}
 				catch(Exception $e)
 				{
