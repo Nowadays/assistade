@@ -99,7 +99,6 @@
                 $this->db->insert_batch($tableName, $valuesToInsert);
             }
 
-
 			if($tableName === 'teacher'){
                 if (!empty($passwordToInsert))
                 {

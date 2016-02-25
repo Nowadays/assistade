@@ -26,7 +26,7 @@
 		if(!$isPeriodOpen)
 		{
 			echo br();
-			echo anchor('config/initNbHours', 'Ouvrir la saisie des voeux', array('class' => "btn btn-primary"));
+			echo anchor('admin/initHoursCM', 'Ouvrir la saisie des voeux', array('class' => "btn btn-primary"));
 		}else{
             //Si tous les profs ont validé leurs voeux (fonction à définir)
             //Sinon le bouton est inactif (grisé)

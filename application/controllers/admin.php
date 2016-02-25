@@ -140,14 +140,18 @@
 		}
 
 		/**
-		* Méthode autorisant la saisie des voeux
+		* Méthode autorisant la saisie des voeux et enregistrant les heures de CM pour les rendre indisponnibles
 		*
-		* Cette méthode ouvre la saisie des voueux pour la période actuelle
+		* Cette méthode ouvre la saisie des voueux pour la période actuelle en bloquant les heures de CM pour les enseignants
 		**/
 		public function openWishInput()
 		{
-			$this->admin_model->openPeriodWishInput();
+            if($this->input->post('timeSlot') !== FALSE){  
+                $this->admin_model->insertHoursCM($this->input->post('timeSlot'));  
+            }
 
+            $this->admin_model->openPeriodWishInput();
+            
 			$data = array('title' => 'Succès !',
 						  'content' => 'La saisie des voeux a bien été ouverte !',
 						  'state' => 'success',
@@ -175,6 +179,23 @@
 			$data['teacherWishes'] = $this->admin_model->getTeachersWishes();
 
 			$this->load->admin_template('Admin/summary', $data);
+		}
+        
+        /**
+		 * Méthode permettant d'ouvrir la saisie des voeux d'une période
+		 *
+		 * Cette méthode affiche un planning vierge permettant à l'administrateur de saisir les heures de CM 
+         * pour les rendre indisponnibles pour les enseignants
+		 */
+		public function initHoursCM()
+		{
+			$this->requireConnected();
+
+			$data['hours'] = $this->admin_model->getHours();
+            $data['status'] = $this->admin_model->getHoursStatus();
+            $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
+
+			$this->load->admin_template('Admin/initHoursCM', $data, array('getAvailability.js'));
 		}
 
 		/**

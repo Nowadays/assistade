@@ -56,6 +56,28 @@
 		{
 			$this->db->update('current_period', array('state' => '1'));
 		}
+        
+        /**
+		 * Méthode passant le status des heures de CM à 1 dans la table time_slot pour les rendre indisponnible
+         * et libérant les heures de CM de période précédente
+		 */
+		public function insertHoursCM($availability)
+		{
+            for($i=1 ; $i<41 ; $i++){
+                if($i<29 || $i>32){
+                    $this->db->where('id',$i);
+                    $this->db->update('time_slot', array('status' => '0'));
+                }
+            }
+            
+            foreach ($availability as $timeslot_id => $value) //on enregistre
+            {
+                if($value != 0 && $value != -1){
+                    $this->db->where('id',$timeslot_id);
+                    $this->db->update('time_slot', array('status' => '1'));   
+                }
+            }
+		}
 
 		/**
 		 * Méthode retournant le numéro de la période courrante.
