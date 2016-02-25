@@ -144,7 +144,10 @@
                 $this->db->where('teacher_id', $teacher['initials']);							
 				$this->db->delete('mini_nb_hours');
                 
-				$this->db->where('initials', $teacher['initials']);							
+                $this->db->where('teacher_id',$teacher['initials']);
+				$this->db->delete('teacher_password');
+                
+				$this->db->where('initials', $teacher['initials']);	
 				$this->db->delete('teacher');
 					
 				return 'success';
