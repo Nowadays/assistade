@@ -227,6 +227,25 @@
 			$data['teachers'] = $this->config_model->getPermanentWorkers();
 			$data['subjects'] = $this->config_model->getSubjects();
 
+            if($this->input->post() !== false){
+                $hoursCM = $this->input->post('hoursCM');
+                $hoursTD = $this->input->post('hoursTD');
+                $hoursTP = $this->input->post('hoursTP');
+
+                try{
+                    $this->config_model->saveSubjectHours('cm',$hoursCM);
+                    $this->config_model->saveSubjectHours('td',$hoursTD);
+                    $this->config_model->saveSubjectHours('tp',$hoursTP);
+                }catch(Exception $e){
+                    $data['title'] = 'Erreur';
+                    $data['content'] = $e->getMessage();
+                    $data['state'] = 'danger';
+                    $data['button'] = array('visible' => FALSE);
+
+                    $this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data);
+                }   
+            }
+            
 			if ($this->input->post('manageResp') !== false)
 			{
 				try
