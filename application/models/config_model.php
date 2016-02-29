@@ -243,7 +243,7 @@
 				CONSTRAINT school_year_pk PRIMARY KEY(first_year)
 				)");
             
-            $this->db->qyery("CREATE TABLE year(
+            $this->db->query("CREATE TABLE year(
                 id VARCHAR(2) NOT NULL CHECK (id ~ '^[1-2]A$') CONSTRAINT year_pk PRIMARY KEY
                 )");
 
@@ -274,7 +274,7 @@
 				subject_name	VARCHAR(80) NOT NULL,
                 year_id         VARCHAR(2)  NOT NULL,
 				CONSTRAINT subject_pk PRIMARY KEY(id),
-                CONSTRAINT subject_fk1 FOREIGN KEY year_id REFERENCES year(id)
+                CONSTRAINT subject_fk1 FOREIGN KEY(year_id) REFERENCES year(id)
 				)");
             
             $this->db->query("CREATE TABLE tp(
@@ -376,7 +376,7 @@
 				id SERIAL NOT NULL,
                 year_id VARCHAR(2) NOT NULL,
                 CONSTRAINT student_group_pk PRIMARY KEY(id),
-                CONSTRAINT student_group_fk1 FOREIGN KEY year_id REFERENCES year(id)
+                CONSTRAINT student_group_fk1 FOREIGN KEY(year_id) REFERENCES year(id)
   				)");
             
             $this->db->query("CREATE TABLE student_group_td(
