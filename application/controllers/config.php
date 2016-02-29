@@ -285,7 +285,7 @@
 				redirect('config/initInCharge');
 
 			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'group_tp', 'src' => 'initGroupe');
+			$data = array('name' => 'groupes', 'table' => 'student_group_tp', 'src' => 'initGroupe');
 
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{

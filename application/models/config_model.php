@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','group_tp','mini_nb_hours'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','student_group_tp','mini_nb_hours'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -55,9 +55,7 @@
 		*/
 		public function insertFromCSV($tableName, array $fileInfo)
 		{
-			echo '<script language="javascript">alert("Je suis la fonction insertFromCSV")</script>';
-			
-            if(!in_array($tableName, self::$csvTables, TRUE))	//If table's name given isn't in csvTables
+			if(!in_array($tableName, self::$csvTables, TRUE))	//If table's name given isn't in csvTables
 				throw new Exception("Une erreur inatendues est survenue. Le nom de la table à modifier est incorrect."); //Throw an error
 
 			$file = fopen($fileInfo['tmp_name'], 'r');
