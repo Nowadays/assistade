@@ -242,6 +242,10 @@
 				second_year NUMERIC(4) NOT NULL,
 				CONSTRAINT school_year_pk PRIMARY KEY(first_year)
 				)");
+            
+            $this->db->qyery("CREATE TABLE year(
+                id VARCHAR(2) NOT NULL CHECK (id ~ '^[1-2]A$') CONSTRAINT year_pk PRIMARY KEY
+                )");
 
 			$this->db->query("CREATE TABLE period(
 				id SERIAL NOT NULL,
@@ -268,7 +272,9 @@
 				id				VARCHAR(6) CHECK(id ~ '^M[1-4][1-3]0[1-9]C?$') NOT NULL,
 				short_name		VARCHAR(20) NOT NULL,
 				subject_name	VARCHAR(80) NOT NULL,
-				CONSTRAINT subject_pk PRIMARY KEY(id)
+                year_id         VARCHAR(2)  NOT NULL,
+				CONSTRAINT subject_pk PRIMARY KEY(id),
+                CONSTRAINT subject_fk1 FOREIGN KEY year_id REFERENCES year(id)
 				)");
             
             $this->db->query("CREATE TABLE tp(
@@ -368,7 +374,9 @@
             
             $this->db->query("CREATE TABLE student_group(
 				id SERIAL NOT NULL,
-                CONSTRAINT student_group_pk PRIMARY KEY(id)
+                year_id VARCHAR(2) NOT NULL,
+                CONSTRAINT student_group_pk PRIMARY KEY(id),
+                CONSTRAINT student_group_fk1 FOREIGN KEY year_id REFERENCES year(id)
   				)");
             
             $this->db->query("CREATE TABLE student_group_td(
@@ -550,6 +558,10 @@
             
 			/************* Remplissage de la base de donnée *************/
 
+            $this->db->query("INSERT INTO year VALUES
+                ('1A'),
+                ('2A')");
+            
 			$this->db->query("INSERT INTO hours VALUES
 				(DEFAULT, '08:00:00', '09:00:00'),
 				(DEFAULT, '09:00:00', '10:00:00'),
