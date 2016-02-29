@@ -149,8 +149,6 @@
 
 					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
 					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
-					unset($_FILES);
-					redirect('config/initSubject');
 				}
 				catch(Exception $e)
 				{
