@@ -145,7 +145,7 @@
 			{
 				try
 				{
-					$passwords = $this->config_model->insertFromCSV('teacher', $_FILES['csv']);
+					$passwords = $this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 
 					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
 					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
@@ -189,7 +189,7 @@
 			{
 				try
 				{				    
-                    $this->config_model->insertFromCSV('subject', $_FILES['csv']);
+                    $this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_IN_CHARGE']);
                     redirect('config/initInCharge');
 				}
@@ -289,7 +289,7 @@
 			{
 				try
 				{
-					$this->config_model->insertFromCSV('group_tp', $_FILES['csv']);
+					$this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
 					redirect('config/initAdminInfo');
 				}
@@ -344,7 +344,7 @@
 			{
 				try
 				{
-					$this->config_model->insertFromCSV('mini_nb_hours', $_FILES['csv']);
+					$this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 					$this->session->unset_userdata('state');
 					redirect('admin/openWishInput');
 				}

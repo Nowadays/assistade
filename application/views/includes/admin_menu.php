@@ -7,7 +7,7 @@
 ?>	
 
 <nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 200px;">
-	<div class="container">
+	<div class="col-md-8 col-md-offset-2">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 				<span class="sr-only">Toggle navigation</span>
@@ -28,6 +28,7 @@
 									array('Gestion professeurs', 'admin/manageTeachers'),
 									array('Gestion matières', 'admin/manageSubjects'),
 									array('Gestion responsables de matières', 'admin/manageResponsibles'),
+									array('Gestion des groupes','admin/manageGroup'),
 									array('Déconnexion', 'admin/signOut'));
 
 				echo menuEntry($elems);

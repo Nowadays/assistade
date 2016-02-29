@@ -389,6 +389,10 @@
 			$this->load->admin_template('Admin/manageSubjects', array('subjects' => $subjects), array('tabManagement.js','manageSubjects.js'));
 		}
 
+		public function manageGroup(){
+			//shit happen here
+		}
+
 		/**
 		 * Méthode permettant la modification de la table des matières
 		 *
