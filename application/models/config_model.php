@@ -446,7 +446,7 @@
                 LEFT JOIN tp ON subject.id = tp.id
                 ");
             
-            $this->db->query("CREATE TABLE cm_slot()
+            $this->db->query("CREATE TABLE cm_slot(
                 slot_id INTEGER NOT NULL CONSTRAINT cm_slot_pk PRIMARY KEY,
                 year_id VARCHAR(2) NOT NULL,
                 CONSTRAINT cm_slot_fk1 FOREIGN KEY(slot_id) REFERENCES time_slot(id),
