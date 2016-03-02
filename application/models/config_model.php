@@ -443,7 +443,15 @@
                 FROM subject
                 LEFT JOIN cm ON subject.id = cm.id
                 LEFT JOIN td ON subject.id = td.id
-                LEFT JOIN tp ON subject.id = tp.id");
+                LEFT JOIN tp ON subject.id = tp.id
+                ");
+            
+            $this->db->query("CREATE TABLE cm_slot()
+                slot_id INTEGER NOT NULL CONSTRAINT cm_slot_pk PRIMARY KEY,
+                year_id VARCHAR(2) NOT NULL,
+                CONSTRAINT cm_slot_fk1 FOREIGN KEY(slot_id) REFERENCES time_slot(id),
+                CONSTRAINT cm_slot_fk2 FOREIGN KEY(year_id) REFERENCES year(id)
+                )");
 
             
             /************* Triggers *************/
