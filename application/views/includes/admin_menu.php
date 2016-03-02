@@ -14,8 +14,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<?php $index = (isset($connected) && !$connected) ? '/main' : '/admin'; ?>
-			<a class="navbar-brand" href="<?php echo site_url() . $index; ?>"><span class="glyphicon glyphicon-home"></span> Assist'Edt</a>
+			<?php 
+                $index = (isset($connected) && !$connected) ? '/main' : '/admin'; 
+                if(isset($connected) && !$connected)
+                    echo '<a class="navbar-brand" href="'.site_url() . $index . '"><span class="glyphicon glyphicon-home"></span> Assist\'Edt</a>';
+                else
+                    echo '<a class="navbar-brand" href="'.site_url() . $index . '/privateSpace"><span class="glyphicon glyphicon-home"></span> Assist\'Edt</a>';
+            ?>
 		</div>
 		
 		<div class="navbar-collapse collapse">
@@ -23,12 +28,12 @@
 				if(isset($connected) && !$connected)
 					$elems = array(array("Retour à l'accueil", 'main'));
 				else
-					$elems = array(array('Administrateur', 'admin/privateSpace'),
-									array('Liste des professeurs', 'admin/summary'),
+					$elems = array( array('Heures CM', 'admin/cmHours'),
+									array('Voeux des professeurs', 'admin/summary'),
 									array('Gestion professeurs', 'admin/manageTeachers'),
 									array('Gestion matières', 'admin/manageSubjects'),
 									array('Gestion responsables de matières', 'admin/manageResponsibles'),
-									array('Gestion des groupes','admin/manageGroup'),
+									array('Gestion groupes','admin/manageGroup'),
 									array('Déconnexion', 'admin/signOut'));
 
 				echo menuEntry($elems);

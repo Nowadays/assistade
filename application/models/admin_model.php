@@ -61,21 +61,34 @@
 		 * Méthode passant le status des heures de CM à 1 dans la table time_slot pour les rendre indisponnible
          * et libérant les heures de CM de période précédente
 		 */
-		public function insertHoursCM($availability)
+		public function insertHoursCM($slots, $year, $period = FALSE)
 		{
-            for($i=1 ; $i<41 ; $i++){
-                if($i<29 || $i>32){
-                    $this->db->where('id',$i);
-                    $this->db->update('time_slot', array('status' => '0'));
+            if($period === FALSE)
+				$period = $this->getCurrentPeriodId();
+            
+            foreach ($slots as $timeslot_id => $value) //on enregistre
+            {
+                if($value != 0 && $value != -1){
+                    if($year === '1A'){
+                        $this->db->where('id',$timeslot_id);
+                        $this->db->update('time_slot', array('status' => '1'));
+                    }
+                    $data = array(
+                        'slot_id' => $timeslot_id,
+                        'year_id' => $year,
+                        'period_id' => $period
+                    );                    
+                    $this->db->insert('cm_slot',$data);
                 }
             }
             
-            foreach ($availability as $timeslot_id => $value) //on enregistre
-            {
-                if($value != 0 && $value != -1){
-                    $this->db->where('id',$timeslot_id);
-                    $this->db->update('time_slot', array('status' => '1'));   
-                }
+            if($year === '2A'){
+                for($i=1 ; $i<41 ; $i++){
+                    if($i<29 || $i>32){
+                        $this->db->where('id',$i);
+                        $this->db->update('time_slot', array('status' => '0'));
+                    }
+                }   
             }
 		}
 

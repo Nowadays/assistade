@@ -141,14 +141,17 @@
 		}
 
 		/**
-		* Méthode autorisant la saisie des voeux et enregistrant les heures de CM pour les rendre indisponnibles
+		* Méthode autorisant la saisie des voeux et enregistrant les heures de CM pour les deux promos
 		*
 		* Cette méthode ouvre la saisie des voueux pour la période actuelle en bloquant les heures de CM pour les enseignants
 		**/
-		public function openWishInput()
+		public function openWishInput($promo = NULL)
 		{
-            if($this->input->post('timeSlot') !== FALSE){  
-                $this->admin_model->insertHoursCM($this->input->post('timeSlot'));  
+            if($this->input->post('timeSlot') !== FALSE && $promo != NULL){  
+                $this->admin_model->insertHoursCM($this->input->post('timeSlot'),$promo);  
+                if($promo == '1A'){
+                    redirect('admin/initHoursCM/2A');
+                }
             }
 
             $this->admin_model->openPeriodWishInput();
@@ -183,12 +186,10 @@
 		}
         
         /**
-		 * Méthode permettant d'ouvrir la saisie des voeux d'une période
+		 * Méthode affichant le planning avec les créneaux horaires des CM de la période.
 		 *
-		 * Cette méthode affiche un planning vierge permettant à l'administrateur de saisir les heures de CM 
-         * pour les rendre indisponnibles pour les enseignants
 		 */
-		public function initHoursCM()
+		public function cmHours()
 		{
 			$this->requireConnected();
 
@@ -196,6 +197,24 @@
             $data['status'] = $this->admin_model->getHoursStatus();
             $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
 
+			$this->load->admin_template('Admin/cmHours', $data);
+		}
+        
+        /**
+		 * Méthode permettant d'ouvrir la saisie des voeux d'une période
+		 *
+		 * Cette méthode affiche un planning vierge permettant à l'administrateur de saisir les heures de CM 
+         * pour les rendre indisponnibles pour les enseignants
+		 */
+		public function initHoursCM($promo)
+		{
+			$this->requireConnected();
+
+			$data['hours'] = $this->admin_model->getHours();
+            $data['status'] = $this->admin_model->getHoursStatus();
+            $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
+            $data['promo'] = $promo;
+            
 			$this->load->admin_template('Admin/initHoursCM', $data, array('getAvailability.js'));
 		}
 
