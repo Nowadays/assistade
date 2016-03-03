@@ -189,7 +189,7 @@
 		 * Méthode affichant le planning avec les créneaux horaires des CM de la période.
 		 *
 		 */
-		public function cmHours($promo)
+		public function getHoursCM($promo)
 		{
 			$this->requireConnected();
 
@@ -200,7 +200,7 @@
             $data['promo'] = $promo;
             $data['promos'] = $this->admin_model->getPromos();
             
-			$this->load->admin_template('Admin/cmHours', $data, array('getAvailability.js'));
+			$this->load->admin_template('Admin/getHoursCM', $data, array('getAvailability.js'));
 		}
         
         /**
@@ -413,6 +413,7 @@
 
 		public function manageGroup(){
 			//shit happen here
+            $this->db->query("insert into student_group values(2,'A2','A','2A')");
 		}
 
 		/**

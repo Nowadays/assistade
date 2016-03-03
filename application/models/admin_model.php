@@ -61,7 +61,7 @@
 		 * Méthode passant le status des heures de CM à 1 dans la table time_slot pour les rendre indisponnible
          * et libérant les heures de CM de période précédente
 		 */
-		public function insertHoursCM($slots, $year, $period = FALSE)
+		public function insertHoursCM($slots, $promo, $period = FALSE)
 		{
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
@@ -69,20 +69,20 @@
             foreach ($slots as $timeslot_id => $value) //on enregistre
             {
                 if($value != 0 && $value != -1){
-                    if($year === '1A'){
+                    if($promo === '1A'){
                         $this->db->where('id',$timeslot_id);
                         $this->db->update('time_slot', array('status' => '1'));
                     }
                     $data = array(
-                        'slot_id' => $timeslot_id,
-                        'year_id' => $year,
+                        'timeslot_id' => $timeslot_id,
+                        'promo_id' => $promo,
                         'period_id' => $period
                     );                    
                     $this->db->insert('cm_slot',$data);
                 }
             }
             
-            if($year === '2A'){
+            if($promo === '2A'){
                 for($i=1 ; $i<41 ; $i++){
                     if($i<29 || $i>32){
                         $this->db->where('id',$i);
@@ -109,7 +109,7 @@
 		 * ou FALSE s'il n'y a aucune donnée
 		 */
 		public function getCurrentYear()
-		{
+		{            
 			$this->db->select('first_year, second_year')->from('school_year')->join('period', 'school_year.first_year = period.year_id');
 			$answer = $this->db->join('current_period', 'period.id = current_period.period_id')->get()->result_array();
 

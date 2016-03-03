@@ -76,7 +76,7 @@
 		 */
 		public function getPromos()
 		{
-            $query = $this->db->select('*')->from('year')->get()->result_array();
+            $query = $this->db->select('*')->from('promo')->get()->result_array();
             
             $data = array();
             foreach($query as $row => $val){
@@ -461,16 +461,16 @@
 		 * Cette méthode retourne un tableau contenant tous les créneaux de CM de la période demandée pour l'année spécifiée
 		 * 
 		 * @param  int $period identifiant de la période demandée
-         * @param  string $year identifiant de la promo voulue
+         * @param  string $promo identifiant de la promo voulue
 		 * 
 		 * @return array Tableau associatif représentant une ligne de la table cm_slots. Les clés sont : 'period_id', 'year_id', 'timeslot_id'
 		 */
-		public function getHoursCM($year, $period = FALSE)
+		public function getHoursCM($promo, $period = FALSE)
 		{
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
             
-			$query = $this->db->get_where('cm_slot', array('period_id' => $period, 'year_id' => $year))->result_array();
+			$query = $this->db->get_where('cm_slot', array('period_id' => $period, 'promo_id' => $promo))->result_array();
 			
             $data = array();
             foreach($query as $row=>$cm){

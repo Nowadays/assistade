@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp','mini_nb_hours'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','student_group_tp','group_tp','mini_nb_hours'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -50,7 +50,7 @@
 		* si le nom des colonnes ne correspond pas à ceux en base de donnée, cela lancera une Exception avec un message.
 		* 
 		* @author groupeAssist'Edt
-		* @param string $tableName Le nom de la table, le nom doit être celui d'une des trois tables autorisé.
+		* @param string $tableName Le nom de la table, le nom doit être celui d'une des tables autorisé.
 		* @param array $fileInfo Tableau contenant toute les informations sur le fichier uploadé par l'utilisateur.
 		*/
 		public function insertFromCSV($tableName, array $fileInfo)
@@ -243,8 +243,8 @@
 				CONSTRAINT school_year_pk PRIMARY KEY(first_year)
 				)");
             
-            $this->db->query("CREATE TABLE year(
-                id VARCHAR(2) NOT NULL CHECK (id ~ '^[1-2]A$') CONSTRAINT year_pk PRIMARY KEY
+            $this->db->query("CREATE TABLE promo(
+                id VARCHAR(2) NOT NULL CHECK (id ~ '^[1-2]A$') CONSTRAINT promo_pk PRIMARY KEY
                 )");
 
 			$this->db->query("CREATE TABLE period(
@@ -272,9 +272,9 @@
 				id				VARCHAR(6) CHECK(id ~ '^M[1-4][1-3]0[1-9]C?$') NOT NULL,
 				short_name		VARCHAR(20) NOT NULL,
 				subject_name	VARCHAR(80) NOT NULL,
-                year_id         VARCHAR(2)  NOT NULL,
+                promo_id         VARCHAR(2)  NOT NULL,
 				CONSTRAINT subject_pk PRIMARY KEY(id),
-                CONSTRAINT subject_fk1 FOREIGN KEY(year_id) REFERENCES year(id)
+                CONSTRAINT subject_fk1 FOREIGN KEY(promo_id) REFERENCES promo(id)
 				)");
             
             $this->db->query("CREATE TABLE tp(
@@ -307,9 +307,7 @@
 
 			$this->db->query("CREATE TABLE temporary_worker(
 				teacher_id	VARCHAR(3) CHECK(teacher_id ~ '^[A-Z]{2,3}$') NOT NULL,
-
 				CONSTRAINT temporary_worker_pk PRIMARY KEY(teacher_id),
-
 				CONSTRAINT temporary_worker_fk FOREIGN KEY(teacher_id) REFERENCES teacher(initials)
 				)");
 
@@ -371,48 +369,54 @@
   				CONSTRAINT involvedtimeslot_fk2 FOREIGN KEY (timeslot_id)	REFERENCES time_slot (id)
   				)");
             
-            
-            $this->db->query("CREATE TABLE student_group(
-				id SERIAL NOT NULL,
-                year_id VARCHAR(2) NOT NULL,
-                CONSTRAINT student_group_pk PRIMARY KEY(id),
-                CONSTRAINT student_group_fk1 FOREIGN KEY(year_id) REFERENCES year(id)
+            $this->db->query("CREATE TABLE group_td(
+				id_grouptd VARCHAR(1) NOT NULL CHECK(id_grouptd ~ '^[A-Z]$'),
+                promo_id VARCHAR(2) NOT NULL,
+                CONSTRAINT group_td_pk PRIMARY KEY(id_grouptd),
+                CONSTRAINT group_td_fk1 FOREIGN KEY(promo_id) REFERENCES promo(id)
   				)");
             
-            $this->db->query("CREATE TABLE student_group_td(
-                id INTEGER NOT NULL,
-				id_grouptd VARCHAR(1) CHECK(id_grouptd ~ '^[A-Z]$') UNIQUE NOT NULL,
-                CONSTRAINT student_group_td_pk PRIMARY KEY(id_grouptd),
-                CONSTRAINT student_group_td_fk1 FOREIGN KEY(id) REFERENCES student_group(id)
-  				)");
-            
-            $this->db->query("CREATE TABLE student_group_tp(
-                id INTEGER NOT NULL,
-                id_grouptp VARCHAR(2) CHECK(id_grouptd ~ '^[A-Z]{1,2}$') UNIQUE NOT NULL,
+            $this->db->query("CREATE TABLE group_tp(
+                id_grouptp VARCHAR(2) CHECK(id_grouptp ~ '^[A-Z]{1,2}$') UNIQUE NOT NULL,
 				id_grouptd VARCHAR(1) NOT NULL,
-                CONSTRAINT student_group_tp_pk PRIMARY KEY(id_grouptp),
-                CONSTRAINT student_group_tp_fk1 FOREIGN KEY(id) REFERENCES student_group(id),
-                CONSTRAINT student_group_tp_fk2 FOREIGN KEY(id_grouptd) REFERENCES student_group_td(id_grouptd)
+                CONSTRAINT group_tp_pk PRIMARY KEY(id_grouptp),
+                CONSTRAINT group_tp_fk1 FOREIGN KEY(id_grouptd) REFERENCES group_td(id_grouptd)
   				)");
             
             $this->db->query("CREATE TABLE course(
 				id_course SERIAL NOT NULL,
                 teacher_id VARCHAR(3) NOT NULL,
-                student_group_id INTEGER,
                 subject_id VARCHAR(6) NOT NULL,
                 period_id INTEGER NOT NULL,
                 CONSTRAINT course_pk PRIMARY KEY(id_course),
                 CONSTRAINT course_fk1 FOREIGN KEY(teacher_id) REFERENCES teacher(initials),
-                CONSTRAINT course_fk2 FOREIGN KEY(student_group_id) REFERENCES student_group(id),
                 CONSTRAINT course_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id),
                 CONSTRAINT course_fk4 FOREIGN KEY(period_id) REFERENCES period(id)
   				)");
+            
+            $this->db->query("CREATE TABLE course_groups_tp(
+                id_course INTEGER NOT NULL,
+                id_grouptp VARCHAR(2) NOT NULL,
+                CONSTRAINT course_groups_tp_pk PRIMARY KEY (id_course,id_grouptp),
+                CONSTRAINT course_groups_tp_fk1 FOREIGN KEY(id_course) REFERENCES course(id_course),
+                CONSTRAINT course_groups_tp_fk2 FOREIGN KEY(id_grouptp) REFERENCES group_tp(id_grouptp)
+                )");
+            
+            $this->db->query("CREATE TABLE course_groups_td(
+                id_course INTEGER NOT NULL,
+                id_grouptd VARCHAR(2) NOT NULL,
+                CONSTRAINT course_groups_td_pk PRIMARY KEY (id_course,id_grouptd),
+                CONSTRAINT course_groups_td_fk1 FOREIGN KEY(id_course) REFERENCES course(id_course),
+                CONSTRAINT course_groups_td_fk2 FOREIGN KEY(id_grouptd) REFERENCES group_td(id_grouptd)
+                )");
             
             $this->db->query("CREATE OR REPLACE VIEW courseDetail AS
 				SELECT *
                 FROM course
                 INNER JOIN subject
                 ON course.subject_id = subject.id
+                NATURAL JOIN course_groups_tp
+                NATURAL JOIN course_groups_td
   				");
             
             //Pourra être supprimée par la suite, il faudra alors une fonction de calcul du nombre d'heures en prenant en compte le nombre de groupe par matières et le nombre d'heure pour chaque groupe dans la matière
@@ -435,8 +439,10 @@
                 CONSTRAINT nb_group_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id)
   				)");
             
-            $this->db->query("CREATE VIEW group_tp AS
-                SELECT * FROM student_group_tp");
+            $this->db->query("CREATE OR REPLACE VIEW groups AS
+                SELECT * FROM group_tp
+                NATURAL JOIN group_td
+                ");
             
             $this->db->query("CREATE VIEW subjects AS
                 SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp
@@ -448,10 +454,10 @@
             
             $this->db->query("CREATE TABLE cm_slot(
                 timeslot_id INTEGER NOT NULL CONSTRAINT cm_slot_pk PRIMARY KEY,
-                year_id VARCHAR(2) NOT NULL,
+                promo_id VARCHAR(2) NOT NULL,
                 period_id INTEGER NOT NULL,
                 CONSTRAINT cm_slot_fk1 FOREIGN KEY(timeslot_id) REFERENCES time_slot(id),
-                CONSTRAINT cm_slot_fk2 FOREIGN KEY(year_id) REFERENCES year(id),
+                CONSTRAINT cm_slot_fk2 FOREIGN KEY(promo_id) REFERENCES promo(id),
                 CONSTRAINT cm_slot_fk3 FOREIGN KEY(period_id) REFERENCES period(id)
                 )");
 
@@ -463,7 +469,7 @@
                     PERFORM * FROM student_group WHERE id = NEW.id;
                     IF NOT FOUND
                     THEN
-                        INSERT INTO student_group VALUES(NEW.id);
+                        INSERT INTO student_group VALUES(NEW.id,NEW.year_id);
                     END IF;
                     PERFORM * FROM student_group_td WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd;
                     IF NOT FOUND
@@ -481,7 +487,7 @@
                 
             $this->db->query("CREATE TRIGGER insert_group
                 INSTEAD OF INSERT
-                ON group_tp
+                ON groups
                 FOR EACH ROW
                 EXECUTE PROCEDURE insert_group()");
             
@@ -568,7 +574,7 @@
             
 			/************* Remplissage de la base de donnée *************/
 
-            $this->db->query("INSERT INTO year VALUES
+            $this->db->query("INSERT INTO promo VALUES
                 ('1A'),
                 ('2A')");
             

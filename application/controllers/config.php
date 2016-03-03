@@ -43,7 +43,7 @@
 			if($this->session->userdata('state') !== self::$states['CREATE_DB'])
 				redirect('config/adminFirstConnexion');
 
-			$this->config_model->createDatabase();
+            $this->config_model->createDatabase();
 
 			$this->session->set_userdata('state', self::$states['INIT_YEAR']);
 
@@ -283,7 +283,7 @@
 				redirect('config/initInCharge');
 
 			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'student_group_tp', 'src' => 'initGroupe');
+			$data = array('name' => 'groupes', 'table' => 'group_tp', 'src' => 'initGroupe');
 
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
@@ -385,7 +385,7 @@
 					$fileName = "Professeur";
 				else if($tableName === "subject")
 					$fileName = "Matiere";
-				else if($tableName === "student_group_tp"){
+				else if($tableName === "group_tp"){
 					$fileName = "Groupe";
 				}else if($tableName === "mini_nb_hours"){
 					$fileName = "NbHeure";
