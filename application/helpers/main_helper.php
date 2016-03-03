@@ -86,8 +86,8 @@
 								$table .= '<td class="selectable">';
 
 								if((is_array($form)) AND isset($form[$timeslot_id]))
-									$table .= form_hidden('timeSlot['.$timeslot_id.']', $form[$timeslot_id]['availability_level']);
-								else
+                                    $table .= form_hidden('timeSlot['.$timeslot_id.']', $form[$timeslot_id]['availability_level']);
+                                else
 									$table .= form_hidden('timeSlot['.$timeslot_id.']', 0);
 
 								$table .= '</td>';

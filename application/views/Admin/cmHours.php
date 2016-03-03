@@ -6,6 +6,7 @@
 	 * Les données du tableau sont remplis via requêtes AJAX.
      * $cmHours => Heures de cm de la période pour la promo correspondant
      * $periodNumber => Numéro de la période courante
+     * $promo => Nulero de la promo concernée
 	 */
 	echo div(array('class' => 'modal fade', 'id' => 'loading', 'tabindex' => -5, 'aria-hidden' => 'true'));
 		echo div(array('class' => 'modal-dialog'));
@@ -17,12 +18,17 @@
 			echo div_close();
 		echo div_close();
 	echo div_close();
-	
+
 	echo div(array('style' => 'max-width: 750px;', 'class' => "text-center center-block"));
-		echo heading('Créneaux réservés aux CM de P'.$periodNumber);
+		echo anchor('Admin/cmHours/1A', 'Promotion 1A', array('class' => "btn btn-primary"));
+        echo nbs(2);
+        echo anchor('Admin/cmHours/2A', 'Promotion 2A', array('class' => "btn btn-primary"));
         echo br(2);
 
-		echo availabilityTable($hours);
-		echo availabilityLevel();
+        echo heading('Créneaux réservés aux CM de P'.$periodNumber.' pour les '.$promo);
+        echo br(2);
+
+        echo availabilityTable($hours, NULL, $cmHours);
+		//echo availabilityLevel();
 	echo div_close(); 
 ?>

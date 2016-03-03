@@ -66,6 +66,25 @@
 			else
 				return FALSE;
 		}
+        
+        /**
+		 * Méthode retournant les promos d'étudiants
+		 *
+		 * Cette méthode retourne un tableau avec toutes les promos.
+		 * 
+		 * @return array[] Tableau contenant des tableaux représentant chacun une ligne de la table year. Ces tableaux ont pour clés : ''
+		 */
+		public function getPromos()
+		{
+            $query = $this->db->select('*')->from('year')->get()->result_array();
+            
+            $data = array();
+            foreach($query as $row => $val){
+                $data[] = array($val['id'] => $val['id']);
+            }
+            
+            return $data;
+		}
 
 		/**
 		 * Méthode modifiant un professeur en base de données
@@ -434,6 +453,31 @@
 			$query = $this->db->get_where('teacher_information', array('teacher_id' => $id))->result_array()[0];
 			
 			return $query;
+		}
+        
+        /**
+		 * Méthode retournant les créneaux horaires des CM d'une promo pour une période.
+		 *
+		 * Cette méthode retourne un tableau contenant tous les créneaux de CM de la période demandée pour l'année spécifiée
+		 * 
+		 * @param  int $period identifiant de la période demandée
+         * @param  string $year identifiant de la promo voulue
+		 * 
+		 * @return array Tableau associatif représentant une ligne de la table cm_slots. Les clés sont : 'period_id', 'year_id', 'timeslot_id'
+		 */
+		public function getHoursCM($year, $period = FALSE)
+		{
+            if($period === FALSE)
+				$period = $this->getCurrentPeriodId();
+            
+			$query = $this->db->get_where('cm_slot', array('period_id' => $period, 'year_id' => $year))->result_array();
+			
+            $data = array();
+            foreach($query as $row=>$cm){
+                $data[$cm['timeslot_id']]['availability_level'] = 3;
+            }
+            
+			return $data;
 		}
 
 		/**

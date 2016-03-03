@@ -447,10 +447,10 @@
                 ");
             
             $this->db->query("CREATE TABLE cm_slot(
-                slot_id INTEGER NOT NULL CONSTRAINT cm_slot_pk PRIMARY KEY,
+                timeslot_id INTEGER NOT NULL CONSTRAINT cm_slot_pk PRIMARY KEY,
                 year_id VARCHAR(2) NOT NULL,
                 period_id INTEGER NOT NULL,
-                CONSTRAINT cm_slot_fk1 FOREIGN KEY(slot_id) REFERENCES time_slot(id),
+                CONSTRAINT cm_slot_fk1 FOREIGN KEY(timeslot_id) REFERENCES time_slot(id),
                 CONSTRAINT cm_slot_fk2 FOREIGN KEY(year_id) REFERENCES year(id),
                 CONSTRAINT cm_slot_fk3 FOREIGN KEY(period_id) REFERENCES period(id)
                 )");

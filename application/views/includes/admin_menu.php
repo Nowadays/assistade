@@ -28,7 +28,7 @@
 				if(isset($connected) && !$connected)
 					$elems = array(array("Retour à l'accueil", 'main'));
 				else
-					$elems = array( array('Heures CM', 'admin/cmHours'),
+					$elems = array( array('Heures CM', 'admin/cmHours/1A'),
 									array('Voeux des professeurs', 'admin/summary'),
 									array('Gestion professeurs', 'admin/manageTeachers'),
 									array('Gestion matières', 'admin/manageSubjects'),

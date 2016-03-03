@@ -189,15 +189,18 @@
 		 * Méthode affichant le planning avec les créneaux horaires des CM de la période.
 		 *
 		 */
-		public function cmHours()
+		public function cmHours($promo)
 		{
 			$this->requireConnected();
 
 			$data['hours'] = $this->admin_model->getHours();
             $data['status'] = $this->admin_model->getHoursStatus();
             $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
-
-			$this->load->admin_template('Admin/cmHours', $data);
+            $data['cmHours'] = $this->admin_model->getHoursCM($promo);
+            $data['promo'] = $promo;
+            $data['promos'] = $this->admin_model->getPromos();
+            
+			$this->load->admin_template('Admin/cmHours', $data, array('getAvailability.js'));
 		}
         
         /**
