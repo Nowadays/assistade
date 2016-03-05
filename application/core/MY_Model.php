@@ -465,12 +465,18 @@
 		 * 
 		 * @return array Tableau associatif représentant une ligne de la table cm_slots. Les clés sont : 'period_id', 'year_id', 'timeslot_id'
 		 */
-		public function getHoursCM($promo, $period = FALSE)
+		public function getHoursCM($promo = FALSE, $period = FALSE)
 		{
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
             
-			$query = $this->db->get_where('cm_slot', array('period_id' => $period, 'promo_id' => $promo))->result_array();
+            $where = array('period_id' => $period);
+            
+            if($promo !== FALSE){
+                $where['promo_id'] = $promo; 
+            }
+            
+			$query = $this->db->get_where('cm_slot', $where)->result_array();
 			
             $data = array();
             foreach($query as $row=>$cm){

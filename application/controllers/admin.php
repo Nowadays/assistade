@@ -198,9 +198,58 @@
             $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
             $data['cmHours'] = $this->admin_model->getHoursCM($promo);
             $data['promo'] = $promo;
-            $data['promos'] = $this->admin_model->getPromos();
             
 			$this->load->admin_template('Admin/getHoursCM', $data, array('getAvailability.js'));
+		}
+        
+        /**
+		 * Méthode permettant la modification des créneaux des CM d'une promo
+		 *
+		 * Cette méthode affiche les CM de la promo donnée et permet à l'administrateur de les modifier
+		 * 
+		 * @param  string $promo Identifiant de la promp à afficher
+		 */
+		public function modifyHoursCM($promo)
+		{
+			$this->requireConnected();
+
+			if($this->input->post('timeSlot') !== FALSE)
+			{				
+				$this->admin_model->insertHoursCM($this->input->post('timeSlot'), $promo);				
+				redirect('admin/getHoursCM/'.$promo);
+			}
+
+			try
+			{		
+				$period = $this->admin_model->getCurrentPeriod();
+			
+                $this->admin_model->setBlockedHoursCM($promo);
+                
+				$data['hours'] = $this->admin_model->getHours();
+                $data['status'] = $this->admin_model->getHoursStatus();
+                $data['periodNumber'] = $period['period_id'];
+                $data['cmHours'] = $this->admin_model->getHoursCM($promo);  
+                $data['promo'] = $promo;
+                
+				$this->load->admin_template('Admin/modifyHoursCM', $data, array('getAvailability.js'));
+                
+                $this->admin_model->unsetBlockedHours();
+			}
+			catch(Exception $e)
+			{
+				$data = array('title' => 'Erreur',
+							  'content' => $e->getMessage(),
+							  'state' => 'danger',
+							  'button' => array('visible' => FALSE),
+							  'button' => array(
+										'value' => 'retour',
+										'onclick' => 'admin/getHoursCM/'.$promo,
+										'visible' => true
+										)
+							  );
+
+				$this->load->admin_template('Main/message', $data);
+			}
 		}
         
         /**
@@ -307,7 +356,7 @@
 							  'button' => array('visible' => FALSE),
 							  'button' => array(
 										'value' => 'retour',
-										'onclick' => 'admingetTeacherPlanning/'.$initials,
+										'onclick' => 'admin/getTeacherPlanning/'.$initials,
 										'visible' => true
 										)
 							  );

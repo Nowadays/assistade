@@ -13,10 +13,11 @@
 		echo form_button(array('content' => 'Sélectionner', 'class' => 'btn btn-xs btn-success', 'id' => 'green'));
 
 		echo br(2);
-		echo form_open('admin/openWishInput/'.$promo);
+		echo form_open('admin/modifyHoursCM/'.$promo);
 
-			echo availabilityTable($hours, $status, true);
-			echo form_submit(array('name' => 'validate', 'value' => 'Valider', 'class' => 'btn btn-success'));
+			echo availabilityTable($hours, $status, $cmHours);
+			echo form_submit(array('name' => 'validate', 'value' => 'Sauvegarder', 'class' => 'btn btn-success'));
 		echo form_close();
 	echo div_close();
+print_r($periodNumber);
 ?>

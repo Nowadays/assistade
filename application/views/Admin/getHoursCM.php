@@ -30,5 +30,6 @@
 
         echo availabilityTable($hours, NULL, $cmHours);
 		//echo availabilityLevel();
+        echo anchor("admin/modifyHoursCM/$promo", 'Modifier', array('class' => 'btn btn-primary'));
 	echo div_close(); 
 ?>

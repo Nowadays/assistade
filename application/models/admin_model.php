@@ -69,10 +69,8 @@
             foreach ($slots as $timeslot_id => $value) //on enregistre
             {
                 if($value != 0 && $value != -1){
-                    if($promo === '1A'){
-                        $this->db->where('id',$timeslot_id);
-                        $this->db->update('time_slot', array('status' => '1'));
-                    }
+                    $this->setBlockedHoursCM($promo);
+                    
                     $data = array(
                         'timeslot_id' => $timeslot_id,
                         'promo_id' => $promo,
@@ -82,15 +80,37 @@
                 }
             }
             
-            if($promo === '2A'){
-                for($i=1 ; $i<41 ; $i++){
-                    if($i<29 || $i>32){
-                        $this->db->where('id',$i);
-                        $this->db->update('time_slot', array('status' => '0'));
-                    }
-                }   
-            }
+            $this->unsetBlockedHours();
 		}
+        
+        /**
+         * Méthode bloquant les heures de CM des autres promos
+         *
+         * Exemple : Si $promo vaut '1A', les heures de CM des autres promos que '1A' seront bloquées pour '1A'
+         */
+        public function setBlockedHoursCM($promo)
+        {
+            $slots = array_diff_key($this->getHoursCM(), $this->getHoursCM($promo));
+            
+            foreach ($slots as $timeslot_id => $value) //on enregistre
+            {
+                $this->db->where('id',$timeslot_id);
+                $this->db->update('time_slot', array('status' => '1'));
+            }
+        }
+        
+        /**
+         * Méthode libérant toutes les heures sauf les 4 heures du jeudi après-midi
+         */
+        public function unsetBlockedHours()
+        {
+            for($i=1 ; $i<41 ; $i++){
+                if($i<29 || $i>32){
+                    $this->db->where('id',$i);
+                    $this->db->update('time_slot', array('status' => '0'));
+                }
+            } 
+        }
 
 		/**
 		 * Méthode retournant le numéro de la période courrante.
