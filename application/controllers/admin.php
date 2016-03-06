@@ -148,7 +148,29 @@
 		public function openWishInput($promo = NULL)
 		{
             if($this->input->post('timeSlot') !== FALSE && $promo != NULL){  
-                $this->admin_model->insertHoursCM($this->input->post('timeSlot'),$promo);  
+                $this->admin_model->insertHoursCM($this->input->post('timeSlot'),$promo);
+                
+                $nb = count(array_filter($this->input->post('timeSlot'), function($k){return $k == 3;}));
+                
+                if($nb < $this->admin_model->getNbHoursCM($promo)){
+                    $message['state']= 'danger';
+                    $message['title']= 'Attention';
+                    $message['content']= 'Vous n\'avez pas renseigné suffisemment de créneaux';
+                    $message['static']= FALSE;
+                                        
+                    $this->session->set_userdata('message', $message);                    
+                    redirect('admin/initHoursCM/'.$promo);
+                }
+                if($nb > $this->admin_model->getNbHoursCM($promo)){
+                    $message['state']= 'danger';
+                    $message['title']= 'Attention';
+                    $message['content']= 'Vous avez renseigné trop de créneaux';
+                    $message['static']= FALSE;
+                                        
+                    $this->session->set_userdata('message', $message);
+                    redirect('admin/initHoursCM/'.$promo);
+                }
+                                      
                 if($promo == '1A'){
                     redirect('admin/initHoursCM/2A');
                 }
@@ -219,11 +241,6 @@
                 
             if($this->input->post('timeSlot') !== FALSE)
 			{    
-    //                    echo '<script>alert('.$this->admin_model->getNbHoursCM($promo).')</script>';
-  //                                      print_r($this->input->post('timeSlot'));
-
-//                        echo '<script>alert('.count($this->input->post('timeSlot'));
-
                 $message['state']= 'success';
                 $message['title']= 'Succès';
                 $message['content']= 'Vos disponibilités ont bien été enregistrées';
@@ -303,6 +320,10 @@
 		public function initHoursCM($promo)
 		{
 			$this->requireConnected();
+            
+            $view = array('Admin/initHoursCM');
+            $data = array();
+            $this->addMessage($view,$data);
 
 			$data['hours'] = $this->admin_model->getHours();
             $data['status'] = $this->admin_model->getHoursStatus();
@@ -310,7 +331,7 @@
             $data['promo'] = $promo;
             $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
             
-			$this->load->admin_template('Admin/initHoursCM', $data, array('getAvailability.js'));
+			$this->load->admin_template($view, $data, array('getAvailability.js'));
 		}
 
 		/**
