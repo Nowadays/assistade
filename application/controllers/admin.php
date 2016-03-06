@@ -192,6 +192,10 @@
 		public function getHoursCM($promo)
 		{
 			$this->requireConnected();
+            
+            $view = array('Admin/getHoursCM');
+			$data = array();
+			$this->addMessage($view,$data);
 
 			$data['hours'] = $this->admin_model->getHours();
             $data['status'] = $this->admin_model->getHoursStatus();
@@ -199,7 +203,7 @@
             $data['cmHours'] = $this->admin_model->getHoursCM($promo);
             $data['promo'] = $promo;
             
-			$this->load->admin_template('Admin/getHoursCM', $data, array('getAvailability.js'));
+			$this->load->admin_template($view, $data, array('getAvailability.js'));
 		}
         
         /**
@@ -212,15 +216,52 @@
 		public function modifyHoursCM($promo)
 		{
 			$this->requireConnected();
+                
+            if($this->input->post('timeSlot') !== FALSE)
+			{    
+    //                    echo '<script>alert('.$this->admin_model->getNbHoursCM($promo).')</script>';
+  //                                      print_r($this->input->post('timeSlot'));
 
-			if($this->input->post('timeSlot') !== FALSE)
-			{				
-				$this->admin_model->insertHoursCM($this->input->post('timeSlot'), $promo);				
-				redirect('admin/getHoursCM/'.$promo);
-			}
+//                        echo '<script>alert('.count($this->input->post('timeSlot'));
 
+                $message['state']= 'success';
+                $message['title']= 'Succès';
+                $message['content']= 'Vos disponibilités ont bien été enregistrées';
+                $message['static']= FALSE;
+                
+                $redirect = 'admin/getHoursCM/';
+                
+                $nb = count(array_filter($this->input->post('timeSlot'), function($k){return $k == 3;}));
+                
+                if($nb < $this->admin_model->getNbHoursCM($promo)){
+                    $message['state']= 'danger';
+                    $message['title']= 'Attention';
+                    $message['content']= 'Vous n\'avez pas renseigné suffisemment de créneaux';
+                    $message['static']= FALSE;
+                    
+                    $redirect = 'admin/modifyHoursCM/';
+                }
+                if($nb > $this->admin_model->getNbHoursCM($promo)){
+                    $message['state']= 'danger';
+                    $message['title']= 'Attention';
+                    $message['content']= 'Vous avez renseigné trop de créneaux';
+                    $message['static']= FALSE;
+
+                    $redirect = 'admin/modifyHoursCM/';
+                }
+                    
+                $this->admin_model->insertHoursCM($this->input->post('timeSlot'), $promo);
+
+                $this->session->set_userdata('message', $message);
+                redirect($redirect.$promo);
+            }
+                
 			try
 			{		
+                $view = array('Admin/modifyHoursCM');
+                $data = array();
+			    $this->addMessage($view,$data);
+                
 				$period = $this->admin_model->getCurrentPeriod();
 			
                 $this->admin_model->setBlockedHoursCM($promo);
@@ -230,8 +271,9 @@
                 $data['periodNumber'] = $period['period_id'];
                 $data['cmHours'] = $this->admin_model->getHoursCM($promo);  
                 $data['promo'] = $promo;
+                $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
                 
-				$this->load->admin_template('Admin/modifyHoursCM', $data, array('getAvailability.js'));
+				$this->load->admin_template($view, $data, array('getAvailability.js'));
                 
                 $this->admin_model->unsetBlockedHours();
 			}
@@ -266,6 +308,7 @@
             $data['status'] = $this->admin_model->getHoursStatus();
             $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
             $data['promo'] = $promo;
+            $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
             
 			$this->load->admin_template('Admin/initHoursCM', $data, array('getAvailability.js'));
 		}

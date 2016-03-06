@@ -7,6 +7,7 @@
 	echo div(array('style' => 'max-width: 800px;', 'class' => 'text-center center-block'));
 		echo heading('Saisie des heures de CM de P'.$periodNumber.' pour les '.$promo, 2);
 		echo br();
+        echo '<p>Nombre d\'heures à saisir : '.$nbHours.'</p>';
 		
 		echo form_button(array('content' => 'Retirer', 'class' => 'btn btn-xs active', 'id' => 'white'));
 		echo nbs(2);

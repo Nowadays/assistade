@@ -58,13 +58,15 @@
 		}
         
         /**
-		 * Méthode passant le status des heures de CM à 1 dans la table time_slot pour les rendre indisponnible
-         * et libérant les heures de CM de période précédente
+		 * Méthode insérant les créneaux sélectionnés dans la table cm_slot
 		 */
 		public function insertHoursCM($slots, $promo, $period = FALSE)
 		{
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
+            
+            $this->db->where('promo_id',$promo);
+            $this->db->delete('cm_slot');
             
             foreach ($slots as $timeslot_id => $value) //on enregistre
             {
@@ -330,6 +332,28 @@
             
             if($query -> num_rows() > 0){
                 $result = $query->result_array();   
+            }
+                
+            return $result;
+        }
+        
+        
+        /**
+		* Méthode renvoyant le nombre d'heures de CM de la période courante pour une promo donnée
+		*
+		* Cette méthode renvoie un entier
+		*/
+        public function getNbHoursCM($promo, $period = NULL){
+            if($period === NULL)
+				$period = $this->getCurrentPeriodId();
+            
+            $result = 0;
+            
+            //Rajouter une jointure avec la table Course pour prendre en compte seulement les cours de la période 
+            $query = $this->db->select('sum(nb_hours)')->from('cm')->join('subject','cm.id = subject.id')->where('promo_id',$promo)->get();
+            
+            if($query -> num_rows() > 0){
+                $result = $query->result_array()[0]['sum'];   
             }
                 
             return $result;
