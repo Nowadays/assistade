@@ -80,7 +80,7 @@
             
             $data = array();
             foreach($query as $row => $val){
-                $data[] = array($val['id'] => $val['id']);
+                $data[$val['id']] = $val['id'];
             }
             
             return $data;

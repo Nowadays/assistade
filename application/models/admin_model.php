@@ -86,6 +86,18 @@
 		}
         
         /**
+         * Méthode vidant la table cm_slot
+         */
+        public function deleteHoursCM()
+        {
+            $promos = $this->getPromos();
+            foreach($promos as $key=>$id){
+                $this->db->where('promo_id', $id);
+                $this->db->delete('cm_slot');   
+            }
+        }
+        
+        /**
          * Méthode bloquant les heures de CM des autres promos
          *
          * Exemple : Si $promo vaut '1A', les heures de CM des autres promos que '1A' seront bloquées pour '1A'

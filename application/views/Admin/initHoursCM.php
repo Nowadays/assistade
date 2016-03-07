@@ -16,7 +16,7 @@
 		echo br(2);
 		echo form_open('admin/openWishInput/'.$promo);
 
-			echo availabilityTable($hours, $status, true);
+			echo availabilityTable($hours, $status, $cmHours);
 			echo form_submit(array('name' => 'validate', 'value' => 'Valider', 'class' => 'btn btn-success'));
 		echo form_close();
 	echo div_close();

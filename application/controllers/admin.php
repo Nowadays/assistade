@@ -325,14 +325,22 @@
             $data = array();
             $this->addMessage($view,$data);
 
+            if($promo === '1A')
+                $this->admin_model->deleteHoursCM();
+            
+            $this->admin_model->setBlockedHoursCM($promo);
+            
 			$data['hours'] = $this->admin_model->getHours();
             $data['status'] = $this->admin_model->getHoursStatus();
             $data['periodNumber'] = $this->admin_model->getCurrentPeriod()['period_number'];
             $data['promo'] = $promo;
             $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
+            $data['cmHours'] = $this->admin_model->getHoursCM($promo);
             
 			$this->load->admin_template($view, $data, array('getAvailability.js'));
-		}
+
+            $this->admin_model->unsetBlockedHours();
+        }
 
 		/**
 		 * Méthode affichant le planning d'un professeur donné.
