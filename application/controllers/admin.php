@@ -483,7 +483,7 @@
 						if($action == 'insert')
 						{
 							$password = $this->admin_model->insertTeacherPassword($initials);
-							$message = "Insertion réussie ! Son mot de passe de première connexion est $password.";
+							$message = "Insertion réussie ! Son mot de passe de première connexion est $password ";
 						}
 						if($action == 'update')
 							$message = 'Mise à jour réussie !';
