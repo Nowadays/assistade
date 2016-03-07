@@ -34,8 +34,13 @@
 			}
 			
 			echo '</table>';
-			
-			echo anchor('config/initSubject', 'Continuer', array('class' => 'btn btn-primary'));
+			echo anchor('config/initSubject', 'Continuer', array('class' => 'btn btn-primary','id'=>'continue_btn','onclick'=>'verif()'));
 		echo div_close();
 	echo div_close();
 ?>
+
+<script>
+	function verif(){
+		confirm("Avez-vous sauvegardé les mots de passe ?");
+	}
+</script>

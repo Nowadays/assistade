@@ -3,5 +3,3 @@ var url = reg.exec(document.URL)[1] + 'admin/ajaxRequestTeacher';
 
 var cellNames = ['Initiales','Nom','Prénom'];
 var cellDatabaseNames = ['initials','lastname','firstname'];
-
-
