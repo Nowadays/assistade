@@ -396,6 +396,28 @@
 		* Cette méthode retourne un entier correspondant au nombre d'heures de disponnibilité du professeur dans la période donnée
 		*
 		*/
+		public function TeacherMiniHours($teacherId,$subjects,$nb_group_td,$nb_group_tp, $period = false)
+		{
+ 			if($period === FALSE)
+				$period = $this->getCurrentPeriodId();
+
+			$wish_id = $this->getTeacherWishId($period, $teacherId);
+			$cm_hours  = $this->db->select('cm.nb_hours')->from('subjects')->where('short_name',$subjects);
+			$tp_hours  = $this->db->select('tp.nb_hours')->from('subjects')->where('short_name',$subjects);
+			$td_hours  = $this->db->select('td.nb_hours')->from('subjects')->where('short_name',$subjects);
+
+			$hours = $cm_hours + ($nb_group_td * $td_hours) + ($nb_group_tp * $tp_hours);
+
+			$data = array(
+				'teacher_id' => $teacherId,
+				'period_id' => $period,
+				'nb_hours' => $hours
+			);
+
+			$this->db->insert('mini_nb_hours',$data);
+		}
+
+
         public function getTeacherMiniHours($teacherId, $period = FALSE)
         {
             if($period === FALSE)
