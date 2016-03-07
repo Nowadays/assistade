@@ -189,6 +189,27 @@
 
 			$this->load->template($view, $data);
 		}
+        
+        /**
+		 * Méthode affichant le planning avec les créneaux horaires des CM de la période.
+		 *
+		 */
+		public function getHoursCM($promo)
+		{
+			$this->checkUserState();
+            
+            $view = array('Main/getHoursCM');
+            $data = array();
+			$this->addUserInfo($data);
+            
+			$data['hours'] = $this->main_model->getHours();
+            $data['status'] = $this->main_model->getHoursStatus();
+            $data['periodNumber'] = $this->main_model->getCurrentPeriod()['period_number'];
+            $data['cmHours'] = $this->main_model->getHoursCM($promo);
+            $data['promo'] = $promo;
+            
+			$this->load->template($view, $data, array('getAvailability.js'));
+		}
 
 		/**
 		 * Méthode permettant la modification des information de contacts

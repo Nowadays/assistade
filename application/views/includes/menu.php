@@ -28,7 +28,9 @@
 				if(isset($username) && !empty($username))
 				{
 					$elems[] = array($username, 'main/privateSpace');
-
+                    
+                    $elems[] = array('Créneaux CM', 'main/getHoursCM/1A');
+                    
 					if(isset($wishState) && $wishState !== 2)
 						$elems[] = array('Renseigner disponibilités', 'main/setAvailability');
 					else
