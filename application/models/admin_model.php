@@ -536,5 +536,111 @@
 
 			return empty($query);
 		}
+
+
+		public function getGroups(){
+			return $this->db->select('*')->from('groups')->get()->result_array();
+		}
+
+		public function singleActionGroup($action,$group)
+		{
+			if(!$this->isGroupTdCorrect($group['id_grouptd']))
+				return 'identifiant incorrect !';
+
+			$groupInfo = $this->db->select('*')->from('groups')->get()->result_array();
+
+			if($action == 'insert')
+			{
+				if(!empty($groupInfo))
+					return 'identifiant déjà existant !';
+
+				if(!$this->isGroupTpCorrect	($group['id_grouptp']))
+					return 'id tp incorrect !';
+
+				if(!$this->isGroupTdCorrect	($group['id_grouptd']))
+					return 'id td incorrect !';
+
+				if(!$this->isGroupPromoCorrect	($group['promo_id']))
+					return 'id promo incorrect !';
+
+				$this->db->insert('group_td', array('id_grouptd' => $group['id_grouptd'], 'promo_id' => $group['promo_id']));
+				$this->db->insert('group_tp', array('id_grouptp' => $group['id_grouptp'], 'id_grouptd' => $group['id_grouptd']));
+
+				return 'success';
+			}
+			else if($action == 'update' || $action == 'delete')
+			{
+				if(empty($subjectInfo))
+					return 'identifiant non existant !';
+
+				if($action == 'update')
+				{
+					if(!$this->isGroupTpCorrect	($group['id_grouptp']))
+						return 'id tp incorrect !';
+
+					if(!$this->isGroupTdCorrect	($group['id_grouptd']))
+						return 'id td incorrect !';
+
+					if(!$this->isGroupPromoCorrect	($group['promo_id']))
+						return 'id promo incorrect !';
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->update('group_td', array('id_grouptd' => $group['id_grouptd']));
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->update('group_td', array('promo_id' => $group['promo_id']));
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->update('group_tp', array('id_grouptp' => $group['id_grouptp']));
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->update('group_tp', array('id_grouptd' => $group['id_grouptd']));
+
+					//$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
+				}
+				else
+				{
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->delete('group_tp');
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->delete('group_td');
+
+					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->delete('course_groups_td');
+
+					$this->db->where('id_grouptp', $group['id_grouptp']);
+					$this->db->delete('course_groups_tp');
+
+				}
+
+				return 'success';
+			}
+			else return 'Erreur : action inconnue !';
+		}
+
+		/**
+		 * Vérifie si le format de l'identifiant de matière est correcte ou non
+		 * @param  string  $id Chaine de caractère à tester
+		 * @return boolean     TRUE si la chaîne correspond au format d'identifiant des matière, FALSE sinon
+		 */
+		private function isGroupPromoCorrect($id)
+		{
+			return preg_match('#^M[1-4][1-3]0[1-9]C?$#',$id);
+		}
+
+		/**
+		 * Vérifie si le format du nom de matière est correcte ou non
+		 * @param  string  $id Chaine de caractère à tester
+		 * @return boolean     TRUE si la chaîne correspond au format de nom des matière, FALSE sinon
+		 */
+		private function isGroupTpCorrect($name)
+		{
+			return preg_match('#^[\PM|\PC]+$#', $name);
+		}
+
+		private function isGroupTdCorrect($name){
+			return 0;
+		}
 	}
 ?>

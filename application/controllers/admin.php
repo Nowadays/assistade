@@ -574,7 +574,9 @@
 
 		public function manageGroup(){
 			//shit happen here
-            $this->db->query("insert into student_group values(2,'A2','A','2A')");
+            $this->requireConnected();
+            $groups = $this->admin_model->getGroups();
+            $this->load->admin_template('Admin/manageGroups',array('groups' => $groups), array('tabManagement.js','manageGroups.js'));
 		}
 
 		/**
@@ -619,7 +621,8 @@
 					
 					if($result == 'success')
 					{
-						if($action == 'insert')
+
+                        if($action == 'insert')
 							$message = 'Insertion réussie !';
 						if($action == 'update')
 							$message = 'Mise à jour réussie !';
