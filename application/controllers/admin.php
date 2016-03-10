@@ -173,6 +173,8 @@
                                       
                 if($promo == '1A'){
                     redirect('admin/initHoursCM/2A');
+                }else{
+                    redirect('admin/initNbGroups');
                 }
             }
 
@@ -312,7 +314,7 @@
 		}
         
         /**
-		 * Méthode permettant d'ouvrir la saisie des voeux d'une période
+		 * Méthode permettant dse saisir les créneaux réservés aux heures de CM d'une promo
 		 *
 		 * Cette méthode affiche un planning vierge permettant à l'administrateur de saisir les heures de CM 
          * pour les rendre indisponnibles pour les enseignants
@@ -340,6 +342,44 @@
 			$this->load->admin_template($view, $data, array('getAvailability.js'));
 
             $this->admin_model->unsetBlockedHours();
+        }
+        
+        /**
+		 * Méthode permettant d'insérer le nombre de groupe pour chaque matière pour chaque enseignant poiur une période donnée
+		 *
+		 * Cette méthode affiche une page permettant de charger un fichier CSV
+		 */
+		public function initNbGroups()
+		{
+			$this->requireConnected();
+            $this->load->model('config_model');
+            
+            $view = array('Admin/initCSV');
+            $data = array();
+            $this->addMessage($view,$data);
+            
+            $this->load->library('upload');
+			$data = array('name' => 'prévisions des enseignants', 'table' => 'nb_group', 'src' => 'initNbGroups');
+			
+			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
+			{
+				try
+				{				    
+                    $this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
+                    redirect('admin/openWishInput');
+				}
+				catch(Exception $e)
+				{
+					$data['title'] = 'Erreur';
+					$data['content'] = $e->getMessage();
+					$data['state'] = 'danger';
+					$data['button'] = array('visible' => FALSE);
+
+					$this->load->admin_template(array('Main/message', $view), $data);
+				}
+			}
+			else
+                $this->load->admin_template($view, $data);
         }
 
 		/**

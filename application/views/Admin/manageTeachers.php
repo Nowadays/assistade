@@ -5,7 +5,7 @@
 	 * Cette vue nécessite les variables suivantes : 'teachers' => tableau contenant des tableaux associatif représentant chacun un enseignant ('initials', 'lastname', 'firstname').
 	 */
 
-	echo div(array('style' => 'max-width: 700px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		$headers = array('Initiales', 'Nom','Prénom', 'Options');
 
 		echo '<table id="myTable" class="table table-bordered">';

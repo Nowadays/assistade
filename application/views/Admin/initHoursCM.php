@@ -4,7 +4,7 @@
 	 * Cette vue nécessite les variables suivantes : $periodNumber => numéro de la période en cours
      * $hours => Tableau avec les créneaux horaires
 	 */
-	echo div(array('style' => 'max-width: 800px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		echo heading('Saisie des heures de CM de P'.$periodNumber.' pour les '.$promo, 2);
 		echo br();
         echo '<p>Nombre d\'heures à saisir : '.$nbHours.'</p>';

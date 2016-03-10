@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp','group_tp','mini_nb_hours'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','student_group_tp','group_tp','nb_group'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -430,16 +430,16 @@
   				)");
             
             $this->db->query("CREATE TABLE nb_group(
-                teacher_id VARCHAR(3) NOT NULL,
-                period_id INTEGER NOT NULL,
-                subject_id VARCHAR(6) NOT NULL,
-                nb_group_td INTEGER NOT NULL,
-                nb_group_tp INTEGER NOT NULL,
+                id_enseignant VARCHAR(3) NOT NULL,
+                id_periode INTEGER NOT NULL,
+                id_module VARCHAR(6) NOT NULL,
+                nb_grp_td INTEGER NOT NULL,
+                nb_grp_tp INTEGER NOT NULL,
                 nb_cm INTEGER NOT NULL,
-                CONSTRAINT nb_group_pk PRIMARY KEY(teacher_id,period_id,subject_id),
-                CONSTRAINT nb_group_fk1 FOREIGN KEY(teacher_id) REFERENCES teacher(initials),
-                CONSTRAINT nb_group_fk2 FOREIGN KEY(period_id) REFERENCES period(id),
-                CONSTRAINT nb_group_fk3 FOREIGN KEY(subject_id) REFERENCES subject(id)
+                CONSTRAINT nb_group_pk PRIMARY KEY(id_enseignant, id_periode, id_module),
+                CONSTRAINT nb_group_fk1 FOREIGN KEY(id_enseignant) REFERENCES teacher(initials),
+                CONSTRAINT nb_group_fk2 FOREIGN KEY(id_periode) REFERENCES period(id),
+                CONSTRAINT nb_group_fk3 FOREIGN KEY(id_module) REFERENCES subject(id)
   				)");
             
             $this->db->query("CREATE OR REPLACE VIEW groups AS

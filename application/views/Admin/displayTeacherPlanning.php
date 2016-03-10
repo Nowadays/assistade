@@ -8,7 +8,7 @@
 	 * 'teacherTimeSlot' => tableau contenant les disponibilités du professeur et 'whishState' => état du voeux du professeur.
 	 */
 	
-	echo div(array('style' => 'max-width: 750px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		
 		echo heading('Informations concernant '.$teacherName, 2);
 

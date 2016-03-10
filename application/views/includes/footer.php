@@ -5,7 +5,9 @@
 	 * se trouvant le dossier (racine du site)/res/js/
 	 */
 ?>		
-		<script src="<?php echo base_url('/assets/js/jquery.min.js'); ?>"></script>
+        </div>
+
+        <script src="<?php echo base_url('/assets/js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo base_url('/assets/js/bootstrap.min.js'); ?>"></script>
 		<?php
 			if(!empty($js))

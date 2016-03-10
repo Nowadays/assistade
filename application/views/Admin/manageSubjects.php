@@ -17,7 +17,7 @@
 		echo div_close();
 	echo div_close();
 
-	echo div(array('style' => 'max-width: 700px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		$headers = array('Identifiants', 'Nom court','Nom de la matière', 'Heures CM/Semaine', 'Heures TD/Semaine', 'Heures TP/Semaine', 'Options');
 
 		echo '<table id="myTable" class="table table-bordered">';

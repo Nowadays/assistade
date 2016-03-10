@@ -12,7 +12,7 @@
 	$isPeriodOpen = boolval($period['state']);
 	$periodState = ($isPeriodOpen && $period['state'] != -1) ? 'Saisie des voeux <strong>ouverte</strong>' : 'Saisi des voeux <strong>fermée</strong>';
 
-	echo div(array('style' => 'max-width: 500px;', 'class' => 'alert alert-info center-block text-center'));
+	echo div(array('class' => 'alert alert-info center-block text-center'));
 		echo "<p>Année en cours : <strong>$beginYear - $endYear</strong></p>";
 		
 		if($period['state'] != -1)

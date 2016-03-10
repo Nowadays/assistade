@@ -6,7 +6,7 @@
 	 * l'enseignant, 'email' => l'adresse email du professeur. 'teacherInitials' => initials (id) du professeur, 'TeacherTimeSlot' => tableau contenant les disponibilités du
 	 * professeur, 'hours' => tableau contenant les crénaux horaires, 'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon).
 	 */
-	echo div(array('style' => 'max-width: 750px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		
 		echo heading('Informations concernant '.$teacherName, 2);
 

@@ -43,7 +43,3 @@
 </nav>
 
 <br />
-
-<div class="page-header text-center">
-	<?php echo heading(img(base_url() . 'res/img/logo.png') . "  Assist'Edt"); echo br(1); ?>	
-</div>

@@ -7,7 +7,7 @@
 	 * professeur, 'lastname' => nom du professeur, 'firstname' => prénom du professeur.
 	 */
 	
-	echo div(array('style' => 'max-width: 500px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 
 		if(!isset($teacherWishes) OR empty($teacherWishes))
 			echo 'Erreur !';

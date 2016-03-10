@@ -7,7 +7,7 @@
 	 * clé l'id d'une matière et pour valeur l'id du responsable de matière
 	 */
 ?>
-<div style="max-width: 500px; margin: auto;" class="text-center">
+<div style="margin: auto;" class="text-center">
 	<?php
 		$data = array("default" => "Sélectionnez un professeur");
 		

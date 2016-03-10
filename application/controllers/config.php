@@ -387,8 +387,8 @@
 					$fileName = "Matiere";
 				else if($tableName === "group_tp"){
 					$fileName = "Groupe";
-				}else if($tableName === "mini_nb_hours"){
-					$fileName = "NbHeure";
+				}else if($tableName === "nb_group"){
+					$fileName = "NbGroup";
 				}
 				
 				$fileName .= ".csv";
