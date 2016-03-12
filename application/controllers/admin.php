@@ -770,5 +770,67 @@
 				array_unshift($views,'Main/message');
 			}
 		}
+
+		public function ajaxRequestGroups()
+		{
+			$this->requireConnected();
+
+			if($this->input->is_ajax_request())
+			{
+				try
+				{
+					$action = $this->input->post('action');
+					$id = $this->input->post('id_grouptd');
+					$id_grouptd = $this->input->post('id_grouptd');
+					$id_grouptp = $this->input->post('id_grouptp');
+					$promo_id = $this->input->post('promo_id');
+
+					if($action == 'insert' || $action == 'update')
+					{
+						$result = $this->admin_model->singleActionGroup($action, array('id_grouptd' => $id,'id_grouptp' => $id_grouptp, 'promo_id' => $promo_id));
+					}
+					else if($action == 'delete')
+					{
+						$result = $this->admin_model->singleActionGroup($action, array('id_grouptd' => $id));
+					}
+					else
+					{
+						$data = array('state' => 'failed', 'message' => 'Erreur : Action inconnue !');
+						$this->load->view('Admin/databaseReturnXML', $data);
+					}
+
+					if($result == 'success')
+					{
+
+						if($action == 'insert')
+							$message = 'Insertion réussie !';
+						if($action == 'update')
+							$message = 'Mise à jour réussie !';
+						if($action == 'delete')
+							$message = 'Suppression réussie !';
+
+						$data = array('state' => 'success', 'message' => $message);
+					}
+					else
+					{
+						$data = array('state' => 'failed', 'message' => $result);
+					}
+					$this->load->view('Admin/databaseReturnXML', $data);
+				}
+				catch(Exception $e)
+				{
+					$data = array('state' => 'failed', 'message' => $e->getMessage());
+					$this->load->view('Admin/databaseReturnXML', $data);
+				}
+			}
+			else
+			{
+				$data = array('title' => 'Tut tut...', 'content' => "Vous n'êtes pas censé vous trouvez ici...", 'state' => 'warning', 'static' => TRUE);
+				$this->load->template('Main/message', $data);
+			}
+		}
+
+
+
 	}
 ?>

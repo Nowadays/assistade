@@ -544,14 +544,14 @@
 
 		public function singleActionGroup($action,$group)
 		{
-			if(!$this->isGroupTdCorrect($group['id_grouptd']))
-				return 'identifiant incorrect !';
+			/*if(!$this->isGroupTdCorrect($group['id_grouptd']))
+				return 'identifiant incorrect !';*/
 
-			$groupInfo = $this->db->select('*')->from('groups')->get()->result_array();
-
+			$groupTest = $this->db->select('id_grouptp')->from('groups')->where('id_grouptd',$group['id_grouptd'])->where('id_grouptp',$group['id_grouptp'])->get()->result_array();
+			$groupInfo = $this->db->select('*')->from('groups')->where('id_grouptd',$group['id_grouptd'])->get()->result_array();
 			if($action == 'insert')
 			{
-				if(!empty($groupInfo))
+				if(!empty($groupTest))
 					return 'identifiant déjà existant !';
 
 				if(!$this->isGroupTpCorrect	($group['id_grouptp']))
@@ -570,7 +570,7 @@
 			}
 			else if($action == 'update' || $action == 'delete')
 			{
-				if(empty($subjectInfo))
+				if(empty($groupInfo))
 					return 'identifiant non existant !';
 
 				if($action == 'update')
@@ -601,16 +601,18 @@
 				else
 				{
 					$this->db->where('id_grouptd', $group['id_grouptd']);
+					$this->db->delete('course_groups_td');
+
+					$this->db->where('id_grouptp', $group['id_grouptp'])->where('id_grouptp',$group['id_grouptp']);
+					$this->db->delete('course_groups_tp');
+
+					$this->db->where('id_grouptd', $group['id_grouptd'])->where('id_grouptp',$group['id_grouptp']);
 					$this->db->delete('group_tp');
 
 					$this->db->where('id_grouptd', $group['id_grouptd']);
 					$this->db->delete('group_td');
 
-					$this->db->where('id_grouptd', $group['id_grouptd']);
-					$this->db->delete('course_groups_td');
 
-					$this->db->where('id_grouptp', $group['id_grouptp']);
-					$this->db->delete('course_groups_tp');
 
 				}
 
@@ -626,7 +628,7 @@
 		 */
 		private function isGroupPromoCorrect($id)
 		{
-			return preg_match('#^M[1-4][1-3]0[1-9]C?$#',$id);
+			return preg_match('#^[1-2]A$#',$id);
 		}
 
 		/**
@@ -636,11 +638,11 @@
 		 */
 		private function isGroupTpCorrect($name)
 		{
-			return preg_match('#^[\PM|\PC]+$#', $name);
+			return preg_match('#^[A-Z][1-2]$#', $name);
 		}
 
 		private function isGroupTdCorrect($name){
-			return 0;
+			return preg_match('#^[A-Z]{1}$#',$name);
 		}
 	}
 ?>

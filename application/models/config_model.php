@@ -377,7 +377,11 @@
   				)");
             
             $this->db->query("CREATE TABLE group_tp(
+<<<<<<< HEAD
                 id_grouptp VARCHAR(2) CHECK(id_grouptp ~ '^[A-Z][1-2]$') NOT NULL,
+=======
+                id_grouptp VARCHAR(2) CHECK(id_grouptp ~ '^[A-Z][1-2]$') UNIQUE NOT NULL,
+>>>>>>> origin/master
 				id_grouptd VARCHAR(1) NOT NULL,
                 CONSTRAINT group_tp_pk PRIMARY KEY(id_grouptp),
                 CONSTRAINT group_tp_fk1 FOREIGN KEY(id_grouptd) REFERENCES group_td(id_grouptd)

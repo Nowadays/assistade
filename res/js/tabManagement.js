@@ -144,7 +144,7 @@ function deleteRow(id){
 
 			var data = {};
 			data.action = 'delete';
-			data[cellDatabaseNames[0]] = id;
+			data[cellDatabaseNames[1]] = id;
 			
 			$.post(url, data, function(xml)
 			{
