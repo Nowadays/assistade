@@ -8,7 +8,7 @@
 
 	$fieldNames = array('Initiales','Nom','Prénom');
 	
-	echo div(array('style' => 'max-width: 500px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 	
 		echo '<p class="lead">Pour continuer :</p>';
 		
@@ -29,7 +29,7 @@
 			echo form_close();
 		}
 		
-		echo form_label('créez un nouveau vacataire :');
+		echo form_label('Créer un nouveau vacataire :');
 		echo nbs(2);
 		echo '<table id="myTable" class="table">';
 			echo '<tr id="new">';

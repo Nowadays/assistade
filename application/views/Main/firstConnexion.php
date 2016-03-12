@@ -5,7 +5,7 @@
 	 * (optionnel) $responsibleId => id du responsable connecté
 	 * (seulement si $responsibleId renseigné) $teacherId => id de l'enseignant auquel on modifie le planning
 	 */
-	echo div(array('style' => 'max-width: 700px;', 'class' => 'alert alert-info text-center center-block'));
+	echo div(array('class' => 'alert alert-info text-center center-block'));
 
 	echo form_open('main/firstConnexion', array('class' => 'form-group'));
 		echo '<strong>VOS COORDONNEES HORS IUT</strong>';

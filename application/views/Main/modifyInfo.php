@@ -4,7 +4,7 @@
 	 *
 	 * Cette vue nécessite les variables suivantes : $infos => tableau ayant pour clé et valeur 'phone' (numéro de téléphone renseigné au début) et 'email' (email renseigné au début)
 	 */
-	echo div(array('style' => 'max-width: 700px;', 'class' => 'alert alert-info text-center center-block'));
+	echo div(array('class' => 'alert alert-info text-center center-block'));
 	
 		echo form_open('main/modifyInfo', array('class' => 'form-group'));
 			echo "<h3 class = text-left>Modifier vos informations personnelles :</h3>";

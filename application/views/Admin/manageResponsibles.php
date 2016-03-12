@@ -20,7 +20,7 @@
 			echo br(2);
 			
 			echo '<table class="table table-bordered">';
-			echo '<tr><th>Matière</th><th>Responsable</th></tr>';
+			echo '<tr><th class="text-center">Matière</th><th class="text-center">Responsable</th></tr>';
 			
 			
 			foreach($subjects as $s){

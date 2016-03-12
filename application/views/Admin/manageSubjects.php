@@ -23,7 +23,7 @@
 		echo '<table id="myTable" class="table table-bordered">';
 			echo '<tr>';
 				foreach ($headers as $header)
-					echo "<th>$header</th>";
+					echo "<th class='text-center'>$header</th>";
 			echo '</tr>';
 
 			foreach ($subjects as $subject)

@@ -539,7 +539,7 @@
 
 
 		public function getGroups(){
-			return $this->db->select('*')->from('groups')->get()->result_array();
+			return $this->db->select('*')->from('groups')->order_by('id_grouptd,id_grouptp')->get()->result_array();
 		}
 
 		public function singleActionGroup($action,$group)

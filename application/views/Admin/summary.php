@@ -14,7 +14,7 @@
 		else
 		{
 			$data = array();
-			$headers = array('Nom et Prénom', 'État de la saisie du voeu');
+			$headers = array('Enseignant', 'État de la saisie du voeu');
 			$whishState = array(-1 => '<p class="text text-danger">Pas encore saisi</p>',
 								1 => '<p class="text text-warning">En cours de saisie</p>',
 								2 => '<p class="text text-success">Validé</p>');
@@ -22,7 +22,7 @@
 			echo '<table class="table table-bordered">';
 				echo '<tr>';
 					foreach ($headers as $header)
-						echo "<th>$header</th>";
+						echo "<th class='text-center'>$header</th>";
 				echo '</tr>';
 
 				foreach ($teacherWishes as $whish)

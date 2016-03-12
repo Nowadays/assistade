@@ -10,7 +10,7 @@
 		echo heading("Quelques paramètres pour bien commencer...", 2);
 	echo div_close();
 
-	echo div(array('style' => 'max-width: 750px;', 'class' => 'panel panel-info text-center center-block'));
+	echo div(array('class' => 'panel panel-info text-center center-block'));
 		echo div(array('class' => 'panel-heading'));
 			echo heading('Date de fin de saisie de voeux');
 		echo div_close();

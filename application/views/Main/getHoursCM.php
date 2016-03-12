@@ -19,7 +19,7 @@
 		echo div_close();
 	echo div_close();
 
-	echo div(array('style' => 'max-width: 750px;', 'class' => "text-center center-block"));
+	echo div(array('class' => "text-center center-block"));
 		echo anchor('Main/getHoursCM/1A', 'Promotion 1A', array('class' => "btn btn-primary"));
         echo nbs(2);
         echo anchor('Main/getHoursCM/2A', 'Promotion 2A', array('class' => "btn btn-primary"));

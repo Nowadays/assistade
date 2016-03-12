@@ -6,7 +6,7 @@
      * (ajout) $minHour => Le nombre minimal d'heures à rentrer par l'enseignant,
      *'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon)
 	 */
-	echo div(array('style' => 'max-width: 800px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		echo heading('Voeux pour P'.$periodNumber, 2);
 		echo br();
 		

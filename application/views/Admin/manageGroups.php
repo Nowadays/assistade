@@ -24,12 +24,12 @@ echo div_close();
 echo div_close();
 
 echo div(array('class' => 'text-center center-block'));
-$headers = array('Identifiant TP', 'Identifiant TD','Année');
+$headers = array('Groupe TP', 'Groupe TD','Année','Options');
 
 echo '<table id="myTable" class="table table-bordered">';
 echo '<tr>';
 foreach ($headers as $header)
-    echo "<th>$header</th>";
+    echo "<th class='text-center'>$header</th>";
 echo '</tr>';
 
 foreach ($groups as $group)

@@ -8,7 +8,7 @@
 				"Adresse e-mail : " => $infos['email']
 				);
 	
-	echo div(array('style' => 'max-width: 800px;', 'class' => 'panel panel-info center-block'));
+	echo div(array('class' => 'panel panel-info center-block'));
 		echo div(array('class' => 'panel-heading text-center'));
 		echo "<h2>Bonjour $username</h2>";
 		echo "<i>Vous pouvez retrouver ici vos informations personnelles</i>";
@@ -17,11 +17,9 @@
 		
 		foreach($tab as $key => $value){
 			echo div(array('class' => 'row'));
-				echo div(array('class' => 'col-md-4 col-md-offset-3'));
-					echo "<strong>".$key."</strong>";
-				echo div_close();
-				echo div(array('class' => 'col-md-1'));
-					echo $value;
+				echo div(array('class' => 'col-md-offset-4 col-lg-offset-4 col-sm-offset-4'));
+					echo "<strong>".$key."</strong> ".$value;
+                    echo br(2);
 				echo div_close();
 			echo div_close();
 		}

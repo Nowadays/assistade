@@ -3,7 +3,7 @@
 	 * Vue affichant les modules dans lesquelles l'enseignant est ipliqué durant la période actuelle
 	 * Cette vue nécessite les variables suivantes : $periodNumber => numéro de la période en cours
 	 */
-	echo div(array('style' => 'max-width: 800px;', 'class' => 'text-center center-block'));
+	echo div(array('class' => 'text-center center-block'));
 		echo heading('Modules pour P'.$periodNumber, 2);
 		echo br();
 
@@ -16,13 +16,13 @@
                 echo '<table id="myTable" class="table table-bordered">';
                     echo '<tr>';
                         foreach ($headers as $header)
-                            echo "<th>$header</th>";
+                            echo "<th class='text-center'>$header</th>";
                     echo '</tr>';
 
                     foreach ($subjects as $subject)
                     {
-                        echo '<tr id="'. $subject['id'] .'">';
-                        echo '<td>'. $subject['id'] .'</td><td>'. $subject['subject_name'] .'</td>'; 
+                        echo '<tr id="'. $subject['id_module'] .'">';
+                        echo '<td>'. $subject['id_module'] .'</td><td>'. $subject['subject_name'] .'</td>'; 
                         echo '</tr>';
                     }
                 echo '</table>';
