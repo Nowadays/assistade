@@ -401,17 +401,17 @@
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
 
-            //$query = $this->db->query("SELECT sum(hours) AS nb_hours FROM (SELECT nb_cm*hours_cm + nb_grp_td*hours_td + nb_grp_tp*hours_tp AS hours FROM nb_group INNER JOIN subjects ON nb_group.id_module=subjects.id WHERE id_enseignant='GLB' AND id_periode=1) AS a", FALSE, TRUE);
-            
-            $query = $this->db->select('nb_cm,hours_cm,nb_grp_tp,hours_tp,nb_grp_td,hours_td')->from('nb_group')->join('subjects','nb_group.id_module=subjects.id')->where('id_enseignant',$teacherId)->where('id_periode',$period)->get()->result_array();
-            
-            $result = 0;
-            
-            foreach($query as $row){
-                $result += $row['nb_cm']*$row['hours_cm'] + $row['nb_grp_td']*$row['hours_td'] + $row['nb_grp_tp']*$row['hours_tp'];
-            }
+			$result = null;
+			$wish_id = $this->getTeacherWishId($period, $teacherId);
 			
-            return $result;
+			if($wish_id !== -1)
+			{
+				$query_results = $this->db->select('nb_hours')->from('mini_nb_hours')->where('period_id', $period)->where('teacher_id', $teacherId)->get()->result_array();
+
+				$result = $query_results[0]['nb_hours'];
+			}
+			
+			return $result;
         }
         
         
@@ -429,7 +429,7 @@
         
             $result = null;
 
-            $query = $this->db->select('id_module,subject_name')->from('nb_group')->join('subject','nb_group.id_module=subject.id','inner')->where('id_periode', $period)->where('id_enseignant', $teacherId)->get();
+            $query = $this->db->select('*')->from('nb_group')->join('subject','nb_group.id_module=subject.id','inner')->where('id_periode', $period)->where('id_enseignant', $teacherId)->get();
 			
             if($query -> num_rows() > 0){
                 $result = $query->result_array();   

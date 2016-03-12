@@ -10,8 +10,8 @@
         if($subjects == null){
             echo '<p>Vous n\'avez pas de module pour cette période</p>';
         }else{
-            echo div(array('style' => 'max-width: 700px;', 'class' => 'text-center center-block'));
-                $headers = array('Module', 'Intitulé');
+            echo div(array('class' => 'text-center center-block'));
+                $headers = array('Module', 'Intitulé', 'CM','TD','TP');
 
                 echo '<table id="myTable" class="table table-bordered">';
                     echo '<tr>';
@@ -22,7 +22,7 @@
                     foreach ($subjects as $subject)
                     {
                         echo '<tr id="'. $subject['id_module'] .'">';
-                        echo '<td>'. $subject['id_module'] .'</td><td>'. $subject['subject_name'] .'</td>'; 
+                        echo '<td>'. $subject['id_module'] .'</td><td>'. $subject['subject_name'] .'</td><td>'. $subject['nb_cm'] .'</td><td>'. $subject['nb_grp_td'] .'</td><td>'. $subject['nb_grp_tp'] .'</td>'; 
                         echo '</tr>';
                     }
                 echo '</table>';
