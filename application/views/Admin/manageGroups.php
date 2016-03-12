@@ -24,11 +24,7 @@ echo div_close();
 echo div_close();
 
 echo div(array('class' => 'text-center center-block'));
-<<<<<<< HEAD
-$headers = array('Groupe TP', 'Groupe TD','Année','Options');
-=======
-$headers = array('Identifiant TD', 'Identifiant TP','Année');
->>>>>>> origin/master
+$headers = array('Identifiant TD', 'Identifiant TP','Année','Options');
 
 echo '<table id="myTable" class="table table-bordered">';
 echo '<tr>';

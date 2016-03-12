@@ -11,13 +11,13 @@
 	echo div(array('class' => 'text-center center-block'));
 		
 		echo heading('Informations concernant '.$teacherName, 2);
+        echo br(1);
 
 		$data = array('<strong>N° de téléphone mobile : </strong>'.$infos['phone'],
 					  '<strong>Adresse e-mail : </strong>'.$infos['email']);
 
 		echo ul($data, array('class' => 'text-left'));
 		
-
 		echo heading('Son planning', 2);
 		
         echo '<p>Nombre d\'heures disponnibles : '.$effectivHours.'</p>';
