@@ -34,6 +34,7 @@ echo '</tr>';
 
 foreach ($groups as $group)
 {
+    print_r($group['id_grouptp']);
     echo '<tr id="'.$group['id_grouptp'].'">';
     echo '<td>'. $group['id_grouptd'] .'</td><td>'. $group['id_grouptp'] .'</td><td>'. $group['promo_id'] .'</td>';
     echo '<td>'.nbs(4).'<span style="cursor: pointer;" class="glyphicon glyphicon-trash" data-original-title="Supprimer" data-placement="top" data-toogle="tooltip" onclick="deleteRow(\''. $group['id_grouptp'] .'\')"></span></td>';
@@ -42,9 +43,5 @@ foreach ($groups as $group)
 echo '</table>';
 echo '<button id="addButton" class="btn btn-info" onclick="addRow()">Ajouter une ligne</button>';
 echo div_close();
-
-
-
-
 
 ?>

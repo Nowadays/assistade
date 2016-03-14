@@ -791,7 +791,7 @@
 					}
 					else if($action == 'delete')
 					{
-						$result = $this->admin_model->singleActionGroup($action, array('id_grouptd' => $id));
+						$result = $this->admin_model->singleActionGroup($action, array('id_grouptd'=>$id,'id_grouptp' => $id_grouptp,'promo_id'=>$promo_id));
 					}
 					else
 					{
