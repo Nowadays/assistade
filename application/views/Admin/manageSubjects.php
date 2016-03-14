@@ -18,7 +18,7 @@
 	echo div_close();
 
 	echo div(array('class' => 'text-center center-block'));
-		$headers = array('Identifiants', 'Nom court','Nom de la matière', 'Heures CM/Semaine', 'Heures TD/Semaine', 'Heures TP/Semaine', 'Options');
+		$headers = array('Identifiants', 'Nom court','Nom de la matière', 'Promo', 'Heures CM/Semaine', 'Heures TD/Semaine', 'Heures TP/Semaine', 'Options');
 
 		echo '<table id="myTable" class="table table-bordered">';
 			echo '<tr>';
@@ -29,7 +29,7 @@
 			foreach ($subjects as $subject)
 			{
 				echo '<tr id="'. $subject['id'] .'">';
-				echo '<td>'. $subject['id'] .'</td><td>'. $subject['short_name'] .'</td><td>'. $subject['subject_name'] .'</td><td>'. $subject['hours_cm'] .'</td><td>'. $subject['hours_td'] .'</td><td>'. $subject['hours_tp'] .'</td>';
+				echo '<td>'. $subject['id'] .'</td><td>'. $subject['short_name'] .'</td><td>'. $subject['subject_name'] .'</td><td>'. $subject['promo_id'] .'</td><td>'. $subject['hours_cm'] .'</td><td>'. $subject['hours_td'] .'</td><td>'. $subject['hours_tp'] .'</td>';
 				echo '<td><span style="cursor: pointer;" class="glyphicon glyphicon-pencil" data-original-title="Modifier" data-placement="top" data-toogle="tooltip" class="btn btn-info" onclick="editRow(\''. $subject['id'] .'\')"></span>'.nbs(4).'<span style="cursor: pointer;" class="glyphicon glyphicon-trash" data-original-title="Supprimer" data-placement="top" data-toogle="tooltip" onclick="deleteRow(\''. $subject['id'] .'\')"></span></td>';
 				echo '</tr>';
 			}

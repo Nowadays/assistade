@@ -387,22 +387,22 @@
 		public function singleActionSubject($action,$subject)
 		{
 			if(!$this->isSubjectIdCorrect($subject['id']))
-					return 'identifiant incorrect !';
+					return 'Identifiant incorrect !';
 					
 			$subjectInfo = $this->db->select('*')->from('subjects')->where('id', $subject['id'])->get()->result_array();
 
 			if($action == 'insert')
 			{
 				if(!empty($subjectInfo))
-					return 'identifiant déjà existant !';
+					return 'Identifiant déjà existant !';
 					
 				if(!$this->isSubjectNameCorrect	($subject['short_name']))
-					return 'nom court incorrect !';
+					return 'Nom court incorrect !';
 				
 				if(!$this->isSubjectNameCorrect	($subject['subject_name']))
-					return 'nom de la matière incorrect !';
+					return 'Nom de la matière incorrect !';
 				
-				$this->db->insert('subject', array('id' => $subject['id'], 'short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name']));
+				$this->db->insert('subject', array('id' => $subject['id'], 'short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name'], 'promo_id' => $subject['promo_id']));
 				$this->db->insert('cm', array('id' => $subject['id'], 'nb_hours' => $subject['hours_cm']));                    
 				$this->db->insert('td', array('id' => $subject['id'], 'nb_hours' => $subject['hours_td']));
 				$this->db->insert('tp', array('id' => $subject['id'], 'nb_hours' => $subject['hours_tp']));                
@@ -412,15 +412,15 @@
 			else if($action == 'update' || $action == 'delete')
 			{
 				if(empty($subjectInfo))
-					return 'identifiant non existant !';
+					return 'Identifiant non existant !';
 				
 				if($action == 'update')
 				{
 					if(!$this->isSubjectNameCorrect	($subject['short_name']))
-						return 'nom court incorrect !';
+						return 'Nom court incorrect !';
 				
 					if(!$this->isSubjectNameCorrect	($subject['subject_name']))
-						return 'nom de la matière incorrect !';
+						return 'Nom de la matière incorrect !';
 				
                     $this->db->where('id', $subject['id']);				
 					$this->db->update('cm', array('nb_hours' => $subject['hours_cm']));
@@ -432,7 +432,7 @@
 					$this->db->update('tp', array('nb_hours' => $subject['hours_tp']));
                     
                     $this->db->where('id', $subject['id']);				
-					$this->db->update('subject', array('short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name']));
+					$this->db->update('subject', array('short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name'], 'promo_id' => $subject['promo_id']));
                     
                     //$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
 				}

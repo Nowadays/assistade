@@ -437,8 +437,8 @@
                 NATURAL JOIN group_td
                 ");
             
-            $this->db->query("CREATE VIEW subjects AS
-                SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp
+            $this->db->query("CREATE OR REPLACE VIEW subjects AS
+                SELECT subject.id, short_name, subject_name, cm.nb_hours as hours_cm, td.nb_hours as hours_td, tp.nb_hours as hours_tp, promo_id
                 FROM subject
                 LEFT JOIN cm ON subject.id = cm.id
                 LEFT JOIN td ON subject.id = td.id

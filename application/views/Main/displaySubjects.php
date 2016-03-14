@@ -11,7 +11,7 @@
             echo '<p>Vous n\'avez pas de module pour cette période</p>';
         }else{
             echo div(array('class' => 'text-center center-block'));
-                $headers = array('Module', 'Intitulé', 'CM','TD','TP');
+                $headers = array('Module', 'Intitulé', 'CM','Groupes TD','Groupes TP');
 
                 echo '<table id="myTable" class="table table-bordered">';
                     echo '<tr>';
