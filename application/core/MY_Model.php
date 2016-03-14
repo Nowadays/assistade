@@ -394,44 +394,21 @@
 		* Méthode retournant le nombre d'heures de disponnibilité d'un professeur pour une période donnée
 		*
 		* Cette méthode retourne un entier correspondant au nombre d'heures de disponnibilité du professeur dans la période donnée
-		*
 		*/
-		public function TeacherMiniHours($teacherId,$subjects,$nb_group_td,$nb_group_tp, $period = false)
-		{
- 			if($period === FALSE)
-				$period = $this->getCurrentPeriodId();
-
-			$wish_id = $this->getTeacherWishId($period, $teacherId);
-			$cm_hours  = $this->db->select('cm.nb_hours')->from('subjects')->where('short_name',$subjects);
-			$tp_hours  = $this->db->select('tp.nb_hours')->from('subjects')->where('short_name',$subjects);
-			$td_hours  = $this->db->select('td.nb_hours')->from('subjects')->where('short_name',$subjects);
-
-			$hours = $cm_hours + ($nb_group_td * $td_hours) + ($nb_group_tp * $tp_hours);
-
-			$data = array(
-				'teacher_id' => $teacherId,
-				'period_id' => $period,
-				'nb_hours' => $hours
-			);
-
-			$this->db->insert('mini_nb_hours',$data);
-		}
-
-
         public function getTeacherMiniHours($teacherId, $period = FALSE)
         {
             if($period === FALSE)
 				$period = $this->getCurrentPeriodId();
 
-			$result = null;
-			$wish_id = $this->getTeacherWishId($period, $teacherId);
-			
-			if($wish_id !== -1)
-			{
-				$query_results = $this->db->select('nb_hours')->from('mini_nb_hours')->where('period_id', $period)->where('teacher_id', $teacherId)->get()->result_array();
-
-				$result = $query_results[0]['nb_hours'];
-			}
+			//$query = $this->db->query("SELECT sum(hours) AS nb_hours FROM (SELECT nb_cm*hours_cm + nb_grp_td*hours_td + nb_grp_tp*hours_tp AS hours FROM nb_group INNER JOIN subjects ON nb_group.id_module=subjects.id WHERE id_enseignant='GLB' AND id_periode=1) AS a", FALSE, TRUE);
+            
+            $query = $this->db->select('nb_cm,hours_cm,nb_grp_tp,hours_tp,nb_grp_td,hours_td')->from('nb_group')->join('subjects','nb_group.id_module=subjects.id')->where('id_enseignant',$teacherId)->where('id_periode',$period)->get()->result_array();
+            
+            $result = 0;
+            
+            foreach($query as $row){
+                $result += $row['nb_cm']*$row['hours_cm'] + $row['nb_grp_td']*$row['hours_td'] + $row['nb_grp_tp']*$row['hours_tp'];
+            }
 			
 			return $result;
         }
