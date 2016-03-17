@@ -438,6 +438,15 @@
 				}
 				else
 				{
+                    $this->db->where('sub_id', $subject['id']);
+					$this->db->delete('in_charge');
+                    
+                    $this->db->where('id_module', $subject['id']);
+					$this->db->delete('nb_group');
+                    
+                    $this->db->where('subject_id', $subject['id']);				
+					$this->db->delete('course');
+                    
                     $this->db->where('id', $subject['id']);				
 					$this->db->delete('cm');
                     
@@ -446,9 +455,6 @@
                     
                     $this->db->where('id', $subject['id']);				
 					$this->db->delete('tp  ');
-                    
-					$this->db->where('sub_id', $subject['id']);
-					$this->db->delete('in_charge');
 					
 					$this->db->where('id', $subject['id']);				
 					$this->db->delete('subject');
