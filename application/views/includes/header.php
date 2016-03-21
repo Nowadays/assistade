@@ -15,6 +15,7 @@
 			echo '<meta charset="UTF-8" />';
 			echo link_tag('assets/css/bootstrap.min.css');
 			echo link_tag('assets/css/bootstrap-theme.min.css');
+            echo link_tag('assets/css/style.css');
 		?>
 
 		<!--[if lt IE 9]>

@@ -459,20 +459,15 @@
             
             $this->db->query('CREATE OR REPLACE FUNCTION insert_group() RETURNS trigger AS $group$
                 BEGIN
-                    PERFORM * FROM student_group WHERE id = NEW.id;
+                    PERFORM * FROM group_td WHERE promo_id=NEW.promo_id AND id_grouptd=NEW.id_grouptd;
                     IF NOT FOUND
                     THEN
-                        INSERT INTO student_group VALUES(NEW.id,NEW.year_id);
+                        INSERT INTO group_td VALUES(NEW.id_grouptd,NEW.promo_id);
                     END IF;
-                    PERFORM * FROM student_group_td WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd;
+                    PERFORM * FROM group_tp WHERE id_grouptd=NEW.id_grouptd AND id_grouptp=NEW.id_grouptp;
                     IF NOT FOUND
                     THEN
-                        INSERT INTO student_group_td VALUES(NEW.id,NEW.id_grouptd);
-                    END IF;
-                    PERFORM * FROM student_group_tp WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd AND id_grouptp=NEW.id_grouptp;
-                    IF NOT FOUND
-                    THEN
-                        INSERT INTO student_group_tp VALUES(NEW.id,NEW.id_grouptp,NEW.id_grouptd);
+                        INSERT INTO group_tp VALUES(NEW.id_grouptp,NEW.id_grouptd);
                     END IF;
                     RETURN NEW;
                 END;
