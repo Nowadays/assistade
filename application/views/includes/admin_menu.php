@@ -17,9 +17,9 @@
 			<?php 
                 $index = (isset($connected) && !$connected) ? '/main' : '/admin'; 
                 if(isset($connected) && !$connected)
-                    echo '<a class="navbar-brand" href="'.site_url() . $index . '"><span class="glyphicon glyphicon-home"></span> Assist\'Edt</a>';
+                    echo '<a class="navbar-brand" href="'.site_url() . $index . '"><img src="'.base_url().'res/img/assistade.min.svg'.'"></img></a>';
                 else
-                    echo '<a class="navbar-brand" href="'.site_url() . $index . '/privateSpace"><span class="glyphicon glyphicon-home"></span> Assist\'Edt</a>';
+                    echo '<a class="navbar-brand" href="'.site_url() . $index . '/privateSpace"><img src="'.base_url().'res/img/assistade.min.svg'.'"></img></a>';
             ?>
 		</div>
 		

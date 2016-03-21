@@ -34,7 +34,7 @@
 		echo '<table id="myTable" class="table">';
 			echo '<tr id="new">';
 			foreach($fieldNames as $field)
-				echo '<td><input type="text" class="form-control" placeholder="'.$field.'" style="padding : 0px;"/></td>';
+				echo '<td><input type="text" class="form-control" placeholder="'.$field.'"/></td>';
 			
 			echo '<td><span style="cursor: pointer;" class="glyphicon glyphicon-floppy-disk" data-original-title="Enregistrer" data-placement="top" data-toogle="tooltip" onclick="saveNewRow()"></span></td>';
 			echo '</tr>';

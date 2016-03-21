@@ -2,6 +2,14 @@ table{
     box-shadow: 5px 5px 10px #aaa;
 }
 
+.table-bordered{
+    border: 0px transparent;    
+}
+
+.table-bordered tbody tr th{
+        border : 0px transparent;
+}
+
 table th{
     background-color: #015b7e;
     color: white;
@@ -15,6 +23,15 @@ body{
 
 .navbar{
     background: #015b7e;
+    font-size: 15px;
+    line-height: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-brand{
+    padding-top: 0px;
+    padding-bottom : 0px;
 }
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a{
@@ -28,4 +45,19 @@ body{
 
 input.form-control{
     padding: 10px;
+}
+
+.panel{
+    box-shadow: 5px 5px 10px #aaa;
+    border: 0px transparent;
+    border: 0px transparent;
+}
+
+
+.panel-info > .panel-heading{
+    color : #fff;
+    background-color: #eee;
+    background-image: linear-gradient(to bottom, #025c7f 0px, #015b7e 50%, #025c7f 100%);
+    background-repeat: repeat-x;
+    border-color : transparent;
 }
