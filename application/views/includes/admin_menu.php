@@ -13,6 +13,7 @@
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 			</button>
 			<?php 
                 $index = (isset($connected) && !$connected) ? '/main' : '/admin'; 

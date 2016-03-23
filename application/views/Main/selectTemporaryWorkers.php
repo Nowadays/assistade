@@ -27,7 +27,7 @@
 		}
 		
 		echo nbs(2);
-		echo '<table id="myTable" class="table">';
+		echo '<table id="myTable" class="table table-bordered">';
 			echo "<tr><th></th><th>Créer un nouveau vacataire</th><th></th><th></th></tr>";
             echo '<tr id="new">';
 			foreach($fieldNames as $field)

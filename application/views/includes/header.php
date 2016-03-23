@@ -25,8 +25,7 @@
 	
 	</head>
 	<body>
-        <?php echo br(4) ?>
         <div class="page-header text-center">
-	       <?php echo heading(img(base_url() . 'res/img/assistade.svg')); echo br(1); ?>	
+	       <?php echo heading(img(base_url() . 'res/img/assistade.svg')) ?>	
         </div>
         <div class="container">

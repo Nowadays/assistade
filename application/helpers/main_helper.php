@@ -26,9 +26,9 @@
 		 */
 		function availabilityLevel()
 		{
-			return '<span class="label" style="background-color:#2E2E2E;padding:10px;">Indisponible</span>
-					<span class="label" style="background-color:#CC0000;padding:10px;">Horaires à éviter</span>
-					<span class="label label-success " style="padding:10px;">Horaires disponibles</span>';
+			return '<span class="label" style="background-color:#444;padding:10px;">Indisponible</span>
+					<span class="label" style="background-color:#d9534f;padding:10px;">Horaires à éviter</span>
+					<span class="label" style="background-color:#5cb85c;padding:10px;">Horaires disponibles</span>';
 		}
 	}
 
@@ -187,7 +187,10 @@
 
 			foreach ($elements as $line)
 			{
-				$data[] = anchor($line[1], $line[0]);
+                if ($line[0] != "Déconnexion")
+                    $data[] = anchor($line[1], $line[0]);
+                else
+                    $data[] = anchor($line[1], $line[0], array('class' => 'btn btn-danger'));
 			}
 
 			return ul($data, array('class' => 'nav navbar-nav'));

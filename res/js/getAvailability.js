@@ -21,13 +21,13 @@ function changeState(object, s)
 			setColor(object, 'white');
 			break;
 		case 1:
-			setColor(object, 'rgb(46, 46, 46)');
+			setColor(object, 'rgb(68, 68, 68)');
 			break;
 		case 2:
-			setColor(object, 'rgb(186, 20, 20)');
+			setColor(object, 'rgb(217, 83, 79)');
 			break;
 		case 3:
-			setColor(object, 'rgb(80, 211, 89)');
+			setColor(object, 'rgb(92, 184, 92)');
 			break;
 		default:
 			setColor(object, 'white');

@@ -31,8 +31,9 @@ body{
     background: #015b7e;
     font-size: 15px;
     line-height: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
 }
 
 .navbar-brand{
@@ -42,15 +43,21 @@ body{
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a{
     color: #ddd;
+    font-size: 15px;
 }
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav li a:hover{
     color: #fff;
-    font-size: bold;
 }
 
 input.form-control{
     padding: 10px;
+}
+
+.page-header{
+    background: #eee;
+    padding-bottom: 15px;
+    padding-top: 40px;
 }
 
 .panel{
@@ -68,15 +75,19 @@ input.form-control{
     border-color : transparent;
 }
 
-.btn{
+.btn, a.btn{
     border-radius: 5px;
     border: 0px solid transparent;
     background-image: none;
     padding: 12px;
 }
 
-.btn-danger{
+.btn-danger, a.btn-danger{
     background-color: #d9534f;
+}
+
+.btn-danger:hover, a.btn-danger:hover{
+    background-color: #c12e2a !important;
 }
 
 .btn-info{
@@ -95,4 +106,9 @@ input.form-control{
 .btn-inverse:hover{
     color: white;
     background-color: #444;
+}
+
+.alert{
+    border: none;
+    box-shadow: 5px 5px 10px #aaa;
 }
