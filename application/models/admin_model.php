@@ -609,9 +609,8 @@
                     $id_td = $this->db->select("id_grouptd")->from("groups")->where("id_grouptp",$group['id_grouptd'])->get()->result_array();
                     $res = $this->db->select("count(*) as res")->from("groups")->where("id_grouptd",$id_td[0]['id_grouptd'])->get()->result_array();//$group['id_grouptp']
 
-                    
                     if($res[0]['res']==1){
-                       /* $this->db->where('id_grouptd', $id_td['id_grouptd']);
+                        $this->db->where('id_grouptd', $id_td[0]['id_grouptd']);
                         $this->db->delete('course_groups_td');
 
                         $this->db->where('id_grouptp', $group['id_grouptd']);
@@ -620,17 +619,17 @@
                         $this->db->where('id_grouptp', $group['id_grouptd']);
                         $this->db->delete('group_tp');
 
-                        $this->db->where('id_grouptd', $id_td['id_grouptd']);
-                        $this->db->delete('group_td');*/
+                        $this->db->where('id_grouptd', $id_td[0]['id_grouptd']);
+                        $this->db->delete('group_td');
 
-                        $this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
+                        //$this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
                     }else if($res[0]['res']==2){
-                        /*$this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
                         $this->db->delete('course_groups_tp');
 
                         $this->db->where('id_grouptp', $group['id_grouptd']);
-                        $this->db->delete('group_tp');*/
-                        $this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
+                        $this->db->delete('group_tp');
+                        //$this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
                     }
                 }
 

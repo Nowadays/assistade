@@ -53,7 +53,7 @@ function saveNewRow(){
 			if(state == "success"){
 				$('#modal-content').html('<h3>Succès</<h3><p>' + message + '<br /><br /><button class="btn btn-primary" data-dismiss="modal">Fermer</button></p>');
 
-				id = children[0].firstChild.value;
+				id = children[1].firstChild.value;
 				row.id = id;
 			
 				for(var i = 0; i < children.length-1 ; i++)
