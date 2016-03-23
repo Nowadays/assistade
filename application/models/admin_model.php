@@ -553,8 +553,8 @@
 			/*if(!$this->isGroupTdCorrect($group['id_grouptd']))
 				return 'identifiant incorrect !';*/
 
-			$groupTest = $this->db->select('id_grouptp')->from('groups')->where('id_grouptd',$group['id_grouptd'])->where('id_grouptp',$group['id_grouptp'])->get()->result_array();
-			$groupInfo = $this->db->select('*')->from('groups')->where('id_grouptd',$group['id_grouptd'])->get()->result_array();
+			//$groupTest = $this->db->select('id_grouptp')->from('groups')->where('id_grouptd',$group['id_grouptd'])->where('id_grouptp',$group['id_grouptp'])->get()->result_array();
+			//$groupInfo = $this->db->select('*')->from('groups')->where('id_grouptd',$group['id_grouptd'])->get()->result_array();
 			if($action == 'insert')
 			{
 				if(!empty($groupTest))
@@ -576,8 +576,8 @@
 			}
 			else if($action == 'update' || $action == 'delete')
 			{
-				if(empty($groupInfo))
-					return 'identifiant non existant !';
+				//if(empty($groupInfo))
+				//	return 'identifiant non existant !';
 
 				if($action == 'update')
 				{
@@ -606,21 +606,29 @@
 				}
 				else
 				{
-					$this->db->where('id_grouptd', $group['id_grouptd']);
-					$this->db->delete('course_groups_td');
+                    $id_td = $this->db->select("id_grouptd")->from("groups")->where("id_grouptp",$group['id_grouptd'])->get()->result_array();
+                    $res = $this->db->select("count(*) as res")->from("groups")->where("id_grouptd",$id_td)->get()->result_array();//$group['id_grouptp']
+                    
+                    if($res['res']==1){
+                        $this->db->where('id_grouptd', $id_td['id_grouptd']);
+                        $this->db->delete('course_groups_td');
 
-					$this->db->where('id_grouptp', $group['id_grouptp'])->where('id_grouptp',$group['id_grouptp']);
-					$this->db->delete('course_groups_tp');
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('course_groups_tp');
 
-					$this->db->where('id_grouptd', $group['id_grouptd'])->where('id_grouptp',$group['id_grouptp']);
-					$this->db->delete('group_tp');
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('group_tp');
 
-					$this->db->where('id_grouptd', $group['id_grouptd']);
-					$this->db->delete('group_td');
+                        $this->db->where('id_grouptd', $id_td['id_grouptd']);
+                        $this->db->delete('group_td');
+                    }else if($res['res']==2){
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('course_groups_tp');
 
-
-
-				}
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('group_tp');
+                    }
+                }
 
 				return 'success';
 			}
