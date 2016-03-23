@@ -11,15 +11,19 @@
 			$data[$t['initials']] = $t['firstname'] . ' ' . $t['lastname'];
 
 		echo form_open('main/signIn', array('class' => 'form-group'));
-			echo form_label('Sélectionnez votre nom/prénom :', 'login');
+			echo form_label('Sélectionnez votre identifiant', 'login');
 			echo nbs(2);
 			echo form_dropdown('id', $data, '', 'id="login" class="form-control"');
 			echo br(2);
-			echo form_label('Mot de passe :', 'password');
-			echo br(2);
+			echo form_label('Mot de passe', 'password');
+			echo br(1);
 			echo form_password(array('name' => 'password', 'id' => 'password', 'class' => 'form-control'));
 			echo br(2);
 			echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-success'));
 		echo form_close();
 	echo div_close();		
 ?>
+
+<div class="footer text-center">
+    <p>Réalisé avec <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color:#d9534f"></span> par vos étudiants préférés | IUT Lannion | 2016</p>
+</div>
