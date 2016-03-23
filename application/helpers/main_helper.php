@@ -26,9 +26,9 @@
 		 */
 		function availabilityLevel()
 		{
-			return '<span class="label" style="background-color:#2E2E2E">Indisponible</span>
-					<span class="label" style="background-color:#CC0000">Horaires à éviter</span>
-					<span class="label label-success">Horaires disponibles</span>';
+			return '<span class="label" style="background-color:#2E2E2E;padding:10px;">Indisponible</span>
+					<span class="label" style="background-color:#CC0000;padding:10px;">Horaires à éviter</span>
+					<span class="label label-success " style="padding:10px;">Horaires disponibles</span>';
 		}
 	}
 

@@ -19,7 +19,7 @@
 			echo br(2);
 			echo form_password(array('name' => 'password', 'id' => 'password', 'class' => 'form-control'));
 			echo br(2);
-			echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-info'));
+			echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-success'));
 		echo form_close();
 	echo div_close();		
 ?>

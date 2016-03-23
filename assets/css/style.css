@@ -4,10 +4,15 @@ table{
 
 .table-bordered{
     border: 0px transparent;    
+    border-radius: 5px !important;
+}    
+
+#myTable.table-bordered tbody tr td{
+    border-color: transparent;
 }
 
 .table-bordered tbody tr th{
-        border : 0px transparent;
+    border : 0px transparent;
 }
 
 table th{
@@ -15,7 +20,8 @@ table th{
     color: white;
     font-size: 16px;
     text-align: center;
-}
+    border-color: transparent;
+}    
 
 body{
     padding-bottom: 50px; 
@@ -60,4 +66,33 @@ input.form-control{
     background-image: linear-gradient(to bottom, #025c7f 0px, #015b7e 50%, #025c7f 100%);
     background-repeat: repeat-x;
     border-color : transparent;
+}
+
+.btn{
+    border-radius: 5px;
+    border: 0px solid transparent;
+    background-image: none;
+    padding: 12px;
+}
+
+.btn-danger{
+    background-color: #d9534f;
+}
+
+.btn-info{
+    background-color: #5bc0de;
+}
+
+.btn-success{
+    background-color: #5cb85c;
+}
+
+.btn-inverse{
+    color: white;
+    background-color: #555;
+}
+
+.btn-inverse:hover{
+    color: white;
+    background-color: #444;
 }

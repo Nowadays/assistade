@@ -206,7 +206,7 @@
 
 			$data['teacherWishes'] = $this->admin_model->getTeachersWishes();
 
-			$this->load->admin_template('Admin/summary', $data);
+			$this->load->admin_template('Admin/summary', $data, array('table.js'));
 		}
         
         /**
