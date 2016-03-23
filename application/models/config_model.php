@@ -455,6 +455,12 @@
                 )");
 
             
+            
+            
+            
+            
+            
+            
             /************* Triggers *************/
             
             $this->db->query('CREATE OR REPLACE FUNCTION insert_group() RETURNS trigger AS $group$
@@ -478,6 +484,24 @@
                 ON groups
                 FOR EACH ROW
                 EXECUTE PROCEDURE insert_group()");
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION delete_group() RETURNS trigger AS $group$
+                BEGIN
+                    DELETE FROM group_tp WHERE id_grouptp = OLD.id_grouptp;
+                    PERFORM * FROM group_tp WHERE id_grouptp = OLD.id_grouptp;
+                    IF NOT FOUND
+                    THEN
+                        DELETE FROM group_td WHERE id_grouptd = OLD.id_grouptd;
+                    END;
+                    RETURN OLD;
+                END;
+                $group$ LANGUAGE plpgsql');
+            
+            $this->db->query("CREATE TRIGGER delete_group
+                INSTEAD OF DELETE
+                ON groups
+                FOR EACH ROW
+                EXECUTE PROCEDURE delete_group()");
             
             $this->db->query('CREATE OR REPLACE FUNCTION insert_subject() RETURNS trigger AS $subject$
                 BEGIN
