@@ -17,8 +17,6 @@
 				$data[$t['initials']] = $t['firstname'] . ' ' . $t['lastname'];
 
 			echo form_open('main/selectTemporaryWorkers', array('class' => 'form-group'));
-				echo form_label('Sélectionnez le nom/prénom du vacataire :', 'login');
-				echo nbs(2);
 				echo form_dropdown('id', $data, '', 'id="login" class="form-control"');
 				echo br(1);
 				echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-success'));

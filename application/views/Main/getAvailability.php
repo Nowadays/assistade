@@ -7,8 +7,6 @@
      *'status' => tableau contenant les status des créneaux horaires (0 si sélectionnable, 1 sinon)
 	 */
 	echo div(array('class' => 'text-center center-block'));
-		echo heading('Voeux pour P'.$periodNumber, 2);
-		echo br();
 		
 		echo form_button(array('content' => 'Remettre à blanc', 'class' => 'btn btn-xs active', 'id' => 'white'));
 		echo nbs(2);

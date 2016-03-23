@@ -2,6 +2,7 @@
 	/**
 	 * Vue affichant l'en-tête HTML de chaque page
 	 * Cette vue affiche le doctype HTML5, affiche l'icone sur le naviguateur et inclut les fichiers CSS bootstrap
+     * Prends en paramètre la variable $title à afficher dans le header
 	 */
 	echo doctype('html5'); 
 ?>
@@ -26,6 +27,7 @@
 	</head>
 	<body>
         <header class="page-header text-center">
-	       <?php echo heading(img(base_url() . 'res/img/assistade.svg')) ?>	
+	       <!--<?php echo heading(img(base_url() . 'res/img/assistade.svg')) ?>-->
+	       <?php echo heading($title) ?>	
         </header>
-        <div class="container">
+        <div id='main-container' class="container">

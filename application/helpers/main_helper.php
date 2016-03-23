@@ -193,7 +193,7 @@
                     $data[] = anchor($line[1], $line[0], array('class' => 'btn btn-danger'));
 			}
 
-			return ul($data, array('class' => 'nav navbar-nav'));
+			return ul($data, array('class' => 'nav navbar-nav navbar-right'));
 		}
 	}
 

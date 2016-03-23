@@ -15,9 +15,9 @@
 		*
 		* @param string[] $js Tableau associatif contenant le nom des fichiers javascript à rajouter
 		*/
-		public function template($views, array $vars = array(), array $js = array())
+		public function template($views, array $vars = array(), array $js = array(), $title=NULL)
 		{
-			$this->displayTemplate('main', $views, $vars, $js);
+			$this->displayTemplate('main', $views, $vars, $js, $title);
 		}
 
 		/**
@@ -29,9 +29,9 @@
 		*
 		* @param string[] $js Tableau associatif contenant le nom des fichiers javascript à rajouter
 		*/
-		public function admin_template($views, array $vars = array(), array $js = array())
+		public function admin_template($views, array $vars = array(), array $js = array(), $title=NULL)
 		{
-			$this->displayTemplate('admin', $views, $vars, $js);
+			$this->displayTemplate('admin', $views, $vars, $js, $title);
 		}
 
 		/**
@@ -43,9 +43,9 @@
 		*
 		* @param string[] $js Tableau associatif contenant le nom des fichiers javascript à rajouter
 		*/
-		public function templateWithoutMenu($views, array $vars = array(), array $js = array())
+		public function templateWithoutMenu($views, array $vars = array(), array $js = array(), $title=NULL)
 		{
-			$this->displayTemplate(FALSE, $views, $vars, $js);
+			$this->displayTemplate(FALSE, $views, $vars, $js, $title);
 		}
 
 		/**
@@ -62,9 +62,14 @@
 		 * @param  array  $js    Paramètre optionnel contenant le nom des fichier javascript à inclure en fin de fichier. Ces nom doivent terminer par leur extension. De plus,
 		 * les fichiers doivent se situer à la racine du site dans le dossier res/js
 		 */
-		private function displayTemplate($menu, $views, array $vars = array(), array $js = array())
+		private function displayTemplate($menu, $views, array $vars = array(), array $js = array(), $title=NULL)
 		{
-			$this->view('includes/header.php');
+            $data['title'] = "";
+            
+            if($title != NULL)
+                $data['title'] = $title;
+            
+			$this->view('includes/header.php',$data);
 
 			if($menu === "admin")
 				$this->view('includes/admin_menu.php', $vars);

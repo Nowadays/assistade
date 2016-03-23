@@ -17,7 +17,6 @@
 	echo div_close();
 	
 	echo div(array('class' => "text-center center-block"));
-		echo heading('Vos disponibilités');
 		echo '<p class="lead">Ces disponibilités sont définitives ! Pour tout problème, veuillez contacter l\'administrateur.</p>';
 
 		echo availabilityTable($hours);

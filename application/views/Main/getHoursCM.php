@@ -25,9 +25,6 @@
         echo anchor('Main/getHoursCM/2A', 'Promotion 2A', array('class' => "btn btn-primary"));
         echo br(2);
 
-        echo heading('Créneaux réservés aux CM de P'.$periodNumber.' pour les '.$promo);
-        echo br(2);
-
         echo availabilityTable($hours, NULL, $cmHours);
 		//echo availabilityLevel();
 	echo div_close(); 

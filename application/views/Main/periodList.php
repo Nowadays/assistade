@@ -5,7 +5,7 @@
 	 * et pour valeur le texte affiché par la dropdown. Voir doc codeigniter 2.2 > helper > form helper
 	 */
 	echo div(array('style' => 'max-width: 300px', 'class' => 'text-center center-block'));
-		echo 'Période : ';
+		echo '<h4>Période</h4>';
 		echo form_dropdown('period', $periods, '', 'id="period" class="form-control"');
 	echo div_close();
 ?>

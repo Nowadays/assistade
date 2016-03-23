@@ -4,11 +4,16 @@
 	 */
 ?>
 <div class="text-center">
-	<p class="lead">
-		Bienvenue sur l'application de saisie de disponibilité ! <br />
-		Vous êtes invité à vous connecter et à indiquer vos disponibilités <br />
-		si cela n'a pas encore été fait !
-	</p>
+    <div class="col-md-4">
+        <?php echo img(base_url() . 'res/img/calendar.svg') ?>
+    </div>
+    <div class="col-md-8 text-left">
+        <p class="lead">
+            Bienvenue sur l'application de saisie de disponibilités ! <br />
+            Vous êtes invité à vous connecter et à indiquer vos disponibilités <br />
+            si cela n'a pas encore été fait !
+        </p>
+    </div>
 </div>
 
 

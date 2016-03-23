@@ -1,4 +1,4 @@
-var state = 0;
+var state = -1;
 var hasClick = false;
 
 function setColor(object, color)
@@ -10,7 +10,7 @@ function changeState(object, s)
 {
 	if(typeof(s) !== 'undefined')
 		state = s;
-
+    
 	var input = object.children;
 
 	$(input).attr('value', state.toString());
@@ -30,7 +30,7 @@ function changeState(object, s)
 			setColor(object, 'rgb(92, 184, 92)');
 			break;
 		default:
-			setColor(object, 'white');
+			//setColor(object, 'white');
 	}
 }
 
@@ -51,9 +51,9 @@ $('.selectable').each(function(index, element)
 
 	if(state !== 0)
 		changeState(element, state);
-})
+});
 
-state = 0;
+state = -1;
 
 $('#white').on('click', function(){ state = 0; setActive(this);});
 $('#black').on('click', function(){ state = 1; setActive(this);});

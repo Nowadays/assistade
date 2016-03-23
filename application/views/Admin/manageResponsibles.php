@@ -15,9 +15,6 @@
 			$data[$t['initials']] = $t['firstname'] . ' ' . $t['lastname'];
 
 		echo form_open('admin/manageResponsibles', array('class' => 'form-group'));
-		
-			echo form_label('Sélectionnez les responsables de matière :', 'resp');
-			echo br(2);
 			
 			echo '<table id="myTable" class="table table-bordered table-striped">';
 			echo '<tr><th class="text-center">Matière</th><th class="text-center">Responsable</th></tr>';
