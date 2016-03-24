@@ -66,6 +66,7 @@ function saveNewRow(){
 				
 				row.replaceChild(cell,row.lastChild);
 				$('#addButton').removeClass('disabled');
+               location.reload(true);
 			}
 			else if(state == "failed")
 				$('#modal-content').html('<h3>Echec</<h3><p>Raison : ' + message + '<br /><br /><button class="btn btn-primary" data-dismiss="modal">Fermer</button></p>');

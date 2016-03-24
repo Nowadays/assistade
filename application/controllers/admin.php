@@ -544,7 +544,7 @@
 					{
 						$data = array('state' => 'failed', 'message' => $result);
 					}
-					$this->load->view('Admin/databaseReturnXML', $data);
+                    $this->load->view('Admin/databaseReturnXML', $data);
 				}
 				catch(Exception $e)
 				{
@@ -782,7 +782,7 @@
 				{
 					$action = $this->input->post('action');
 					$id = $this->input->post('id_grouptd');
-					$id_grouptd = $this->input->post('id_grouptd');
+					//$id_grouptd = $this->input->post('id_grouptd');
 					$id_grouptp = $this->input->post('id_grouptp');
 					$promo_id = $this->input->post('promo_id');
 
