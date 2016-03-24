@@ -139,7 +139,7 @@
 				redirect('config/initPeriods');
 
 			$this->load->library('upload');
-			$data = array('name' => 'professeurs', 'table' => 'teacher', 'src' => 'initTeacher');
+			$data = array('name' => 'enseignants', 'table' => 'teacher', 'src' => 'initTeacher');
 
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
@@ -183,7 +183,7 @@
 				redirect('config/initPeriods');
 
             $this->load->library('upload');
-			$data = array('name' => 'matières', 'table' => 'subject', 'src' => 'initSubject');
+			$data = array('name' => 'modules', 'table' => 'subject', 'src' => 'initSubject');
 			
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
@@ -283,15 +283,14 @@
 				redirect('config/initInCharge');
 
 			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'group_tp', 'src' => 'initGroupe');
-
+			$data = array('name' => 'groupes', 'table' => 'groups', 'src' => 'initGroupe');
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
 				try
 				{
 					$this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
-					redirect('config/initAdminInfo');
+                    redirect('config/initAdminInfo');
 				}
 				catch(Exception $e)
 				{
@@ -382,14 +381,16 @@
 				$fileName = "";
 
 				if($tableName === "teacher")
-					$fileName = "Professeur";
+					$fileName = "Enseignants";
 				else if($tableName === "subject")
-					$fileName = "Matiere";
-				else if($tableName === "group_tp"){
-					$fileName = "Groupe";
-				}else if($tableName === "nb_group"){
-					$fileName = "NbGroup";
-				}
+					$fileName = "Modules";
+				else if($tableName === "group_tp")
+					$fileName = "Groupes";
+                else if($tableName === "groups")
+					$fileName = "Groupes";
+				else if($tableName === "nb_group")
+					$fileName = "Prévisions";
+				
 				
 				$fileName .= ".csv";
 

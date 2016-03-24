@@ -23,9 +23,9 @@
 							echo form_password(array('id' => 'passwordBis', 'name' => 'passwordBis', 'class' => 'form-control', 'required' => 'true'));
 						echo div_close();
 
-				echo br(2);
+				echo br(3);
 
-				echo form_submit(array('value' => 'Enregistrer', 'class' => 'btn btn-primary'));
+				echo form_submit(array('value' => 'Enregistrer', 'class' => 'btn btn-success'));
 			echo form_close();
 		echo div_close();
 	echo div_close();

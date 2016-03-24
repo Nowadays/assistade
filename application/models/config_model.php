@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp','group_tp','nb_group'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','groups','group_tp','nb_group'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -76,7 +76,7 @@
 				$passwordToInsert = array();
 				$password = array();
 			}
-
+            
 			while(($row = fgetcsv($file)) !== FALSE)
 			{
 				for($i = 0; $i < count($fileColumns); $i++)
@@ -94,7 +94,18 @@
             if(empty($valuesToInsert)){
                 throw new Exception("Fichier vide");
             }else{
-                $this->db->insert_batch($tableName, $valuesToInsert);
+                if ($tableName === 'groups'){
+                    foreach($valuesToInsert as $ligne){
+                        $tp = $ligne['id_grouptp'];
+                        $td = $ligne['id_grouptd'];
+                        $promo = $ligne['promo_id'];
+                        
+                        $this->db->insert('group_td', array('id_grouptd' => $td, 'promo_id' => $promo));
+                        $this->db->insert('group_tp', array('id_grouptp' => $tp, 'id_grouptd' => $td));
+                    }
+                }else{
+                    $this->db->insert_batch($tableName, $valuesToInsert);   
+                }
             }
 
 			if($tableName === 'teacher'){
