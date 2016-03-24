@@ -2,14 +2,10 @@
 	/**
 	 * Vue permettant à l'administrateur de changer son mot de passe
 	 */
-	echo div(array('class' => 'text-center'));
-		echo heading("Configuration d'une nouvelle année", 1);
-		echo heading("Quelques paramètres pour bien commencer...", 2);
-	echo div_close();
 
 	echo div(array('style' => 'max-width: 750px;', 'class' => 'panel panel-info text-center center-block'));
 		echo div(array('class' => 'panel-heading'));
-			echo heading("Information de connexion");
+			echo heading("Nouveau mot de passe");
 		echo div_close();
 
 		echo div(array('class' => 'panel-body'));

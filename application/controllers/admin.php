@@ -185,7 +185,7 @@
 						  'state' => 'success',
 						  'static' => TRUE,
 						  'button' => array(
-										'value' => 'retour',
+										'value' => 'Retour',
 										'onclick' => '/admin',
 										'visible' => true
 										)
@@ -379,7 +379,7 @@
 				}
 			}
 			else
-                $this->load->admin_template($view, $data, array(), 'Chargement d\'un CSV');
+                $this->load->admin_template($view, $data, array(), 'Chargement des modules des enseignants');
         }
 
 		/**

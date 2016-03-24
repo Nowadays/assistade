@@ -122,8 +122,8 @@ input.form-control{
 
 .page-header{
     background: #eee;
-    padding-bottom: 35px;
-    padding-top: 100px;
+    padding-bottom: 45px;
+    padding-top: 110px;
     margin: 0;
     margin-bottom: 30px;
     font-variant-caps: petite-caps;
@@ -136,6 +136,10 @@ input.form-control{
     border: 0px transparent;
 }
 
+.panel table{
+    box-shadow: none;
+}
+
 
 .panel-info > .panel-heading{
     color : #fff;
@@ -143,6 +147,10 @@ input.form-control{
     background-image: linear-gradient(to bottom, #025c7f 0px, #015b7e 50%, #025c7f 100%);
     background-repeat: repeat-x;
     border-color : transparent;
+}
+
+.panel-info > .panel-heading .lead{
+    color: #fff;
 }
 
 .btn, a.btn{
@@ -206,4 +214,8 @@ input.form-control{
     font-family: 'Josefin Sans', 'Montserrat';
     font-size: 40px;
     color: #015b7e;
+}
+
+.label{
+    padding: 5px;
 }

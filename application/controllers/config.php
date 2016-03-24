@@ -27,7 +27,7 @@
 				redirect('admin');
 			
 			$this->session->set_userdata('state', self::$states['CREATE_DB']);
-			$this->load->templateWithoutMenu('Config/Admin/createDB');
+			$this->load->templateWithoutMenu('Config/Admin/createDB', array(), array(), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -70,7 +70,7 @@
 				redirect('config/initPeriods');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initYear', getdate(), array('adminFirstConnection.js'));
+				$this->load->templateWithoutMenu('Config/Admin/initYear', getdate(), array('adminFirstConnection.js'), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -113,13 +113,13 @@
 					$data['year'] = $this->session->userdata('currentYear');
 
 					$this->session->set_userdata('state', self::$states['INIT_YEAR']);
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initYear'), $data, array('adminFirstConnection.js'));
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initYear'), $data, array('adminFirstConnection.js'), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
 			{
 				$data = array('periodNumber' => $this->session->userdata('periodNumber'));
-				$this->load->templateWithoutMenu('Config/Admin/initPeriods', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initPeriods', $data, array(), 'Configuration d\'une nouvelle année');
 			}
 
 		}
@@ -148,7 +148,7 @@
 					$passwords = $this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 
 					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
-					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
+					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords), array(), 'Configuration d\'une nouvelle année');
 				}
 				catch(Exception $e)
 				{
@@ -161,7 +161,7 @@
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 
 		}
 
@@ -200,11 +200,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -240,7 +240,7 @@
                     $data['state'] = 'danger';
                     $data['button'] = array('visible' => FALSE);
 
-                    $this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data);
+                    $this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data, array(), 'Configuration d\'une nouvelle année');
                 }   
             }
             
@@ -260,14 +260,14 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 				
 				
 				redirect('admin/manageResponsibles');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
         /**
@@ -300,11 +300,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
 
@@ -331,7 +331,7 @@
 				redirect('admin/signIn');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initAdminInfo');
+				$this->load->templateWithoutMenu('Config/Admin/initAdminInfo', array(), array(), 'Configuration d\'une nouvelle année');
 		}
 
 		public function initNbHours(){
@@ -355,11 +355,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 
 		}
 

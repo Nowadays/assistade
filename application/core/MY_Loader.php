@@ -75,6 +75,8 @@
 				$this->view('includes/admin_menu.php', $vars);
 			else if($menu === "main")
 				$this->view('includes/menu.php', $vars);
+            else
+                $this->view('includes/menu_empty.php', $vars);
 
 			if(is_array($views))
 				foreach ($views as $view)
