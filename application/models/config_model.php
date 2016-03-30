@@ -4,7 +4,7 @@
 	*/
 	class Config_model extends MY_Model
 	{
-		private static $csvTables = array('teacher', 'subject','student_group_tp','group_tp','nb_group'); //Tables available for importing from CSV file
+		private static $csvTables = array('teacher', 'subject','groups','group_tp','nb_group'); //Tables available for importing from CSV file
 
 		function __construct()
 		{
@@ -76,7 +76,7 @@
 				$passwordToInsert = array();
 				$password = array();
 			}
-
+            
 			while(($row = fgetcsv($file)) !== FALSE)
 			{
 				for($i = 0; $i < count($fileColumns); $i++)
@@ -94,7 +94,18 @@
             if(empty($valuesToInsert)){
                 throw new Exception("Fichier vide");
             }else{
-                $this->db->insert_batch($tableName, $valuesToInsert);
+                if ($tableName === 'groups'){
+                    foreach($valuesToInsert as $ligne){
+                        $tp = $ligne['id_grouptp'];
+                        $td = $ligne['id_grouptd'];
+                        $promo = $ligne['promo_id'];
+                        
+                        $this->db->insert('group_td', array('id_grouptd' => $td, 'promo_id' => $promo));
+                        $this->db->insert('group_tp', array('id_grouptp' => $tp, 'id_grouptd' => $td));
+                    }
+                }else{
+                    $this->db->insert_batch($tableName, $valuesToInsert);   
+                }
             }
 
 			if($tableName === 'teacher'){
@@ -455,24 +466,25 @@
                 )");
 
             
+            
+            
+            
+            
+            
+            
             /************* Triggers *************/
             
             $this->db->query('CREATE OR REPLACE FUNCTION insert_group() RETURNS trigger AS $group$
                 BEGIN
-                    PERFORM * FROM student_group WHERE id = NEW.id;
+                    PERFORM * FROM group_td WHERE promo_id=NEW.promo_id AND id_grouptd=NEW.id_grouptd;
                     IF NOT FOUND
                     THEN
-                        INSERT INTO student_group VALUES(NEW.id,NEW.year_id);
+                        INSERT INTO group_td VALUES(NEW.id_grouptd,NEW.promo_id);
                     END IF;
-                    PERFORM * FROM student_group_td WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd;
+                    PERFORM * FROM group_tp WHERE id_grouptd=NEW.id_grouptd AND id_grouptp=NEW.id_grouptp;
                     IF NOT FOUND
                     THEN
-                        INSERT INTO student_group_td VALUES(NEW.id,NEW.id_grouptd);
-                    END IF;
-                    PERFORM * FROM student_group_tp WHERE id=NEW.id AND id_grouptd=NEW.id_grouptd AND id_grouptp=NEW.id_grouptp;
-                    IF NOT FOUND
-                    THEN
-                        INSERT INTO student_group_tp VALUES(NEW.id,NEW.id_grouptp,NEW.id_grouptd);
+                        INSERT INTO group_tp VALUES(NEW.id_grouptp,NEW.id_grouptd);
                     END IF;
                     RETURN NEW;
                 END;
@@ -483,6 +495,24 @@
                 ON groups
                 FOR EACH ROW
                 EXECUTE PROCEDURE insert_group()");
+            
+            $this->db->query('CREATE OR REPLACE FUNCTION delete_group() RETURNS trigger AS $group$
+                BEGIN
+                    DELETE FROM group_tp WHERE id_grouptp = OLD.id_grouptp;
+                    PERFORM * FROM group_tp WHERE id_grouptd = OLD.id_grouptd;
+                    IF NOT FOUND
+                    THEN
+                        DELETE FROM group_td WHERE id_grouptd = OLD.id_grouptd;
+                    END IF;
+                    RETURN OLD;
+                END;
+                $group$ LANGUAGE plpgsql');
+            
+            $this->db->query("CREATE TRIGGER delete_group
+                INSTEAD OF DELETE
+                ON groups
+                FOR EACH ROW
+                EXECUTE PROCEDURE delete_group()");
             
             $this->db->query('CREATE OR REPLACE FUNCTION insert_subject() RETURNS trigger AS $subject$
                 BEGIN

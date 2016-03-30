@@ -19,7 +19,7 @@
 								1 => '<p class="text text-warning">En cours de saisie</p>',
 								2 => '<p class="text text-success">Validé</p>');
 
-			echo '<table class="table table-bordered">';
+			echo '<table id="myTable" class="table table-bordered table-striped">';
 				echo '<tr>';
 					foreach ($headers as $header)
 						echo "<th class='text-center'>$header</th>";

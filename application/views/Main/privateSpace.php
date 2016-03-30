@@ -11,7 +11,7 @@
 	echo div(array('class' => 'panel panel-info center-block'));
 		echo div(array('class' => 'panel-heading text-center'));
 		echo "<h2>Bonjour $username</h2>";
-		echo "<i>Vous pouvez retrouver ici vos informations personnelles</i>";
+        echo br();
 		echo div_close();
 		echo br();
 		

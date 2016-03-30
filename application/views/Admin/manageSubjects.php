@@ -20,13 +20,13 @@
 	echo div(array('class' => 'text-center center-block'));
 		$headers = array('Identifiants', 'Nom court','Nom de la matière', 'Promo', 'Heures CM/Semaine', 'Heures TD/Semaine', 'Heures TP/Semaine', 'Options');
 
-		echo '<table id="myTable" class="table table-bordered">';
+		echo '<table id="myTable" class="table table-bordered table-striped">';
 			echo '<tr>';
 				foreach ($headers as $header)
 					echo "<th class='text-center'>$header</th>";
 			echo '</tr>';
 
-			foreach ($subjects as $subject)
+            foreach ($subjects as $subject)
 			{
 				echo '<tr id="'. $subject['id'] .'">';
 				echo '<td>'. $subject['id'] .'</td><td>'. $subject['short_name'] .'</td><td>'. $subject['subject_name'] .'</td><td>'. $subject['promo_id'] .'</td><td>'. $subject['hours_cm'] .'</td><td>'. $subject['hours_td'] .'</td><td>'. $subject['hours_tp'] .'</td>';

@@ -1,0 +1,221 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:400,300);
+
+html{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    min-height: 100%;
+    position: relative;
+    top: 0;
+    padding: 0;
+    margin: 0;
+}
+
+table{
+    box-shadow: 5px 5px 10px #aaa;
+}
+
+.table-bordered{
+    border: 0px transparent;    
+    border-radius: 5px !important;
+}
+
+.table-bordered > tbody > tr:first-child > th:first-child {
+	border-top-left-radius: 5px !important;
+}
+
+.table-bordered > tbody > tr:first-child > th:last-child {
+	border-top-right-radius: 5px !important;
+}
+
+.table-bordered > tbody > tr:last-child td:first-child {
+	border-bottom-left-radius: 5px !important;
+}
+
+.table-bordered > tbody > tr:last-child td:last-child {
+	border-bottom-right-radius: 5px !important;
+}
+
+#myTable.table-bordered tbody tr td{
+    border-color: transparent;
+}
+
+.table-bordered tbody tr th{
+    border : 0px transparent;
+}
+
+.table-bordered tbody tr td{
+    padding: 12px;
+}
+
+.table-bordered tbody span.glyphicon-trash:hover,
+.table-bordered tbody span.glyphicon-remove:hover
+{
+    color: #c12e2a;
+}
+
+.table-bordered tbody span.glyphicon-pencil:hover{
+    color: #5bc0de;
+}
+
+.table-bordered tbody span.glyphicon-floppy-disk:hover{
+    color: #5cb85c;
+}
+
+table th{
+    background-color: #015b7e;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-color: transparent;
+}    
+
+.navbar{
+    background: #015b7e;
+    font-size: 15px;
+    line-height: 15px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-toggle{
+    border-color: transparent;
+}
+
+.menu-admin{
+    padding-left: 5%;
+    padding-right: 30px;
+}
+
+.navbar-brand{
+    padding-top: 0px;
+    padding-bottom : 0px;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav li a{
+    color: #ddd;
+    font-size: 15px;
+    text-align: center;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+    border: none !important;
+    border-color: transparent !important;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav li a:hover{
+    color: #fff;
+}
+
+input.form-control{
+    padding: 10px;
+}
+
+.page-header{
+    background: #eee;
+    padding-bottom: 45px;
+    padding-top: 110px;
+    margin: 0;
+    margin-bottom: 30px;
+    font-variant-caps: petite-caps;
+    font-family: 'Montserrat';
+}
+
+.panel{
+    box-shadow: 5px 5px 10px #aaa;
+    border: 0px transparent;
+    border: 0px transparent;
+}
+
+.panel table{
+    box-shadow: none;
+}
+
+
+.panel-info > .panel-heading{
+    color : #fff;
+    background-color: #eee;
+    background-image: linear-gradient(to bottom, #025c7f 0px, #015b7e 50%, #025c7f 100%);
+    background-repeat: repeat-x;
+    border-color : transparent;
+}
+
+.panel-info > .panel-heading .lead{
+    color: #fff;
+}
+
+.btn, a.btn{
+    border-radius: 5px;
+    border: 0px solid transparent;
+    background-image: none;
+    padding: 12px;
+}
+
+.btn-danger, a.btn-danger{
+    background-color: #d9534f;
+}
+
+.btn-danger:hover, a.btn-danger:hover{
+    background-color: #c12e2a !important;
+}
+
+.btn-info{
+    background-color: #5bc0de;
+}
+
+.btn-success{
+    background-color: #5cb85c;
+}
+
+.btn-inverse{
+    color: white;
+    background-color: #555;
+}
+
+.btn-inverse:hover, .btn-inverse:focus{
+    color: white;
+    background-color: #444;
+}
+
+.alert{
+    border: none;
+    box-shadow: 5px 5px 10px #aaa;
+}
+
+.footer{
+    margin-top: -50px;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    background-color: #eee;
+    font-size: 17px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#main-container{
+    padding-bottom: 80px;
+}
+
+.lead{
+    padding-top: 30px;
+    font-weight: 200;
+    font-family: 'Josefin Sans', 'Montserrat';
+    font-size: 40px;
+    color: #015b7e;
+}
+
+.label{
+    padding: 5px;
+}

@@ -59,9 +59,9 @@ function getPlanning(periodId)
 
 function applyColors()
 {
-	$('.available').css('background-color', 'rgb(80, 211, 89)');
+	$('.available').css('background-color', 'rgb(92, 184, 92)');
 
-	$('.avoid').css('background-color', 'rgb(186, 20, 20)');
+	$('.avoid').css('background-color', 'rgb(217, 83, 79)');
 
-	$('.unavailable').css('background-color', 'rgb(46, 46, 46)');
+	$('.unavailable').css('background-color', 'rgb(68, 68, 68)');
 }

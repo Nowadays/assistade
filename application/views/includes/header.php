@@ -2,6 +2,7 @@
 	/**
 	 * Vue affichant l'en-tête HTML de chaque page
 	 * Cette vue affiche le doctype HTML5, affiche l'icone sur le naviguateur et inclut les fichiers CSS bootstrap
+     * Prends en paramètre la variable $title à afficher dans le header
 	 */
 	echo doctype('html5'); 
 ?>
@@ -15,6 +16,7 @@
 			echo '<meta charset="UTF-8" />';
 			echo link_tag('assets/css/bootstrap.min.css');
 			echo link_tag('assets/css/bootstrap-theme.min.css');
+            echo link_tag('assets/css/style.css');
 		?>
 
 		<!--[if lt IE 9]>
@@ -24,8 +26,8 @@
 	
 	</head>
 	<body>
-        <?php echo br(2) ?>
-        <div class="page-header text-center">
-	       <?php echo heading(img(base_url() . 'res/img/logo.png') . "  Assist'Edt"); echo br(1); ?>	
-        </div>
-        <div class="container">
+        <header class="page-header text-center">
+	       <!--<?php echo heading(img(base_url() . 'res/img/assistade.svg')) ?>-->
+	       <?php echo heading($title) ?>	
+        </header>
+        <div id='main-container' class="container">

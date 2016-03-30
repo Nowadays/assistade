@@ -19,7 +19,7 @@ function addRow() {
 	for(var i = 0; i < cellNames.length; i++){	
 		var cell1 = row.insertCell();
 		
-		cell1.innerHTML = '<input type="text" class="form-control" placeholder="'+cellNames[i]+'" style="padding : 0px;"/>';
+		cell1.innerHTML = '<input type="text" class="form-control" placeholder="'+cellNames[i]+'"/>';
 	}
 	
 	$('#addButton').addClass('disabled');
@@ -66,6 +66,7 @@ function saveNewRow(){
 				
 				row.replaceChild(cell,row.lastChild);
 				$('#addButton').removeClass('disabled');
+               location.reload(true);
 			}
 			else if(state == "failed")
 				$('#modal-content').html('<h3>Echec</<h3><p>Raison : ' + message + '<br /><br /><button class="btn btn-primary" data-dismiss="modal">Fermer</button></p>');
@@ -83,7 +84,7 @@ function editRow(id)
 		var text = children[i].firstChild.data;
 		
 		var cell = document.createElement("td");
-		cell.innerHTML = '<input type="text" class="form-control" placeholder="'+text+'" value="'+text+'" style="padding : 0px;"/>';
+		cell.innerHTML = '<input type="text" class="form-control" placeholder="'+text+'" value="'+text+'"/>';
 		
 		row.replaceChild(cell,children[i]);
 	}

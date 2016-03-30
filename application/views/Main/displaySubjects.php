@@ -4,8 +4,6 @@
 	 * Cette vue nécessite les variables suivantes : $periodNumber => numéro de la période en cours
 	 */
 	echo div(array('class' => 'text-center center-block'));
-		echo heading('Modules pour P'.$periodNumber, 2);
-		echo br();
 
         if($subjects == null){
             echo '<p>Vous n\'avez pas de module pour cette période</p>';
@@ -13,7 +11,7 @@
             echo div(array('class' => 'text-center center-block'));
                 $headers = array('Module', 'Intitulé', 'CM','Groupes TD','Groupes TP');
 
-                echo '<table id="myTable" class="table table-bordered">';
+                echo '<table id="myTable" class="table table-bordered table-striped">';
                     echo '<tr>';
                         foreach ($headers as $header)
                             echo "<th class='text-center'>$header</th>";

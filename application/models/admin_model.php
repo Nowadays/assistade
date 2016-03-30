@@ -550,44 +550,50 @@
 
 		public function singleActionGroup($action,$group)
 		{
-			/*if(!$this->isGroupTdCorrect($group['id_grouptd']))
+
+            if($action == 'insert'){
+                $groupTest = $this->db->select('id_grouptp')->from('groups')->where('id_grouptp',$group['id_grouptp'])->get()->result_array();
+            }
+            /*if(!$this->isGroupTdCorrect($group['id_grouptd']))
 				return 'identifiant incorrect !';*/
 
-			$groupTest = $this->db->select('id_grouptp')->from('groups')->where('id_grouptd',$group['id_grouptd'])->where('id_grouptp',$group['id_grouptp'])->get()->result_array();
-			$groupInfo = $this->db->select('*')->from('groups')->where('id_grouptd',$group['id_grouptd'])->get()->result_array();
+            $groupInfo = $this->db->select('*')->from('groups')->where('id_grouptd',$group['id_grouptd'])->get()->result_array();
 			if($action == 'insert')
 			{
 				if(!empty($groupTest))
 					return 'identifiant déjà existant !';
 
-				if(!$this->isGroupTpCorrect	($group['id_grouptp']))
+
+                if(!$this->isGroupTdCorrect(strtoupper($group['id_grouptd'])))
+                    return 'id td incorrect !';
+
+                if(!$this->isGroupTpCorrect(strtoupper($group['id_grouptp'])))
 					return 'id tp incorrect !';
 
-				if(!$this->isGroupTdCorrect	($group['id_grouptd']))
-					return 'id td incorrect !';
 
-				if(!$this->isGroupPromoCorrect	($group['promo_id']))
+
+				if(!$this->isGroupPromoCorrect(strtoupper($group['promo_id'])))
 					return 'id promo incorrect !';
 
-				$this->db->insert('group_td', array('id_grouptd' => $group['id_grouptd'], 'promo_id' => $group['promo_id']));
-				$this->db->insert('group_tp', array('id_grouptp' => $group['id_grouptp'], 'id_grouptd' => $group['id_grouptd']));
+				$this->db->insert('group_td', array('id_grouptd' => strtoupper($group['id_grouptd']), 'promo_id' => strtoupper($group['promo_id'])));
+				$this->db->insert('group_tp', array('id_grouptp' => strtoupper($group['id_grouptp']), 'id_grouptd' => strtoupper($group['id_grouptd'])));
 
 				return 'success';
 			}
 			else if($action == 'update' || $action == 'delete')
 			{
-				if(empty($groupInfo))
-					return 'identifiant non existant !';
+				//if(empty($groupInfo))
+				//	return 'identifiant non existant !';
 
 				if($action == 'update')
 				{
-					if(!$this->isGroupTpCorrect	($group['id_grouptp']))
+					if(!$this->isGroupTpCorrect(strtoupper($group['id_grouptp'])))
 						return 'id tp incorrect !';
 
-					if(!$this->isGroupTdCorrect	($group['id_grouptd']))
+					if(!$this->isGroupTdCorrect(strtoupper($group['id_grouptd'])))
 						return 'id td incorrect !';
 
-					if(!$this->isGroupPromoCorrect	($group['promo_id']))
+					if(!$this->isGroupPromoCorrect(strtoupper($group['promo_id'])))
 						return 'id promo incorrect !';
 
 					$this->db->where('id_grouptd', $group['id_grouptd']);
@@ -606,21 +612,32 @@
 				}
 				else
 				{
-					$this->db->where('id_grouptd', $group['id_grouptd']);
-					$this->db->delete('course_groups_td');
 
-					$this->db->where('id_grouptp', $group['id_grouptp'])->where('id_grouptp',$group['id_grouptp']);
-					$this->db->delete('course_groups_tp');
+                    $id_td = $this->db->select("id_grouptd")->from("groups")->where("id_grouptp",$group['id_grouptd'])->get()->result_array();
+                    $res = $this->db->select("count(*) as res")->from("groups")->where("id_grouptd",$id_td[0]['id_grouptd'])->get()->result_array();//$group['id_grouptp']
+                    if($res[0]['res']==1){
+                        $this->db->where('id_grouptd', $id_td[0]['id_grouptd']);
+                        $this->db->delete('course_groups_td');
 
-					$this->db->where('id_grouptd', $group['id_grouptd'])->where('id_grouptp',$group['id_grouptp']);
-					$this->db->delete('group_tp');
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('course_groups_tp');
 
-					$this->db->where('id_grouptd', $group['id_grouptd']);
-					$this->db->delete('group_td');
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('group_tp');
 
+                        $this->db->where('id_grouptd', $id_td[0]['id_grouptd']);
+                        $this->db->delete('group_td');
 
+                        //$this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
+                    }else if($res[0]['res']==2){
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('course_groups_tp');
 
-				}
+                        $this->db->where('id_grouptp', $group['id_grouptd']);
+                        $this->db->delete('group_tp');
+                        //$this->db->where('id_grouptp',$group['id_grouptd'])->delete('groups');
+                    }
+                }
 
 				return 'success';
 			}

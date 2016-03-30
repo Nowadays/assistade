@@ -5,15 +5,16 @@
      * $hours => Tableau avec les créneaux horaires
 	 */
 	echo div(array('class' => 'text-center center-block'));
-		echo heading('Saisie des heures de CM de P'.$periodNumber.' pour les '.$promo, 2);
-		echo br();
-        echo '<p>Nombre d\'heures à saisir : '.$nbHours.'</p>';
 		
+        echo '<h3>Nombre d\'heures à saisir : '.$nbHours.'</h3>';
+        echo br();
+
 		echo form_button(array('content' => 'Retirer', 'class' => 'btn btn-xs active', 'id' => 'white'));
 		echo nbs(2);
 		echo form_button(array('content' => 'Sélectionner', 'class' => 'btn btn-xs btn-success', 'id' => 'green'));
 
-		echo br(2);
+        echo br(2);
+
 		echo form_open('admin/modifyHoursCM/'.$promo);
 
 			echo availabilityTable($hours, $status, $cmHours);

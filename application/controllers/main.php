@@ -29,7 +29,7 @@
 			$this->addUserInfo($data);
 			$this->addMessage($view,$data);
 
-			$this->load->template($view, $data);
+			$this->load->template($view, $data, array(), 'Accueil');
 		}
 
 		/**
@@ -93,7 +93,7 @@
 			
 			$this->addMessage($view,$data); //Rajoute un message à la liste de vues s'il y en a un à afficher
 
-			$this->load->template($view,$data);
+			$this->load->template($view,$data,array(),'Connexion');
 		}
 		
 		/**
@@ -110,7 +110,7 @@
 			{
 				$data = array();
 				$this->addUserInfo($data);
-				$this->load->template('Main/firstConnexion', $data);
+				$this->load->template('Main/firstConnexion', $data, array(), 'Initialisation de mes informations');
 			}
 			else
 			{
@@ -187,7 +187,7 @@
 			
 			$data['infos']=$this->main_model->getTeacherInformations($data['teacherId']);
 
-			$this->load->template($view, $data);
+			$this->load->template($view, $data, array(), 'Espace personnel');
 		}
         
         /**
@@ -208,7 +208,7 @@
             $data['cmHours'] = $this->main_model->getHoursCM($promo);
             $data['promo'] = $promo;
             
-			$this->load->template($view, $data, array('getAvailability.js'));
+			$this->load->template($view, $data, array('getAvailability.js'),'Heures de CM de P'.$this->main_model->getCurrentPeriod()['period_number'].' pour les '.$promo);
 		}
 
 		/**
@@ -228,7 +228,7 @@
 			$data['infos']=$this->main_model->getTeacherInformations($data['teacherId']);
 
 			if($this->input->post('phoneNumber') == FALSE || $this->input->post('email') == FALSE)
-				$this->load->template($view, $data);
+				$this->load->template($view, $data, array(), 'Modifier mes informations');
 			else
 			{
 				$this->main_model->modifyInfo($this->session->userdata('teacherId'),
@@ -258,7 +258,12 @@
 			{
 				if($this->input->post('timeSlot') !== FALSE)
 				{  
-                    if($this->main_model->getTeacherHours($this->session->userdata('teacherId')) < floor(1.5*$this->main_model->getTeacherMiniHours($this->session->userdata('teacherId')))){
+                    $compt = 0;
+                    foreach($this->input->post('timeSlot') as $val){
+                        if ($val == 3) $compt++;                
+                    }
+                    
+                    if($compt < floor(1.5*$this->main_model->getTeacherMiniHours($this->session->userdata('teacherId')))){
                         $message['state']= 'warning';
 				        $message['title']= 'Attention';
                         $message['content']= 'Vous n\'avez pas renseigné suffisemment d\'heures disponibles';
@@ -275,7 +280,7 @@
                     if($state === 1){
                         $this->main_model->insertWish($this->input->post('timeSlot'), $state, $this->session->userdata('teacherId'));   
                     }else{
-                        if($this->main_model->getTeacherHours($this->session->userdata('teacherId')) < floor(1.5*$this->main_model->getTeacherMiniHours($this->session->userdata('teacherId')))){
+                        if($compt < floor(1.5*$this->main_model->getTeacherMiniHours($this->session->userdata('teacherId')))){
                             $message['state']= 'danger';
                             $message['title']= 'Attention';
                             $message['content']= 'Votre voeux n\'a pas pu être accepté, vous n\'avez pas renseigné suffisemment d\'heures disponibles';
@@ -313,7 +318,7 @@
 					if($wishState == 1)
 						$data['TeacherTimeSlot'] = $this->main_model->getTeacherTimeSlots($this->session->userdata('teacherId'));
 					
-					$this->load->template($view, $data, array('getAvailability.js'));
+					$this->load->template($view, $data, array('getAvailability.js'),'Saisie des voeux pour P'.$promo);
 					
 				}
 			}
@@ -388,7 +393,7 @@
 			$data['TeacherTimeSlot'] = $this->main_model->getTeacherTimeSlots($this->session->userdata('teacherId'), key($data['periods']));
 
 
-			$this->load->template(array('Main/periodList', 'Main/displayAvailability'), $data, array('getPlanning.js', 'getOlderPlanning.js'));
+			$this->load->template(array('Main/periodList', 'Main/displayOlderAvailability'), $data, array('getPlanning.js', 'getOlderPlanning.js'),'Mes anciens plannings');
 		}
 
 		/**
@@ -407,7 +412,7 @@
             $data['miniHours'] = floor($this->main_model->getTeacherMiniHours($this->session->userdata('teacherId'))*1.5);
 			$this->addUserInfo($data);
 
-			$this->load->template($view, $data, array('getPlanning.js', 'displayAvailability.js'));
+			$this->load->template($view, $data, array('getPlanning.js', 'displayAvailability.js'),'Mes disponnibilités');
 		}
 		
         
@@ -424,7 +429,7 @@
             $data['subjects'] = $this->main_model->getTeacherSubjects($this->session->userdata('teacherId'),$data['periodNumber']);
             $this->addUserInfo($data);
 
-			$this->load->template($view, $data);
+			$this->load->template($view, $data, array(), 'Mes modules pour P'.$this->main_model->getCurrentPeriod()['period_number']);
 		}
         
         public function SelectGroup(){
@@ -520,7 +525,7 @@
 			$this->addUserInfo($data);
 			$this->addMessage($view,$data);
 
-			$this->load->template($view,$data,array('selectTemporaryWorker.js'));
+			$this->load->template($view,$data,array('selectTemporaryWorker.js'),'Vacataires');
 		}
 		
 		/**

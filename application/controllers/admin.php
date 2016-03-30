@@ -29,7 +29,7 @@
 			$data = array();
 			$this->addMessage($view,$data);
 
-			$this->load->admin_template($view, $data);
+			$this->load->admin_template($view, $data, array(), 'Accueil');
 		}
 
 		/**
@@ -64,7 +64,7 @@
 										'visible' => true
 										),
 								  'connected' => $this->isAdminConnected());
-					$this->load->admin_template($views, $data);
+					$this->load->admin_template($views, $data, array(), 'Espace administrateur');
 				}
 				else
 				{
@@ -81,7 +81,7 @@
 				}
 			}
 			else
-				$this->load->admin_template('Admin/signIn', array('connected' => $this->isAdminConnected()));
+				$this->load->admin_template('Admin/signIn', array('connected' => $this->isAdminConnected()), array(), 'Espace administrateur');
 		}
 
 		
@@ -121,7 +121,7 @@
 			$data['period'] = $this->admin_model->getCurrentPeriod();
 			$data['res']=$this->admin_model->getState($data['period']);
 
-			$this->load->admin_template('Admin/privateSpace', $data);
+			$this->load->admin_template('Admin/privateSpace', $data, array(), 'Administrateur');
 		}
 
 		/**
@@ -185,7 +185,7 @@
 						  'state' => 'success',
 						  'static' => TRUE,
 						  'button' => array(
-										'value' => 'retour',
+										'value' => 'Retour',
 										'onclick' => '/admin',
 										'visible' => true
 										)
@@ -206,7 +206,7 @@
 
 			$data['teacherWishes'] = $this->admin_model->getTeachersWishes();
 
-			$this->load->admin_template('Admin/summary', $data);
+			$this->load->admin_template('Admin/summary', $data, array('table.js'), 'Voeux des enseignants');
 		}
         
         /**
@@ -227,7 +227,7 @@
             $data['cmHours'] = $this->admin_model->getHoursCM($promo);
             $data['promo'] = $promo;
             
-			$this->load->admin_template($view, $data, array('getAvailability.js'));
+			$this->load->admin_template($view, $data, array('getAvailability.js'), 'Heures de CM de P'.$this->admin_model->getCurrentPeriod()['period_number'].' pour les '.$promo);
 		}
         
         /**
@@ -292,7 +292,7 @@
                 $data['promo'] = $promo;
                 $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
                 
-				$this->load->admin_template($view, $data, array('getAvailability.js'));
+				$this->load->admin_template($view, $data, array('getAvailability.js'), 'Modification des heures de CM de P'.$period['period_id'].'pour les '.$promo);
                 
                 $this->admin_model->unsetBlockedHours();
 			}
@@ -339,7 +339,7 @@
             $data['nbHours'] = $this->admin_model->getNbHoursCM($promo);
             $data['cmHours'] = $this->admin_model->getHoursCM($promo);
             
-			$this->load->admin_template($view, $data, array('getAvailability.js'));
+			$this->load->admin_template($view, $data, array('getAvailability.js'),'Initialisation des heures de CM pour P'.$this->admin_model->getCurrentPeriod()['period_number']);
 
             $this->admin_model->unsetBlockedHours();
         }
@@ -379,7 +379,7 @@
 				}
 			}
 			else
-                $this->load->admin_template($view, $data);
+                $this->load->admin_template($view, $data, array(), 'Chargement des modules des enseignants');
         }
 
 		/**
@@ -408,7 +408,7 @@
 				$data['TeacherTimeSlot'] = $this->admin_model->getTeacherTimeSlots($initials, $period['period_id']);
 				$data['wishState'] = $this->admin_model->getTeacherWishState($initials);
 
-				$this->load->admin_template('Admin/displayTeacherPlanning', $data, array('getAvailability.js'));
+				$this->load->admin_template('Admin/displayTeacherPlanning', $data, array('getAvailability.js'), 'Planning de '.$initials);
 			}
 			catch(Exception $e)
 			{
@@ -458,7 +458,7 @@
 				$data['TeacherTimeSlot'] = $this->admin_model->getTeacherTimeSlots($initials, $period['period_id']);
 				$data['wishState'] = $this->admin_model->getTeacherWishState($initials);
 
-				$this->load->admin_template('Admin/modifyTeacherPlanning', $data, array('getAvailability.js'));
+				$this->load->admin_template('Admin/modifyTeacherPlanning', $data, array('getAvailability.js'), 'Modification du planning de '.$initials);
 			}
 			catch(Exception $e)
 			{
@@ -487,7 +487,7 @@
 		{
 			$this->requireConnected();
 			$teachers = $this->admin_model->getTeachers();			
-			$this->load->admin_template('Admin/manageTeachers', array('teachers' => $teachers), array('tabManagement.js','manageTeachers.js'));
+			$this->load->admin_template('Admin/manageTeachers', array('teachers' => $teachers), array('tabManagement.js','manageTeachers.js'), 'Gestion des enseignants');
 		}
 		
 		/**
@@ -544,7 +544,7 @@
 					{
 						$data = array('state' => 'failed', 'message' => $result);
 					}
-					$this->load->view('Admin/databaseReturnXML', $data);
+                    $this->load->view('Admin/databaseReturnXML', $data);
 				}
 				catch(Exception $e)
 				{
@@ -569,9 +569,19 @@
 		{
 			$this->requireConnected();
 			$subjects = $this->admin_model->getSubjects();
-			$this->load->admin_template('Admin/manageSubjects', array('subjects' => $subjects), array('tabManagement.js','manageSubjects.js'));
+			$this->load->admin_template('Admin/manageSubjects', array('subjects' => $subjects), array('tabManagement.js','manageSubjects.js'), 'Gestion des modules');
 		}
 
+<<<<<<< HEAD
+=======
+		public function manageGroup(){
+			//shit happen here
+            $this->requireConnected();
+            $groups = $this->admin_model->getGroups();
+            $this->load->admin_template('Admin/manageGroups',array('groups' => $groups), array('tabManagement.js','manageGroups.js'), 'Groupes d\'étudiants');
+		}
+
+>>>>>>> origin/master
 		/**
 		 * Méthode permettant la modification de la table des matières
 		 *
@@ -674,7 +684,7 @@
 			$data['responsibles'] = $this->admin_model->getResponsibles();
 			
 			$this->addMessage($view,$data);
-			$this->load->admin_template($view, $data);
+			$this->load->admin_template($view, $data, array(), 'Gestion des responsables des modules');
 			
 		}
 		
@@ -709,7 +719,7 @@
 															  'static' => false));
             
             $this->addMessage($view,$data);
-            $this->load->admin_template($view, $data);
+            $this->load->admin_template($view, $data, array(), 'Voeux des enseignants');
 		}
 		
 		/**
@@ -782,7 +792,7 @@
 				{
 					$action = $this->input->post('action');
 					$id = $this->input->post('id_grouptd');
-					$id_grouptd = $this->input->post('id_grouptd');
+					//$id_grouptd = $this->input->post('id_grouptd');
 					$id_grouptp = $this->input->post('id_grouptp');
 					$promo_id = $this->input->post('promo_id');
 

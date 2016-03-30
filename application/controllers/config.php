@@ -27,7 +27,7 @@
 				redirect('admin');
 			
 			$this->session->set_userdata('state', self::$states['CREATE_DB']);
-			$this->load->templateWithoutMenu('Config/Admin/createDB');
+			$this->load->templateWithoutMenu('Config/Admin/createDB', array(), array(), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -70,7 +70,7 @@
 				redirect('config/initPeriods');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initYear', getdate(), array('adminFirstConnection.js'));
+				$this->load->templateWithoutMenu('Config/Admin/initYear', getdate(), array('adminFirstConnection.js'), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -113,13 +113,13 @@
 					$data['year'] = $this->session->userdata('currentYear');
 
 					$this->session->set_userdata('state', self::$states['INIT_YEAR']);
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initYear'), $data, array('adminFirstConnection.js'));
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initYear'), $data, array('adminFirstConnection.js'), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
 			{
 				$data = array('periodNumber' => $this->session->userdata('periodNumber'));
-				$this->load->templateWithoutMenu('Config/Admin/initPeriods', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initPeriods', $data, array(), 'Configuration d\'une nouvelle année');
 			}
 
 		}
@@ -139,7 +139,7 @@
 				redirect('config/initPeriods');
 
 			$this->load->library('upload');
-			$data = array('name' => 'professeurs', 'table' => 'teacher', 'src' => 'initTeacher');
+			$data = array('name' => 'enseignants', 'table' => 'teacher', 'src' => 'initTeacher');
 
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
@@ -148,7 +148,7 @@
 					$passwords = $this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 
 					$this->session->set_userdata('state', self::$states['INIT_SUBJECT']);
-					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords));
+					$this->load->templateWithoutMenu('Config/Admin/teacherPasswords', array('passwords' => $passwords), array(), 'Configuration d\'une nouvelle année');
 				}
 				catch(Exception $e)
 				{
@@ -161,7 +161,7 @@
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 
 		}
 
@@ -183,7 +183,7 @@
 				redirect('config/initPeriods');
 
             $this->load->library('upload');
-			$data = array('name' => 'matières', 'table' => 'subject', 'src' => 'initSubject');
+			$data = array('name' => 'modules', 'table' => 'subject', 'src' => 'initSubject');
 			
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
@@ -200,11 +200,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
 		/**
@@ -240,7 +240,7 @@
                     $data['state'] = 'danger';
                     $data['button'] = array('visible' => FALSE);
 
-                    $this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data);
+                    $this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data, array(), 'Configuration d\'une nouvelle année');
                 }   
             }
             
@@ -260,14 +260,14 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initInCharge'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 				
 				
 				redirect('admin/manageResponsibles');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initInCharge', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
         /**
@@ -283,15 +283,14 @@
 				redirect('config/initInCharge');
 
 			$this->load->library('upload');
-			$data = array('name' => 'groupes', 'table' => 'group_tp', 'src' => 'initGroupe');
-
+			$data = array('name' => 'groupes', 'table' => 'groups', 'src' => 'initGroupe');
 			if(isset($_FILES['csv']) && $_FILES['csv']['size'] > 0)
 			{
 				try
 				{
 					$this->config_model->insertFromCSV($data['table'], $_FILES['csv']);
 					$this->session->set_userdata('state', self::$states['INIT_ADMIN_INFO']);
-					redirect('config/initAdminInfo');
+                    redirect('config/initAdminInfo');
 				}
 				catch(Exception $e)
 				{
@@ -300,11 +299,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 		}
 
 
@@ -331,7 +330,7 @@
 				redirect('admin/signIn');
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initAdminInfo');
+				$this->load->templateWithoutMenu('Config/Admin/initAdminInfo', array(), array(), 'Configuration d\'une nouvelle année');
 		}
 
 		public function initNbHours(){
@@ -355,11 +354,11 @@
 					$data['state'] = 'danger';
 					$data['button'] = array('visible' => FALSE);
 
-					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data);
+					$this->load->templateWithoutMenu(array('Main/message', 'Config/Admin/initCSV'), $data, array(), 'Configuration d\'une nouvelle année');
 				}
 			}
 			else
-				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data);
+				$this->load->templateWithoutMenu('Config/Admin/initCSV', $data, array(), 'Configuration d\'une nouvelle année');
 
 		}
 
@@ -382,14 +381,16 @@
 				$fileName = "";
 
 				if($tableName === "teacher")
-					$fileName = "Professeur";
+					$fileName = "Enseignants";
 				else if($tableName === "subject")
-					$fileName = "Matiere";
-				else if($tableName === "group_tp"){
-					$fileName = "Groupe";
-				}else if($tableName === "nb_group"){
-					$fileName = "NbGroup";
-				}
+					$fileName = "Modules";
+				else if($tableName === "group_tp")
+					$fileName = "Groupes";
+                else if($tableName === "groups")
+					$fileName = "Groupes";
+				else if($tableName === "nb_group")
+					$fileName = "Prévisions";
+				
 				
 				$fileName .= ".csv";
 
