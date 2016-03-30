@@ -838,8 +838,14 @@
 				$this->load->template('Main/message', $data);
 			}
 		}
-
-
+        
+        
+        public function repartition(){
+            $this->load->model('repartition_model');
+            $result=$this->repartition_model->repartition();
+            $_SESSION['result']=$result;
+            redirect('init','refresh');
+        }
 
 	}
 ?>

@@ -32,9 +32,9 @@
             echo br();
 
             if($res){
-				echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary"));
+				echo anchor('admin/repartition', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary"));
 			}else{
-				echo anchor('#', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary disabled"));
+				echo anchor('admin/repartition', 'Valider la saisie des voeux et lancer la répartition des groupes', array('class' => "btn btn-primary disabled"));
 			}
         }
 
