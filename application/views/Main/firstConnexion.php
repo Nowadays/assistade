@@ -26,7 +26,7 @@
 			echo form_password(array('name' => 'password', 'class' => 'form-control'));
 		}
 		echo br(1);
-		echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-info'));
+		echo form_submit(array('value' => 'Connexion', 'class' => 'btn btn-success'));
 	echo form_close();
 
 	echo div_close();

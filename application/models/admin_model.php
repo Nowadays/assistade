@@ -159,7 +159,6 @@
 			}
 		}
 
-
 		public function getState($period)
 		{
 			$this->db->select('state')->from('teacher_wish')->where('period_id', $period['period_number']);
@@ -433,8 +432,6 @@
                     
                     $this->db->where('id', $subject['id']);				
 					$this->db->update('subject', array('short_name' => $subject['short_name'], 'subject_name' => $subject['subject_name'], 'promo_id' => $subject['promo_id']));
-                    
-                    //$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
 				}
 				else
 				{
@@ -544,10 +541,27 @@
 		}
 
 
+        /**
+        * Méthode retournants les groupes de td et tp triés dans l'ordre des alphabétiques des groupes de td puis tp
+        */
 		public function getGroups(){
 			return $this->db->select('*')->from('groups')->order_by('id_grouptd,id_grouptp')->get()->result_array();
 		}
 
+        
+        
+        /**
+		 * Méthode modifiant un groupe d'étudiants en base de données
+		 *
+		 * Cette méthode effectue l'action demandée sur le groupe fourni
+		 * 
+		 * @param  string $action  Action à effectuer parmis : 'insert', 'update', 'delete'
+		 * @param  string[] $group Tableau associatif contenant les clé/valeur suivantes : 'id_grouptp' (id du groupe de tp de la forme '[A-Z][1-2]'),
+		 * id_grouptd' (id du groupe de td de la forme '[A-Z]'), et 'promo_id' (numéro de promo de la forme '[1-2]A')
+		 * 
+		 * @return string Renvoie un texte qui sera renvoyé à la requête AJAX. Les réponses possibles sont : 'identifiant déjà existant !' (si insert),
+		 * 'nom court incorrect !', 'nom de la matière incorrect !', 'identifiant non existant !' (si update ou delete), 'Erreur : action inconnue !' et 'success'
+		 */
 		public function singleActionGroup($action,$group)
 		{
 
@@ -608,7 +622,6 @@
 					$this->db->where('id_grouptd', $group['id_grouptd']);
 					$this->db->update('group_tp', array('id_grouptd' => $group['id_grouptd']));
 
-					//$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
 				}
 				else
 				{

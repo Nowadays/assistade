@@ -771,7 +771,17 @@
 				array_unshift($views,'Main/message');
 			}
 		}
-
+        
+        /**
+		 * Méthode permettant la modification de la table des groupes tp et td
+		 *
+		 * Cette méthode permet de supprimer ou de créer un groupe d'étudiants.
+		 * Elle ne répond qu'aux requêtes AJAX. Les données sont envoyé par POST.
+		 * 'action' indique l'action à effectuer : insert, update ou delete.
+		 * 'id_grouptd' indique le groupe de td à créer ou modifier
+		 * 'id_grouptp' indique le groupe de tp à créer ou modifier
+		 * 'promo_id' indique le numéro de la promo  du groupe
+		 */
 		public function ajaxRequestGroups()
 		{
 			$this->requireConnected();
