@@ -39,6 +39,8 @@
 					$elems[] = array('Mes anciens Planning', 'main/displayOlderPlanning');
 					
                     $elems[] = array('Voir mes modules', 'main/displaySubjects');
+
+                    $elems[] = array('kalash', 'main/SelectGroup');
                     
 					if(isset($is_responsible) && $is_responsible === true)
 					{

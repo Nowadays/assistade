@@ -572,13 +572,6 @@
 			$this->load->admin_template('Admin/manageSubjects', array('subjects' => $subjects), array('tabManagement.js','manageSubjects.js'));
 		}
 
-		public function manageGroup(){
-			//shit happen here
-            $this->requireConnected();
-            $groups = $this->admin_model->getGroups();
-            $this->load->admin_template('Admin/manageGroups',array('groups' => $groups), array('tabManagement.js','manageGroups.js'));
-		}
-
 		/**
 		 * Méthode permettant la modification de la table des matières
 		 *
@@ -770,6 +763,13 @@
 				$this->session->unset_userdata('message');
 				array_unshift($views,'Main/message');
 			}
+		}
+		
+		public function manageGroup(){
+			//shit happen here
+            $this->requireConnected();
+            $groups = $this->admin_model->getGroups();
+            $this->load->admin_template('Admin/manageGroups',array('groups' => $groups), array('tabManagement.js','manageGroups.js'));
 		}
 
 		public function ajaxRequestGroups()
