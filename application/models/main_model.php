@@ -200,6 +200,12 @@
                 
             return $result;
         }
+
+        public function getGroups($teacherId)
+		{
+			$res = $this->db->select('*')->from('courseDetail')->where('teacherId',$teacherId)->get();
+			return ($res === FALSE) ? array() : $res->result_array();
+		}
         
 		
 		/**
@@ -217,6 +223,40 @@
 				$this->db->update('teacher_information', array("phone" => $phone), array("teacher_id" => $id));
 			if(!empty($mail))
 				$this->db->update('teacher_information', array("email" => $mail), array("teacher_id" => $id));
+		}
+
+		public function singleActionSelectGroup($action,$select)
+		{
+			if(!$this->isSubjectIdCorrect($subject['id']))
+					return 'Identifiant incorrect !';
+					
+			$subjectInfo = $this->db->select('*')->from('courseDetail')->where('id', $select['id'])->get()->result_array();
+
+			if($action == 'update')
+			{
+				if(empty($subjectInfo))
+					return 'Identifiant non existant !';
+				
+				if($action == 'update')
+				{
+				
+					if(!$this->isSubjectNameCorrect	($subject['subject_name']))
+						return 'Nom de la matière incorrect !';
+                    
+                    $this->db->where('id', $select['id']);				
+					$this->db->update('courseDetail', array('id_grouptp' => $select['group_tp'],'id_grouptd' => $select['group_td']));
+                    
+                    //$this->db->query("update subjects set id=\'".$subject['id']."\',short_name=\'".$subject['short_name']."\',subject_name=\'".$subject['subject_name']."\',hours_cm=".$subject['hours_cm'].",hours_td=".$subject['hours_td'].",hours_tp=".$subject['hours_tp']);
+				}
+				
+				return 'success';
+			}
+			else return 'Erreur : action inconnue !';
+		}
+
+		private function isSubjectIdCorrect($id)
+		{
+			return preg_match('#^M[1-4][1-3]0[1-9]C?$#',$id);
 		}
 		
 		/**

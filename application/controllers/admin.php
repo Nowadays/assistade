@@ -573,12 +573,10 @@
 		}
 
 		public function manageGroup(){
-			//shit happen here
             $this->requireConnected();
             $groups = $this->admin_model->getGroups();
             $this->load->admin_template('Admin/manageGroups',array('groups' => $groups), array('tabManagement.js','manageGroups.js'), 'Groupes d\'étudiants');
 		}
-
 		/**
 		 * Méthode permettant la modification de la table des matières
 		 *

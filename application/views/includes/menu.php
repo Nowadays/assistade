@@ -39,7 +39,10 @@
 
 					$elems[] = array('Mes anciens Planning', 'main/displayOlderPlanning');
 					
+                    $elems[] = array('Sélectionner des groupes', 'main/SelectGroup');
+
                     $elems[] = array('Mes modules', 'main/displaySubjects');
+
                     
 					if(isset($is_responsible) && $is_responsible === true)
 					{

@@ -318,7 +318,7 @@
 					if($wishState == 1)
 						$data['TeacherTimeSlot'] = $this->main_model->getTeacherTimeSlots($this->session->userdata('teacherId'));
 					
-					$this->load->template($view, $data, array('getAvailability.js'),'Saisie des voeux pour P'.$promo);
+					$this->load->template($view, $data, array('getAvailability.js'),'Saisie des voeux pour P'.$this->main_model->getCurrentPeriod()['period_number']);
 					
 				}
 			}
@@ -432,6 +432,63 @@
 			$this->load->template($view, $data, array(), 'Mes modules pour P'.$this->main_model->getCurrentPeriod()['period_number']);
 		}
         
+        public function SelectGroup(){
+            $this->checkUserState();
+            $groups = $this->main_model->getGroups($this->session->userdata('teacherId'));
+            $view = array('Main/selectGroup');
+            $data = array('groups' => $groups);
+            $this->addUserInfo($data);
+            $this->load->template($view,$data, array('tabManagement.js','SelectGroups.js'));
+		}
+
+		public function ajaxRequestSelectGroup()
+		{
+			$this->checkUserState();
+
+			if($this->input->is_ajax_request())
+			{
+				try
+				{
+					$action = $this->input->post('action');
+					$id = $this->input->post('id');
+					$subject_name = $this->input->post('subject_name');
+                    $group_td = $this->input->post('group_td');
+                    $group_tp = $this->input->post('group_tp');
+                    
+					if($action == 'update')
+					{
+						$result = $this->main_model->singleActionSelectGroup($action, array('id' => $id, 'subject_name' => $subject_name, 'group_td' => $group_td, 'group_tp' => $group_tp));
+					}
+					else
+					{
+						$data = array('state' => 'failed', 'message' => 'Erreur : Action inconnue !');
+						$this->load->view('Main/databaseReturnXML', $data);
+					}
+					
+					if($result == 'success')
+					{
+						if($action == 'update')
+							$message = 'Mise à jour réussie !';
+						$data = array('state' => 'success', 'message' => $message);
+					}
+					else
+					{
+						$data = array('state' => 'failed', 'message' => $result);
+					}
+					$this->load->view('Main/databaseReturnXML', $data);
+				}
+				catch(Exception $e)
+				{
+					$data = array('state' => 'failed', 'message' => $e->getMessage());
+					$this->load->view('Main/databaseReturnXML', $data);
+				}
+			}
+			else
+			{
+				$data = array('title' => 'Tut tut...', 'content' => "Vous n'êtes pas censé vous trouvez ici...", 'state' => 'warning', 'static' => TRUE);
+				$this->load->template('Main/message', $data);
+			}
+		}
         
 		/**
 		 * Propose la liste des vacataire ou propose la création d'un vacataire
