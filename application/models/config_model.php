@@ -422,12 +422,14 @@
                 )");
             
             $this->db->query("CREATE OR REPLACE VIEW courseDetail AS
-				SELECT *
+				SELECT course.id_course,teacher_id,course.subject_id,period_id,short_name,subject_name,subject.promo_id,id_grouptp,id_grouptd
                 FROM course
-                INNER JOIN subject
+                LEFT JOIN subject
                 ON course.subject_id = subject.id
-                NATURAL JOIN course_groups_tp
-                NATURAL JOIN course_groups_td
+                LEFT JOIN course_groups_tp
+                ON course.id_course = course_groups_tp.id_course
+                LEFT JOIN course_groups_td
+                ON course.id_course = course_groups_td.id_course
   				");
             
             $this->db->query("CREATE TABLE nb_group(
